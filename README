@@ -1,0 +1,36 @@
+Contents
+========
+
+1 ... Project Description
+
+2 ... Installation
+
+-------------------------
+
+1 ... Project Description
+=========================
+
+This is a simple script to reduce repetitive typing of some AutoTools commands. It reduces the distribution tarball creation to one command - this script.
+
+---------------------
+
+2 ... Installation
+==================
+
+1 ... Extract the tarball (.tar.gz file) preserving the directory structure.
+
+2 ... cd to the directory created.
+
+2 ... As root or sudo, type './configure'
+
+3 ... As root or sudo, type 'make install clean'
+
+(Quote marks are for textual clarity only).
+
+
+
+To uninstall the package:
+
+1 ... cd to the directory created in the above install process.
+
+2 ... As root or sudo, type 'make uninstall clean'

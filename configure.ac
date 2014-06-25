@@ -21,7 +21,7 @@
 
 
 AC_PREREQ([2.65])
-AC_INIT([AutoTools Dist Build Script], m4_esyscmd([git describe | tr -d '\n']), [m.grant.prg@gmail.com], [atbuild])
+AC_INIT([atbuild AutoTools Distribution Build Script], m4_esyscmd([git describe | tr -d '\n']), [m.grant.prg@gmail.com], [atbuild])
 
 AM_INIT_AUTOMAKE
 

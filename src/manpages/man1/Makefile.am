@@ -25,7 +25,7 @@ manpagessrcdir = $(srcdir)
 ../../../manpages/man1/atbuild.1: Makefile
 	mkdir -p $(@D)
 	rm -f $@
-	txt2man -t $(@F) -s 1 -v "atbuild Manual" \
+	txt2man -t atbuild -s 1 -v "atbuild Manual" \
 		$(manpagessrcdir)/$(@F).txt > $@
 
 atbuild.1: $(manpagessrcdir)/atbuild.1.txt
