@@ -1,0 +1,35 @@
+NAME
+atbuild - atbuild script
+SYNOPSIS
+atbuild [OPTION]
+DESCRIPTION
+A script to automate AutoTools build of a distribution tarball.
+OPTIONS
+-h  prints usage information
+
+-V  prints version information
+EXIT STATUS
+0
+if OK,
+
+1
+if minor problems,
+
+64
+error in command line arguments.
+
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2014 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+

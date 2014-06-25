@@ -1,0 +1,117 @@
+#! /usr/bin/env bash
+##########################################################################
+##									##
+##	atbuild is automatically generated,				##
+##		please do not modify!					##
+##									##
+##########################################################################
+
+##########################################################################
+##									##
+## Script ID: atbuild							##
+## Author: Mark Grant							##
+##									##
+## Purpose:								##
+## To simplify the AutoTools distribution build.			##
+##									##
+## Syntax:	atbuild [ -h || -V ]					##
+##									##
+## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
+##		0 - success						##
+##		64 - Invalid arguments					##
+##		65 - File(s) already exist				##
+##		67 - trap received					##
+##									##
+## Further Info:							##
+##									##
+##########################################################################
+
+##########################################################################
+##									##
+## Changelog								##
+##									##
+## Date		Author	Version	Description				##
+##									##
+## 25/06/2014	MG	1.0.1	Created.				##
+##									##
+##########################################################################
+
+####################
+## Init variables ##
+####################
+script_exit_code=0
+version="1.0.1"			# set version variable
+outputprefix="atbuild: "
+
+###############
+## Functions ##
+###############
+
+# Output $1 to stdout or stderr depending on $2.
+output()
+{
+	if [ $2 = 0 ]
+	then
+		echo "$outputprefix$1"
+	else
+		echo "$outputprefix$1" 1>&2
+	fi
+}
+
+# Standard function to test command error ($1 is $?) and exit if non-zero
+std_cmd_err_handler()
+{
+	if [ $1 != 0 ]
+	then
+		script_exit_code=$1
+		script_exit
+	fi
+}
+
+# Standard function to cleanup and return exit code
+script_exit()
+{
+	exit $script_exit_code
+}
+
+# Standard trap exit function
+trap_exit()
+{
+script_exit_code=67
+output "Script terminating due to trap received." 1
+script_exit
+}
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGTERM
+
+##########
+## Main ##
+##########
+# Process command line arguments with getopts.
+while getopts :hV arg
+do
+	case $arg in
+	h)	echo "Usage is $0 [options]"
+		echo "	-h displays usage information"
+		echo "	OR"
+		echo "	-V displays version information"
+		script_exit_code=0
+		script_exit
+		;;
+	V)	echo "$0 version "$version
+		script_exit_code=0
+		script_exit
+		;;
+	\?)	script_exit_code=64
+		output "Invalid argument -$OPTARG." 1
+		script_exit
+		;;
+	esac
+done
+
+autoreconf -if && ./configure && make dist clean && make distclean
+std_cmd_err_handler $?
+
+script_exit_code=0
+script_exit
