@@ -16,12 +16,17 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
+## 26/06/2014	MG	1.0.2	Use 'git describe --always' for AC_INIT	##
+##				version as it returns a value as long	##
+##				as there is at least 1 commit, even	##
+##				with no tags. If no commits then	##
+##				'Pre-Release' is used.			##
 ##									##
 ##########################################################################
 
 
 AC_PREREQ([2.65])
-AC_INIT([atbuild AutoTools Distribution Build Script], m4_esyscmd([git describe | tr -d '\n']), [m.grant.prg@gmail.com], [atbuild])
+AC_INIT([atbuild AutoTools Distribution Build Script], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [atbuild])
 
 AM_INIT_AUTOMAKE
 
