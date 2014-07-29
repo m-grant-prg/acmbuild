@@ -21,8 +21,6 @@
 ##				as there is at least 1 commit, even	##
 ##				with no tags. If no commits then	##
 ##				'Pre-Release' is used.			##
-## 29/07/2014	MG	1.0.3	Include check to ensure make is		##
-##				installed.				##
 ##									##
 ##########################################################################
 
@@ -51,11 +49,6 @@ fi
 AC_CHECK_PROG(TXT2MAN, txt2man, yes, no)
 if test "x$TXT2MAN" = "xno" ; then
    	AC_MSG_ERROR([txt2man not found])
-fi
-
-AC_CHECK_PROG(MAKE, make, yes, no)
-if test "x$MAKE" = "xno" ; then
-   	AC_MSG_ERROR([make not found])
 fi
 
 # Checks for libraries.
