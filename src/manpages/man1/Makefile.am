@@ -5,7 +5,7 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Automake script file to generate atbuild manual pages from source.	##
+## Automake script file to generate acmbuild manual pages from source.	##
 ##									##
 ##########################################################################
 
@@ -16,20 +16,22 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
+## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
+##				AutoConf and Make.			##
 ##									##
 ##########################################################################
 
 
 manpagessrcdir = $(srcdir)
 
-../../../manpages/man1/atbuild.1: Makefile
+../../../manpages/man1/acmbuild.1: Makefile
 	mkdir -p $(@D)
 	rm -f $@
-	txt2man -t atbuild -s 1 -v "atbuild Manual" \
+	txt2man -t acmbuild -s 1 -v "acmbuild Manual" \
 		$(manpagessrcdir)/$(@F).txt > $@
 
-atbuild.1: $(manpagessrcdir)/atbuild.1.txt
+acmbuild.1: $(manpagessrcdir)/acmbuild.1.txt
 
-man1_MANS = ../../../manpages/man1/atbuild.1
+man1_MANS = ../../../manpages/man1/acmbuild.1
 
-EXTRA_DIST = $(manpagessrcdir)/atbuild.1.txt
+EXTRA_DIST = $(manpagessrcdir)/acmbuild.1.txt

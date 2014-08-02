@@ -5,7 +5,7 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Automake script file to generate atbuild script from source.		##
+## Automake script file to generate acmbuild script from source.	##
 ##									##
 ##########################################################################
 
@@ -16,6 +16,8 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
+## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
+##				AutoConf and Make.			##
 ##									##
 ##########################################################################
 
@@ -28,7 +30,7 @@ edit = sed \
 
 scriptssrcdir = $(srcdir)
 
-../../scripts/atbuild: Makefile
+../../scripts/acmbuild: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || scriptssrcdir=$(scriptssrcdir)/; \
@@ -38,8 +40,8 @@ scriptssrcdir = $(srcdir)
 
 	chmod a+x $@
 
-atbuild: $(scriptssrcdir)/atbuild.in
+acmbuild: $(scriptssrcdir)/acmbuild.in
 
-bin_SCRIPTS = ../../scripts/atbuild
+bin_SCRIPTS = ../../scripts/acmbuild
 
-EXTRA_DIST = $(scriptssrcdir)/atbuild.in
+EXTRA_DIST = $(scriptssrcdir)/acmbuild.in

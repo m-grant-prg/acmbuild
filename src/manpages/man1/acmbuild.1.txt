@@ -1,9 +1,9 @@
 NAME
-atbuild - atbuild script
+acmbuild - acmbuild script
 SYNOPSIS
-atbuild [OPTION]
+acmbuild [OPTION]
 DESCRIPTION
-A script to automate AutoTools build of a distribution tarball.
+A script to automate AutoConf and Make builds of distribution tarballs.
 OPTIONS
 -h  prints usage information
 

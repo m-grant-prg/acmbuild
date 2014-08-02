@@ -1,20 +1,20 @@
 #! /usr/bin/env bash
 ##########################################################################
 ##									##
-##	atbuild is automatically generated,				##
+##	acmbuild is automatically generated,				##
 ##		please do not modify!					##
 ##									##
 ##########################################################################
 
 ##########################################################################
 ##									##
-## Script ID: atbuild							##
+## Script ID: acmbuild							##
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
 ## To simplify the AutoTools distribution build.			##
 ##									##
-## Syntax:	atbuild [ -h || -V ]					##
+## Syntax:	acmbuild [ -h || -V ]					##
 ##									##
 ## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
 ##		0 - success						##
@@ -33,6 +33,8 @@
 ## Date		Author	Version	Description				##
 ##									##
 ## 25/06/2014	MG	1.0.1	Created.				##
+## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
+##				AutoConf and Make.			##
 ##									##
 ##########################################################################
 
@@ -41,7 +43,7 @@
 ####################
 script_exit_code=0
 version="1.0.1"			# set version variable
-outputprefix="atbuild: "
+outputprefix="acmbuild: "
 
 ###############
 ## Functions ##

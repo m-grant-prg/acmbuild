@@ -5,7 +5,7 @@
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
-## Autoconfigure script file to configure atbuild project.		##
+## Autoconfigure script file to configure acmbuild project.		##
 ##									##
 ##########################################################################
 
@@ -21,12 +21,14 @@
 ##				as there is at least 1 commit, even	##
 ##				with no tags. If no commits then	##
 ##				'Pre-Release' is used.			##
+## 02/08/2014	MG	1.0.3	Change naming from AutoTools to		##
+##				AutoConf and Make.			##
 ##									##
 ##########################################################################
 
 
 AC_PREREQ([2.65])
-AC_INIT([atbuild AutoTools Distribution Build Script], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [atbuild])
+AC_INIT([acmbuild AutoConf Make Distribution Build Script], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [acmbuild])
 
 AM_INIT_AUTOMAKE
 
