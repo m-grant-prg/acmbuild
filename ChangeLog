@@ -1,2 +1,7 @@
+2014-10-27 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	* Improve use of git describe.
+	Change name to autoconf and make.
+	Seperate commands in order to check exit status.
+	
 2014-06-25 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
 	* Initial release.

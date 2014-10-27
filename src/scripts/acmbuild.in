@@ -35,6 +35,8 @@
 ## 25/06/2014	MG	1.0.1	Created.				##
 ## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
 ##				AutoConf and Make.			##
+## 27/10/2014	MG	1.0.3	Seperated each command in order to test	##
+##				exit status.				##
 ##									##
 ##########################################################################
 
@@ -42,7 +44,7 @@
 ## Init variables ##
 ####################
 script_exit_code=0
-version="1.0.1"			# set version variable
+version="1.0.3"			# set version variable
 outputprefix="acmbuild: "
 
 ###############
@@ -112,8 +114,25 @@ do
 	esac
 done
 
-autoreconf -if && ./configure && make dist clean && make distclean
-std_cmd_err_handler $?
+autoreconf -if 
+status=$?
+output "autoreconf -if completed with exit status: "$status $status
+std_cmd_err_handler $status
+
+./configure
+status=$?
+output "./configure completed with exit status: "$status $status
+std_cmd_err_handler $status
+
+make dist clean
+status=$?
+output "make dist clean completed with exit status: "$status $status
+std_cmd_err_handler $status
+
+make distclean
+status=$?
+output "make distclean completed with exit status: "$status $status
+std_cmd_err_handler $status
 
 script_exit_code=0
 script_exit
