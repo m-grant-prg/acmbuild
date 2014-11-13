@@ -5,9 +5,9 @@ acmbuild [OPTION]
 DESCRIPTION
 A script to automate AutoConf and Make builds of distribution tarballs.
 OPTIONS
--h  prints usage information
+-h, --help  prints usage information
 
--V  prints version information
+-V, --version  prints version information
 EXIT STATUS
 0
 if OK,

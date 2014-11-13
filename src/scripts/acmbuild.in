@@ -14,7 +14,7 @@
 ## Purpose:								##
 ## To simplify the AutoTools distribution build.			##
 ##									##
-## Syntax:	acmbuild [ -h || -V ]					##
+## Syntax:	acmbuild [ -h || --help || -V || --version ]		##
 ##									##
 ## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
 ##		0 - success						##
@@ -37,6 +37,8 @@
 ##				AutoConf and Make.			##
 ## 27/10/2014	MG	1.0.3	Seperated each command in order to test	##
 ##				exit status.				##
+## 13/11/2014	MG	1.0.4	Switched from getopts to GNU getopt to	##
+##				allow long options.			##
 ##									##
 ##########################################################################
 
@@ -44,7 +46,7 @@
 ## Init variables ##
 ####################
 script_exit_code=0
-version="1.0.3"			# set version variable
+version="1.0.4"			# set version variable
 outputprefix="acmbuild: "
 
 ###############
@@ -92,27 +94,44 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ##########
 ## Main ##
 ##########
-# Process command line arguments with getopts.
-while getopts :hV arg
+# Process command line arguments with GNU getopt.
+GETOPTTEMP=`getopt -o hV --long help,version -n "$0" -- "$@"`
+std_cmd_err_handler $?
+
+eval set -- "$GETOPTTEMP"
+std_cmd_err_handler $?
+
+while true
 do
-	case $arg in
-	h)	echo "Usage is $0 [options]"
-		echo "	-h displays usage information"
+	case "$1" in
+	-h|--help)	echo "Usage is $0 [options]"
+		echo "	-h or --help displays usage information"
 		echo "	OR"
-		echo "	-V displays version information"
+		echo "	-V or --version displays version information"
 		script_exit_code=0
 		script_exit
 		;;
-	V)	echo "$0 version "$version
+	-V|--version)	echo "$0 version "$version
 		script_exit_code=0
 		script_exit
 		;;
-	\?)	script_exit_code=64
-		output "Invalid argument -$OPTARG." 1
+	--)	shift
+		break
+		;;
+	*)	script_exit_code=1
+		output "Internal error." 1
 		script_exit
 		;;
 	esac
 done
+
+# Script does not accept other arguments.
+if [ $# -gt 0 ]
+then
+	script_exit_code=64
+	output "Invalid argument." 1
+	script_exit
+fi
 
 autoreconf -if 
 status=$?
