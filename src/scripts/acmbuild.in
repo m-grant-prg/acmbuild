@@ -43,6 +43,7 @@
 ##				FreeBSD's quirk of 2 different getopt	##
 ##				programs. See comments at the start of	##
 ##				"Main"					##
+## 16/11/2014	MG	1.0.6	Remove erroneous option.		##
 ##									##
 ##########################################################################
 
@@ -51,7 +52,7 @@
 ####################
 script_exit_code=0
 osname=$(uname -s)		# Get system name for OS differentiation
-version="1.0.5"			# set version variable
+version="1.0.6"			# set version variable
 outputprefix="acmbuild: "
 
 # See getopt comments at the start of "Main"
