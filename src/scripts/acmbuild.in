@@ -107,6 +107,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ##########
 ## Main ##
 ##########
+# Process command line arguments with GNU getopt.
 # (FreeBSD includes, out of the box, a dodgy, feature lacking getopt program
 # installed in /usr/bin. A GNU compatable getopt package is available to install
 # and this gets installed in the bindir, ie /usr/local/bin. This means that the
