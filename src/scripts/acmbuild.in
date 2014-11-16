@@ -114,7 +114,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 # line below to specify the full path). (Linux GNU getopt can be found on PATH so
 # binlocation ="").
 
-GETOPTTEMP=`"$binlocation"getopt -o hvV --long help,verbose,version -n "$0" -- "$@"`
+GETOPTTEMP=`"$binlocation"getopt -o hV --long help,version -n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
