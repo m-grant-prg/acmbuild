@@ -1,3 +1,8 @@
+2014-11-16 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
+	*  Modify getopt processing to allow for FreeBSD quirk of 2 different
+	getopt programs on PATH. See comments in script at the start of "Main".
+	acmbuild script now at version 1.0.5.
+
 2014-11-13 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
 	* Switch to use of GNU getopt to allow long options and implement them.
 	acmbuild script now at version 1.0.4.
