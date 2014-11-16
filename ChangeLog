@@ -1,3 +1,7 @@
+2014-11-16 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Remove erroneous option.
+	acmbuild script now at version 1.0.6.
+
 2014-11-16 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
 	*  Modify getopt processing to allow for FreeBSD quirk of 2 different
 	getopt programs on PATH. See comments in script at the start of "Main".
