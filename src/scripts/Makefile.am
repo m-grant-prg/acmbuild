@@ -18,6 +18,8 @@
 ## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
 ## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
 ##				AutoConf and Make.			##
+## 24/11/2014	MG	1.0.3	Add script substitution variable for	##
+##				overall package version.		##
 ##									##
 ##########################################################################
 
@@ -26,7 +28,8 @@ edit = sed \
 	-e 's|@bindir[@]|$(bindir)|g' \
 	-e 's|@pkgdatadir[@]|$(pkgdatadir)|g' \
 	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
-	-e 's|@prefix[@]|$(prefix)|g'
+	-e 's|@prefix[@]|$(prefix)|g' \
+	-e 's|@pkgversion[@]|$(pkgversion)|g'
 
 scriptssrcdir = $(srcdir)
 

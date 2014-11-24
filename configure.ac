@@ -25,12 +25,16 @@
 ##				AutoConf and Make.			##
 ## 18/11/2014	MG	1.0.4	Re-structure to cope with OS		##
 ##				differences. Add check for GNU getopt.	##
+## 24/11/2014	MG	1.0.5	Add support for passing overall package	##
+##				version to Makefiles.			##
 ##									##
 ##########################################################################
 
 
 AC_PREREQ([2.65])
 AC_INIT([acmbuild AutoConf Make Distribution Build Script], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [acmbuild])
+
+AC_SUBST(pkgversion, m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']))
 
 AM_INIT_AUTOMAKE
 
@@ -59,7 +63,6 @@ case $host_os in
 esac
 
 AC_MSG_NOTICE([checking for required generic programs])
-
 AC_CHECK_PROG(BASH, bash, yes, no)
 if test "x$BASH" = "xno" ; then
    	AC_MSG_ERROR([bash not found])
