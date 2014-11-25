@@ -1,3 +1,7 @@
+2014-11-24 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Add support for including overall package version in script --version.
+	acmbuild script now at version 1.0.8.
+
 2014-11-18 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
 	*  Re-structure OS specific requirements to test for generic *BSD OSs
 	and use Linux as the default.

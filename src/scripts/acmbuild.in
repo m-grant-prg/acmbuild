@@ -55,7 +55,7 @@
 ####################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.0.7"				# set version variable
+version="1.0.8"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 
