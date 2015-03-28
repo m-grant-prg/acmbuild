@@ -1,6 +1,7 @@
 2015-03-28 v 1.0.8 Mark Grant <m.grant.prg@gmail.com>
 	*  Remove redundant AutoConf hashpling.
-	acmbuild script now at version 1.0.8.
+	Remove BSD support.
+	acmbuild script now at version 1.0.9.
 
 2014-11-24 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
 	*  Add support for including overall package version in script --version.

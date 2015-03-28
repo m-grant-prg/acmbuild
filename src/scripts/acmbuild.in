@@ -47,6 +47,7 @@
 ## 18/11/2014	MG	1.0.7	Change FreeBSD specifics to *BSD and	##
 ##				change Linux to be the default.		##
 ## 24/11/2014	MG	1.0.8	Add overall package version to -V.	##
+## 28/03/2015	MG	1.0.9	Remove BSD support.			##
 ##									##
 ##########################################################################
 
@@ -55,18 +56,9 @@
 ####################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.0.8"				# set version variable
+version="1.0.9"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
-
-# See getopt comments at the start of "Main"
-case $osname in
-*BSD)	binlocation=@bindir@"/"
-	;;
-# Linux)	Allow fall through for now as the defaults are linux.
-*)	binlocation=""
-	;;
-esac
 
 ###############
 ## Functions ##
@@ -114,15 +106,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ## Main ##
 ##########
 # Process command line arguments with GNU getopt.
-# (FreeBSD includes, out of the box, a dodgy, feature lacking getopt program
-# installed in /usr/bin. A GNU compatable getopt package is available to install
-# and this gets installed in the bindir, ie /usr/local/bin. This means that the
-# dodgy getopt version is always found first on the PATH. In order to invoke the
-# correct program, $binlocation, (from Makefile bindir), is inserted in the command
-# line below to specify the full path). (Linux GNU getopt can be found on PATH so
-# binlocation ="").
-
-GETOPTTEMP=`"$binlocation"getopt -o hV --long help,version -n "$0" -- "$@"`
+GETOPTTEMP=`getopt -o hV --long help,version -n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
