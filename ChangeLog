@@ -1,3 +1,6 @@
+2015-06-26 v 1.0.10 Mark Grant <m.grant.prg@gmail.com>
+	*  Remove BSD support.
+
 2015-03-28 v 1.0.9 Mark Grant <m.grant.prg@gmail.com>
 	*  Remove BSD support.
 	acmbuild script now at version 1.0.9.
