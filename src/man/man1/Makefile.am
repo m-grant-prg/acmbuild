@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 ##########################################################################
 ##									##
-## Script ID: src/manpages/man1/Makefile.am				##
+## Script ID: src/man/man1/Makefile.am					##
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
@@ -18,20 +18,25 @@
 ## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
 ## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
 ##				AutoConf and Make.			##
+## 27/09/2015	MG	1.0.3	Change to conform to AutoTools Template	##
+##				version 1.0.4.				##
 ##									##
 ##########################################################################
 
 
-manpagessrcdir = $(srcdir)
-
-../../../manpages/man1/acmbuild.1: Makefile
+acmbuild.1: Makefile
 	mkdir -p $(@D)
-	rm -f $@
-	txt2man -t acmbuild -s 1 -v "acmbuild Manual" \
-		$(manpagessrcdir)/$(@F).txt > $@
+	rm -f $@ $@.tmp
+	$(edit) $(srcdir)/$(@F).txt > $@.tmp
+	mv $@.tmp $@
+	txt2manwrap $(@F) 1 "acmbuild Manual" $(srcdir)/$(@F).txt $@
+	rm -f $@.tmp
 
-acmbuild.1: $(manpagessrcdir)/acmbuild.1.txt
+acmbuild.1: $(srcdir)/acmbuild.1.txt
 
-man1_MANS = ../../../manpages/man1/acmbuild.1
+man_MANS = acmbuild.1
 
-EXTRA_DIST = $(manpagessrcdir)/acmbuild.1.txt
+EXTRA_DIST = $(srcdir)/acmbuild.1.txt
+
+CLEANFILES = *.tmp acmbuild.1
+

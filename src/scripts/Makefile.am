@@ -20,31 +20,27 @@
 ##				AutoConf and Make.			##
 ## 24/11/2014	MG	1.0.3	Add script substitution variable for	##
 ##				overall package version.		##
+## 27/09/2015	MG	1.0.4	Change to conform to AutoTools Template	##
+##				version 1.0.4.				##
 ##									##
 ##########################################################################
 
 
-edit = sed \
-	-e 's|@bindir[@]|$(bindir)|g' \
-	-e 's|@pkgdatadir[@]|$(pkgdatadir)|g' \
-	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
-	-e 's|@prefix[@]|$(prefix)|g' \
-	-e 's|@pkgversion[@]|$(pkgversion)|g'
-
-scriptssrcdir = $(srcdir)
-
-../../scripts/acmbuild: Makefile
+acmbuild: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || scriptssrcdir=$(scriptssrcdir)/; \
-	$(edit) $${scriptssrcdir}$(@F).in >$@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
 
 	mv $@.tmp $@
 
 	chmod a+x $@
 
-acmbuild: $(scriptssrcdir)/acmbuild.in
+acmbuild: $(srcdir)/acmbuild.in
 
-bin_SCRIPTS = ../../scripts/acmbuild
+bin_SCRIPTS = acmbuild
 
-EXTRA_DIST = $(scriptssrcdir)/acmbuild.in
+EXTRA_DIST = $(srcdir)/acmbuild.in
+
+CLEANFILES = *.tmp acmbuild
+

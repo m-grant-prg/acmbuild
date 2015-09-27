@@ -22,4 +22,5 @@
 ##########################################################################
 
 
-SUBDIRS = src/scripts src/manpages/man1
+SUBDIRS = src/scripts src/man/man1
+
