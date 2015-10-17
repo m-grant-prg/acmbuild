@@ -33,10 +33,12 @@
 ## 26/06/2015	MG	1.0.7	Remove BSD support.			##
 ## 27/09/2015	MG	1.0.8	Change to conform to AutoTools Template	##
 ##				version 1.0.4.				##
+## 17/10/2015	MG	1.0.9	Restructure to conform to AutoTools	##
+##				General Template v1.0.5.		##
 ##									##
 ##########################################################################
 
-AC_REVISION([$Revision: 1.0.8 $])
+AC_REVISION([$Revision: 1.0.9 $])
 
 AC_PREREQ([2.65])
 
@@ -160,8 +162,8 @@ fi
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		src/scripts/Makefile
-		src/man/man1/Makefile])
+		source/progs/bash/Makefile
+		source/man/man1/Makefile])
 
 AC_OUTPUT
 

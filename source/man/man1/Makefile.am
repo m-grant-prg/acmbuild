@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 ##########################################################################
 ##									##
-## Script ID: src/man/man1/Makefile.am					##
+## Script ID: source/man/man1/Makefile.am				##
 ## Author: Mark Grant							##
 ##									##
 ## Purpose:								##
@@ -20,6 +20,8 @@
 ##				AutoConf and Make.			##
 ## 27/09/2015	MG	1.0.3	Change to conform to AutoTools Template	##
 ##				version 1.0.4.				##
+## 17/10/2015	MG	1.0.4	Restructure to conform to AutoTools	##
+##				General Template v1.0.5.		##
 ##									##
 ##########################################################################
 
