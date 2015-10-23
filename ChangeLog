@@ -1,5 +1,6 @@
 2015-10-17 v 1.0.12 Mark Grant <m.grant.prg@gmail.com>
-	*  Change to conform to AutoTools Template version 1.0.5.
+	*  Note conformity to AutoTools General Template v1.0.6.
+	Change to conform to AutoTools Template version 1.0.5.
 
 2015-09-27 v 1.0.11 Mark Grant <m.grant.prg@gmail.com>
 	*  Change to conform to AutoTools Template version 1.0.4.
@@ -39,8 +40,8 @@
 
 2014-10-27 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
 	* Improve use of git describe.
-	Change name to autoconf and make.
-	Seperate commands in order to check exit status.
+	Change name to AutoConf and make.
+	Separate commands in order to check exit status.
 
 2014-06-25 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
 	* Initial release.

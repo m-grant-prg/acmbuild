@@ -1,4 +1,5 @@
 Release 1.0.12 2015-10-17
+Note conformity to AutoTools General Template v1.0.6.
 Change to conform to AutoTools Template version 1.0.5.
 
 Release 1.0.11 2015-09-27
@@ -33,8 +34,8 @@ acmbuild script now at version 1.0.4.
 
 Release 1.0.2 2014-10-27
 Improve use of git describe.
-Change name to autoconf and make.
-Seperate commands in order to check exit status
+Change name to AutoConf and make.
+Separate commands in order to check exit status
 
 Release 1.0.1 2014-06-25
 Initial release.
