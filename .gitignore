@@ -18,6 +18,8 @@
 **/.deps/
 /dist
 /build
+/patches
+/target
 /ar-lib
 /libtool
 /ltmain.sh
@@ -25,3 +27,4 @@
 **/*.lo
 **/*.la
 **/.libs/
+**/Version.java
