@@ -48,6 +48,7 @@
 ##				change Linux to be the default.		##
 ## 24/11/2014	MG	1.0.8	Add overall package version to -V.	##
 ## 28/03/2015	MG	1.0.9	Remove BSD support.			##
+## 31/01/2017	MG	1.1.1	Add debug make dist and make options.	##
 ##									##
 ##########################################################################
 
@@ -56,9 +57,14 @@
 ####################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.0.9"				# set version variable
+version="1.1.1"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
+
+debug=""
+dist=FALSE
+make=FALSE
+basedir="."
 
 ###############
 ## Functions ##
@@ -106,7 +112,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ## Main ##
 ##########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o hV --long help,version -n "$0" -- "$@"`
+GETOPTTEMP=`getopt -o dDhmV --long debug,dist,help,make,version -n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
@@ -115,14 +121,40 @@ std_cmd_err_handler $?
 while true
 do
 	case "$1" in
+	-d|--debug)
+		debug="--enable-debug=yes"
+		shift
+		;;
+	-D|--dist)
+		if [ $make = TRUE ]
+		then
+			script_exit_code=64
+			output "Options D and m are mutually exclusive." 1 FALSE
+			script_exit
+		fi
+		dist=TRUE
+		shift
+		;;
 	-h|--help)
 		echo "Usage is $0 [options]"
+		echo "	-d or --debug build with appropriate debug flags"
+		echo "	-D or --dist perform a make dist"
 		echo "	-h or --help displays usage information"
-		echo "	OR"
+		echo "	-m or --make compile and link - plain make"
 		echo "	-V or --version displays version information"
 		shift
 		script_exit_code=0
 		script_exit
+		;;
+	-m|--make)
+		if [ $dist = TRUE ]
+		then
+			script_exit_code=64
+			output "Options D and m are mutually exclusive." 1 FALSE
+			script_exit
+		fi
+		make=TRUE
+		shift
 		;;
 	-V|--version)
 		echo "$0 Script version "$version
@@ -141,33 +173,55 @@ do
 	esac
 done
 
-# Script does not accept other arguments.
-if [ $# -gt 0 ]
+# Script can accept 1 other argument, the base directory.
+if [ $# -gt 1 ]
 then
 	script_exit_code=64
 	output "Invalid argument." 1
 	script_exit
 fi
 
-autoreconf -if 
+if [ $# -eq 1 ]
+then
+	basedir=$1
+fi
+
+# One option has to be selected.
+if [ $dist = FALSE -a $make = FALSE ]
+then
+	script_exit_code=64
+	output "Either D or m must be set." 1 FALSE
+	script_exit
+fi
+
+autoreconf -if $basedir
 status=$?
-output "autoreconf -if completed with exit status: "$status $status
+output "autoreconf -if "$basedir" completed with exit status: "$status $status
 std_cmd_err_handler $status
 
-./configure
+$basedir/configure --enable-silent-rules=yes $debug
 status=$?
-output "./configure completed with exit status: "$status $status
+output $basedir"/configure --enable-silent-rules=yes "$debug" completed with \
+exit status: "$status $status
 std_cmd_err_handler $status
 
-make dist clean
-status=$?
-output "make dist clean completed with exit status: "$status $status
-std_cmd_err_handler $status
+if [ $dist = TRUE ]
+then
+	make dist clean --quiet
+	status=$?
+	output "make dist clean completed with exit status: "$status $status
+	std_cmd_err_handler $status
 
-make distclean
-status=$?
-output "make distclean completed with exit status: "$status $status
-std_cmd_err_handler $status
+	make distclean --quiet
+	status=$?
+	output "make distclean completed with exit status: "$status $status
+	std_cmd_err_handler $status
+else
+	make --quiet
+	status=$?
+	output "make completed with exit status: "$status $status
+	std_cmd_err_handler $status
+fi
 
 script_exit_code=0
 script_exit
