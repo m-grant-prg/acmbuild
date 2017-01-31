@@ -5,7 +5,13 @@ acmbuild [OPTION]
 DESCRIPTION
 A script to automate AutoConf and Make builds of distribution tarballs.
 OPTIONS
+-d, --debug build with appropriate debug flags
+
+-D, --dist perform a make dist
+
 -h, --help  prints usage information
+
+-m, --make compile and link - plain make
 
 -V, --version  prints version information
 EXIT STATUS
@@ -32,4 +38,3 @@ License GPLv3+: GNU GPL version 3 or later
 This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
-
