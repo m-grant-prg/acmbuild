@@ -49,6 +49,7 @@
 ## 24/11/2014	MG	1.0.8	Add overall package version to -V.	##
 ## 28/03/2015	MG	1.0.9	Remove BSD support.			##
 ## 31/01/2017	MG	1.1.1	Add debug make dist and make options.	##
+## 24/02/2017	MG	1.1.2	Add distchk option.			##
 ##									##
 ##########################################################################
 
@@ -57,12 +58,13 @@
 ####################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.1.1"				# set version variable
+version="1.1.2"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 
 debug=""
 dist=FALSE
+distchk=FALSE
 make=FALSE
 basedir="."
 
@@ -112,7 +114,8 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ## Main ##
 ##########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o dDhmV --long debug,dist,help,make,version -n "$0" -- "$@"`
+GETOPTTEMP=`getopt -o cdDhmV --long distchk,debug,dist,help,make,version \
+	-n "$0" -- "$@"`
 std_cmd_err_handler $?
 
 eval set -- "$GETOPTTEMP"
@@ -121,15 +124,27 @@ std_cmd_err_handler $?
 while true
 do
 	case "$1" in
+	-c|--distchk)
+		if [ $make = TRUE -o $dist = TRUE ]
+		then
+			script_exit_code=64
+			output "Options c, D and m are mutually exclusive." 1 \
+				FALSE
+			script_exit
+		fi
+		distchk=TRUE
+		shift
+		;;
 	-d|--debug)
 		debug="--enable-debug=yes"
 		shift
 		;;
 	-D|--dist)
-		if [ $make = TRUE ]
+		if [ $make = TRUE -o $distchk = TRUE ]
 		then
 			script_exit_code=64
-			output "Options D and m are mutually exclusive." 1 FALSE
+			output "Options c, D and m are mutually exclusive." 1 \
+				FALSE
 			script_exit
 		fi
 		dist=TRUE
@@ -147,10 +162,11 @@ do
 		script_exit
 		;;
 	-m|--make)
-		if [ $dist = TRUE ]
+		if [ $dist = TRUE -o $distchk = TRUE ]
 		then
 			script_exit_code=64
-			output "Options D and m are mutually exclusive." 1 FALSE
+			output "Options c, D and m are mutually exclusive." 1 \
+				FALSE
 			script_exit
 		fi
 		make=TRUE
@@ -187,10 +203,10 @@ then
 fi
 
 # One option has to be selected.
-if [ $dist = FALSE -a $make = FALSE ]
+if [ $distchk = FALSE -a $dist = FALSE -a $make = FALSE ]
 then
 	script_exit_code=64
-	output "Either D or m must be set." 1 FALSE
+	output "Either c, D or m must be set." 1 FALSE
 	script_exit
 fi
 
@@ -199,14 +215,14 @@ status=$?
 output "autoreconf -if "$basedir" completed with exit status: "$status $status
 std_cmd_err_handler $status
 
-$basedir/configure --enable-silent-rules=yes $debug
-status=$?
-output $basedir"/configure --enable-silent-rules=yes "$debug" completed with \
-exit status: "$status $status
-std_cmd_err_handler $status
-
 if [ $dist = TRUE ]
 then
+	$basedir/configure --enable-silent-rules=yes $debug
+	status=$?
+	output $basedir"/configure --enable-silent-rules=yes "$debug" completed\
+with exit status: "$status $status
+	std_cmd_err_handler $status
+
 	make dist clean --quiet
 	status=$?
 	output "make dist clean completed with exit status: "$status $status
@@ -216,12 +232,31 @@ then
 	status=$?
 	output "make distclean completed with exit status: "$status $status
 	std_cmd_err_handler $status
-else
-	make --quiet
-	status=$?
-	output "make completed with exit status: "$status $status
-	std_cmd_err_handler $status
+	elif [ $make = TRUE ]
+	then
+		$basedir/configure --enable-silent-rules=yes $debug
+		status=$?
+		output $basedir"/configure --enable-silent-rules=yes "$debug\
+" completed with exit status: "$status $status
+		std_cmd_err_handler $status
+		make --quiet
+		status=$?
+		output "make completed with exit status: "$status $status
+		std_cmd_err_handler $status
+	else
+		$basedir/configure --enable-silent-rules=yes \
+			--enable-distchk=yes $debug
+		status=$?
+		output $basedir"/configure --enable-silent-rules=yes"$debug\
+" --enable-distchck=yes completed with exit status: "$status $status
+		std_cmd_err_handler $status
+		make --quiet distcheck \
+			DISTCHECK_CONFIGURE_FLAGS=--enable-distchk=yes
+		status=$?
+		output "make completed with exit status: "$status $status
+		std_cmd_err_handler $status
 fi
+
 
 script_exit_code=0
 script_exit

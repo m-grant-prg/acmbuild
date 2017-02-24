@@ -5,6 +5,8 @@ acmbuild [OPTION]
 DESCRIPTION
 A script to automate AutoConf and Make builds of distribution tarballs.
 OPTIONS
+-c, --distchk run distchk allowing for rootconf scenario
+
 -d, --debug build with appropriate debug flags
 
 -D, --dist perform a make dist
@@ -29,7 +31,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright 2014 Mark Grant.
+Copyright 2017 Mark Grant.
 .br
 License GPLv3+: GNU GPL version 3 or later
 .br
