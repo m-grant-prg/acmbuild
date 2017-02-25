@@ -1,58 +1,58 @@
-##########################################################################
-##									##
-## Script ID: ./configure.ac						##
-## Author: Mark Grant							##
-##									##
-## Purpose:								##
-## Autoconfigure script file to configure acmbuild project.		##
-##									##
-## configure cmd line syntax: ./configure				##
-##									##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Script ID: ./configure.ac						#
+# Author: Mark Grant							#
+#									#
+# Purpose:								#
+# Autoconfigure script file to configure acmbuild project.		#
+#									#
+# configure cmd line syntax: ./configure				#
+#									#
+#									#
+#########################################################################
 
-##########################################################################
-##									##
-## Changelog								##
-##									##
-## Date		Author	Version	Description				##
-##									##
-## 25/06/2014	MG	1.0.1	Started versioning of this script.	##
-## 26/06/2014	MG	1.0.2	Use 'git describe --always' for AC_INIT	##
-##				version as it returns a value as long	##
-##				as there is at least 1 commit, even	##
-##				with no tags. If no commits then	##
-##				'Pre-Release' is used.			##
-## 02/08/2014	MG	1.0.3	Change naming from AutoTools to		##
-##				AutoConf and Make.			##
-## 18/11/2014	MG	1.0.4	Re-structure to cope with OS		##
-##				differences. Add check for GNU getopt.	##
-## 24/11/2014	MG	1.0.5	Add support for passing overall package	##
-##				version to Makefiles.			##
-## 29/11/2014	MG	1.0.6	Remove redundant hashpling.		##
-## 26/06/2015	MG	1.0.7	Remove BSD support.			##
-## 27/09/2015	MG	1.0.8	Change to conform to AutoTools Template	##
-##				version 1.0.4.				##
-## 17/10/2015	MG	1.0.9	Restructure to conform to AutoTools	##
-##				General Template v1.0.5.		##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 25/06/2014	MG	1.0.1	Started versioning of this script.	#
+# 26/06/2014	MG	1.0.2	Use 'git describe --always' for AC_INIT	#
+#				version as it returns a value as long	#
+#				as there is at least 1 commit, even	#
+#				with no tags. If no commits then	#
+#				'Pre-Release' is used.			#
+# 02/08/2014	MG	1.0.3	Change naming from AutoTools to		#
+#				AutoConf and Make.			#
+# 18/11/2014	MG	1.0.4	Re-structure to cope with OS		#
+#				differences. Add check for GNU getopt.	#
+# 24/11/2014	MG	1.0.5	Add support for passing overall package	#
+#				version to Makefiles.			#
+# 29/11/2014	MG	1.0.6	Remove redundant hashpling.		#
+# 26/06/2015	MG	1.0.7	Remove BSD support.			#
+# 27/09/2015	MG	1.0.8	Change to conform to AutoTools Template	#
+#				version 1.0.4.				#
+# 17/10/2015	MG	1.0.9	Restructure to conform to AutoTools	#
+#				General Template v1.0.5.		#
+#									#
+#########################################################################
 
 AC_REVISION([$Revision: 1.0.9 $])
 
 AC_PREREQ([2.65])
 
 
-#########################
-##
-## The following two macros use git to provide versioning information.
-## If git is not intialised or no commit has been made, then 'Pre-Release'
-## will be used.
-## If no Tag has been created then just a commit identifier will be used.
-## If a tag has been created then the most recent tag, plus number of commits
-## since the tag, plus a commit identifier will be used.
-##
-#########################
+########################
+#
+# The following two macros use git to provide versioning information.
+# If git is not intialised or no commit has been made, then 'Pre-Release'
+# will be used.
+# If no Tag has been created then just a commit identifier will be used.
+# If a tag has been created then the most recent tag, plus number of commits
+# since the tag, plus a commit identifier will be used.
+#
+########################
 
 AC_INIT([AutoTools Distribution Build Script], m4_esyscmd([git describe --always 1>/dev/null 2>/dev/null && git describe --always | tr -d '\n' || echo 'Pre-Release' | tr -d '\n']), [m.grant.prg@gmail.com], [acmbuild])
 
@@ -61,43 +61,43 @@ AC_SUBST([pkgversion], [m4_esyscmd([git describe --always 1>/dev/null 2>/dev/nul
 		|| echo 'Pre-Release' | tr -d '\n'])])
 
 
-#########################
-##
-## Now set up a sed sequence to substitute bookmarks in script files with either
-## standard GNU Directory Variables, or with programmer-defined variables set up
-## using an AC_SUBST macro above. This sed sequence will be invoked at programmer
-## discretion at sub-directory Makefile.am level.
-## ------------------------------------
-##
-## prefix	/usr/local (typically)
-##	exec_prefix	${prefix}
-##		bindir	${exec_prefix}/bin	user executables
-##		sbindir	${exec_prefix}/sbin	system admin executables
-##		libexecdir	${exec_prefix}/libexec	program executables
-##		libdir	${exec_prefix}/lib	object code libraries
-##	sysconfdir	 ${prefix}/etc	read-only single-machine data
-##	sharedstatedir	${prefix}/com	modifiable architecture-independent data
-##	localstatedir	${prefix}/var	modifiable single-machine data
-##	runstatedir	${localstatedir}/run
-##	includedir	${prefix}/include	C header files
-##	oldincludedir	$usr/include	C header files
-##	datarootdir	${prefix}/share	read-only arch.-independent data root
-##		localedir	${datarootdir}/locale	locale-dependent data
-##		datadir	${datarootdir}	read-only architecture-independent data
-##		mandir	${datarootdir}/man	man documentation
-##		infodir	${datarootdir}/info	info documentation
-##		docdir	${datarootdir}/doc/${PACKAGE}	documentation root
-##			htmldir	${docdir}	html documentation
-##			dvidir	${docdir}	dvi documentation
-##			pdfdir	${docdir}	pdf documentation
-##			psdir	${docdir}	ps documentation
-##		lispdir	${datarootdir}/emacs/site-lisp
-##	pkgdatadir	${datarootdir}/${PACKAGE}
-##	pkgincludedir	${includedir}/${PACKAGE}
-##	pkglibdir	${libdir}/${PACKAGE}
-##	pkglibexecdir	${libexecdir}/${PACKAGE}
-##
-#########################
+########################
+#
+# Now set up a sed sequence to substitute bookmarks in script files with either
+# standard GNU Directory Variables, or with programmer-defined variables set up
+# using an AC_SUBST macro above. This sed sequence will be invoked at programmer
+# discretion at sub-directory Makefile.am level.
+# ----------------------
+#
+# prefix	/usr/local (typically)
+#	exec_prefix	${prefix}
+#		bindir	${exec_prefix}/bin	user executables
+#		sbindir	${exec_prefix}/sbin	system admin executables
+#		libexecdir	${exec_prefix}/libexec	program executables
+#		libdir	${exec_prefix}/lib	object code libraries
+#	sysconfdir	 ${prefix}/etc	read-only single-machine data
+#	sharedstatedir	${prefix}/com	modifiable architecture-independent data
+#	localstatedir	${prefix}/var	modifiable single-machine data
+#	runstatedir	${localstatedir}/run
+#	includedir	${prefix}/include	C header files
+#	oldincludedir	$usr/include	C header files
+#	datarootdir	${prefix}/share	read-only arch.-independent data root
+#		localedir	${datarootdir}/locale	locale-dependent data
+#		datadir	${datarootdir}	read-only architecture-independent data
+#		mandir	${datarootdir}/man	man documentation
+#		infodir	${datarootdir}/info	info documentation
+#		docdir	${datarootdir}/doc/${PACKAGE}	documentation root
+#			htmldir	${docdir}	html documentation
+#			dvidir	${docdir}	dvi documentation
+#			pdfdir	${docdir}	pdf documentation
+#			psdir	${docdir}	ps documentation
+#		lispdir	${datarootdir}/emacs/site-lisp
+#	pkgdatadir	${datarootdir}/${PACKAGE}
+#	pkgincludedir	${includedir}/${PACKAGE}
+#	pkglibdir	${libdir}/${PACKAGE}
+#	pkglibexecdir	${libexecdir}/${PACKAGE}
+#
+########################
 
 AC_SUBST([edit], ["sed \
 		-e 's|@bindir[@]|\$(bindir)|g' \
@@ -110,14 +110,14 @@ AC_SUBST([edit], ["sed \
 AM_INIT_AUTOMAKE
 
 
-#########################
-##
-## Checks for programs.
-## install, mkdir and gawk are checked by AM_INIT_AUTOMAKE.
-## grep, egrep and ranlib are also automatically checked.
-## Particular and generic program checks follow:
-##
-#########################
+########################
+#
+# Checks for programs.
+# install, mkdir and gawk are checked by AM_INIT_AUTOMAKE.
+# grep, egrep and ranlib are also automatically checked.
+# Particular and generic program checks follow:
+#
+########################
 
 AC_MSG_NOTICE([checking for particular programs required by this application])
 AC_PROG_SED

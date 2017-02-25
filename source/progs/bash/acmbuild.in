@@ -1,61 +1,61 @@
 #! /usr/bin/env bash
-##########################################################################
-##									##
-##	acmbuild is automatically generated,				##
-##		please do not modify!					##
-##									##
-##########################################################################
+#########################################################################
+#									#
+#	acmbuild is automatically generated,				#
+#		please do not modify!					#
+#									#
+#########################################################################
 
-##########################################################################
-##									##
-## Script ID: acmbuild							##
-## Author: Mark Grant							##
-##									##
-## Purpose:								##
-## To simplify the AutoTools distribution build.			##
-##									##
-## Syntax:	acmbuild [ -h || --help || -V || --version ]		##
-##									##
-## Exit Codes:	0 & 64 - 113 as per C/C++ standard			##
-##		0 - success						##
-##		64 - Invalid arguments					##
-##		65 - File(s) already exist				##
-##		67 - trap received					##
-##									##
-## Further Info:							##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Script ID: acmbuild							#
+# Author: Mark Grant							#
+#									#
+# Purpose:								#
+# To simplify the AutoTools distribution build.				#
+#									#
+# Syntax:	acmbuild [ -h || --help || -V || --version ]		#
+#									#
+# Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
+#		0 - success						#
+#		64 - Invalid arguments					#
+#		65 - File(s) already exist				#
+#		67 - trap received					#
+#									#
+# Further Info:								#
+#									#
+#########################################################################
 
-##########################################################################
-##									##
-## Changelog								##
-##									##
-## Date		Author	Version	Description				##
-##									##
-## 25/06/2014	MG	1.0.1	Created.				##
-## 02/08/2014	MG	1.0.2	Change naming from AutoTools to		##
-##				AutoConf and Make.			##
-## 27/10/2014	MG	1.0.3	Seperated each command in order to test	##
-##				exit status.				##
-## 13/11/2014	MG	1.0.4	Switched from getopts to GNU getopt to	##
-##				allow long options.			##
-## 16/11/2014	MG	1.0.5	Modify getopt processing to allow for	##
-##				FreeBSD's quirk of 2 different getopt	##
-##				programs. See comments at the start of	##
-##				"Main"					##
-## 16/11/2014	MG	1.0.6	Remove erroneous option.		##
-## 18/11/2014	MG	1.0.7	Change FreeBSD specifics to *BSD and	##
-##				change Linux to be the default.		##
-## 24/11/2014	MG	1.0.8	Add overall package version to -V.	##
-## 28/03/2015	MG	1.0.9	Remove BSD support.			##
-## 31/01/2017	MG	1.1.1	Add debug make dist and make options.	##
-## 25/02/2017	MG	1.1.2	Add distcheck & distcheckfake options.	##
-##									##
-##########################################################################
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 25/06/2014	MG	1.0.1	Created.				#
+# 02/08/2014	MG	1.0.2	Change naming from AutoTools to		#
+#				AutoConf and Make.			#
+# 27/10/2014	MG	1.0.3	Seperated each command in order to test	#
+#				exit status.				#
+# 13/11/2014	MG	1.0.4	Switched from getopts to GNU getopt to	#
+#				allow long options.			#
+# 16/11/2014	MG	1.0.5	Modify getopt processing to allow for	#
+#				FreeBSD's quirk of 2 different getopt	#
+#				programs. See comments at the start of	#
+#				"Main"					#
+# 16/11/2014	MG	1.0.6	Remove erroneous option.		#
+# 18/11/2014	MG	1.0.7	Change FreeBSD specifics to *BSD and	#
+#				change Linux to be the default.		#
+# 24/11/2014	MG	1.0.8	Add overall package version to -V.	#
+# 28/03/2015	MG	1.0.9	Remove BSD support.			#
+# 31/01/2017	MG	1.1.1	Add debug make dist and make options.	#
+# 25/02/2017	MG	1.1.2	Add distcheck & distcheckfake options.	#
+#									#
+#########################################################################
 
-####################
-## Init variables ##
-####################
+##################
+# Init variables #
+##################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
 version="1.1.2"				# set version variable
@@ -71,9 +71,9 @@ basedir="."
 cmdline=""
 
 
-###############
-## Functions ##
-###############
+#############
+# Functions #
+#############
 
 # Output $1 to stdout or stderr depending on $2.
 output()
@@ -113,9 +113,9 @@ script_exit
 # Setup trap
 trap trap_exit SIGHUP SIGINT SIGTERM
 
-##########
-## Main ##
-##########
+########
+# Main #
+########
 # Process command line arguments with GNU getopt.
 GETOPTTEMP=`getopt -o cdDfhmV --long distcheck,debug,dist,distcheckfake,help,make,version \
 	-n "$0" -- "$@"`
