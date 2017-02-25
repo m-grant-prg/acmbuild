@@ -49,7 +49,7 @@
 ## 24/11/2014	MG	1.0.8	Add overall package version to -V.	##
 ## 28/03/2015	MG	1.0.9	Remove BSD support.			##
 ## 31/01/2017	MG	1.1.1	Add debug make dist and make options.	##
-## 24/02/2017	MG	1.1.2	Add distchk option.			##
+## 25/02/2017	MG	1.1.2	Add distcheck & distcheckfake options.	##
 ##									##
 ##########################################################################
 
@@ -64,9 +64,12 @@ packageversion=@pkgversion@		# Version of the complete package
 
 debug=""
 dist=FALSE
-distchk=FALSE
+distcheck=FALSE
+distcheckfake=FALSE
 make=FALSE
 basedir="."
+cmdline=""
+
 
 ###############
 ## Functions ##
@@ -114,7 +117,7 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ## Main ##
 ##########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o cdDhmV --long distchk,debug,dist,help,make,version \
+GETOPTTEMP=`getopt -o cdDfhmV --long distcheck,debug,dist,distcheckfake,help,make,version \
 	-n "$0" -- "$@"`
 std_cmd_err_handler $?
 
@@ -124,15 +127,14 @@ std_cmd_err_handler $?
 while true
 do
 	case "$1" in
-	-c|--distchk)
-		if [ $make = TRUE -o $dist = TRUE ]
+	-c|--distcheck)
+		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D and m are mutually exclusive." 1 \
-				FALSE
+			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
 			script_exit
 		fi
-		distchk=TRUE
+		distcheck=TRUE
 		shift
 		;;
 	-d|--debug)
@@ -140,20 +142,31 @@ do
 		shift
 		;;
 	-D|--dist)
-		if [ $make = TRUE -o $distchk = TRUE ]
+		if [ $make = TRUE -o $distcheck = TRUE -o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D and m are mutually exclusive." 1 \
-				FALSE
+			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
 			script_exit
 		fi
 		dist=TRUE
 		shift
 		;;
+	-f|--distcheckfake)
+		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE ]
+		then
+			script_exit_code=64
+			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
+			script_exit
+		fi
+		distcheckfake=TRUE
+		shift
+		;;
 	-h|--help)
 		echo "Usage is $0 [options]"
+		echo "  -c or --distcheck perform normal distcheck"
 		echo "	-d or --debug build with appropriate debug flags"
 		echo "	-D or --dist perform a make dist"
+		echo "  -f or --distcheckfake fake a distcheck for fixed root"
 		echo "	-h or --help displays usage information"
 		echo "	-m or --make compile and link - plain make"
 		echo "	-V or --version displays version information"
@@ -162,11 +175,10 @@ do
 		script_exit
 		;;
 	-m|--make)
-		if [ $dist = TRUE -o $distchk = TRUE ]
+		if [ $dist = TRUE -o $distcheck = TRUE -o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D and m are mutually exclusive." 1 \
-				FALSE
+			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
 			script_exit
 		fi
 		make=TRUE
@@ -203,10 +215,10 @@ then
 fi
 
 # One option has to be selected.
-if [ $distchk = FALSE -a $dist = FALSE -a $make = FALSE ]
+if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE -a $distcheckfake = FALSE ]
 then
 	script_exit_code=64
-	output "Either c, D or m must be set." 1 FALSE
+	output "Either c, D, m or r must be set." 1 FALSE
 	script_exit
 fi
 
@@ -215,47 +227,39 @@ status=$?
 output "autoreconf -if "$basedir" completed with exit status: "$status $status
 std_cmd_err_handler $status
 
+cmdline=$basedir"/configure --enable-silent-rules=yes "$debug
+
+if [ $distcheckfake = TRUE ]
+then
+	cmdline=$cmdline" --enable-distcheckfake=yes"
+fi
+
+eval "$cmdline"
+status=$?
+output "$cmdline completed with exit status: $status" $status
+std_cmd_err_handler $status
+
+cmdline="make --quiet"
 if [ $dist = TRUE ]
 then
-	$basedir/configure --enable-silent-rules=yes $debug
-	status=$?
-	output $basedir"/configure --enable-silent-rules=yes "$debug" completed\
-with exit status: "$status $status
-	std_cmd_err_handler $status
-
-	make dist clean --quiet
-	status=$?
-	output "make dist clean completed with exit status: "$status $status
-	std_cmd_err_handler $status
-
-	make distclean --quiet
-	status=$?
-	output "make distclean completed with exit status: "$status $status
-	std_cmd_err_handler $status
-	elif [ $make = TRUE ]
-	then
-		$basedir/configure --enable-silent-rules=yes $debug
-		status=$?
-		output $basedir"/configure --enable-silent-rules=yes "$debug\
-" completed with exit status: "$status $status
-		std_cmd_err_handler $status
-		make --quiet
-		status=$?
-		output "make completed with exit status: "$status $status
-		std_cmd_err_handler $status
-	else
-		$basedir/configure --enable-silent-rules=yes \
-			--enable-distchk=yes $debug
-		status=$?
-		output $basedir"/configure --enable-silent-rules=yes"$debug\
-" --enable-distchck=yes completed with exit status: "$status $status
-		std_cmd_err_handler $status
-		make --quiet distcheck \
-			DISTCHECK_CONFIGURE_FLAGS=--enable-distchk=yes
-		status=$?
-		output "make completed with exit status: "$status $status
-		std_cmd_err_handler $status
+	cmdline=$cmdline" dist clean distclean"
 fi
+
+if [ $distcheck = TRUE ]
+then
+	cmdline=$cmdline" distcheck distclean"
+fi
+
+if [ $distcheckfake = TRUE ]
+then
+	cmdline=$cmdline" distcheck distclean"
+	cmdline=$cmdline" DISTCHECK_CONFIGURE_FLAGS=--enable-distcheckfake=yes"
+fi
+
+eval "$cmdline"
+status=$?
+output "$cmdline completed with exit status: $status" $status
+std_cmd_err_handler $status
 
 
 script_exit_code=0

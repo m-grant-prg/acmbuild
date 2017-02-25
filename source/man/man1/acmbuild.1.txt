@@ -5,15 +5,18 @@ acmbuild [OPTION]
 DESCRIPTION
 A script to automate AutoConf and Make builds of distribution tarballs.
 OPTIONS
--c, --distchk run distchk allowing for rootconf scenario
+-c, --distcheck perform a normal make distcheck.
 
--d, --debug build with appropriate debug flags
+-d, --debug build with appropriate debug flags.
 
--D, --dist perform a make dist
+-D, --dist perform a make dist.
 
--h, --help  prints usage information
+-f, --distcheckfake run a make distcheck using a fake AT standard directory as a
+substitute for an absolute path which distcheck does not support.
 
--m, --make compile and link - plain make
+-h, --help  prints usage information.
+
+-m, --make compile and link - plain make.
 
 -V, --version  prints version information
 EXIT STATUS
