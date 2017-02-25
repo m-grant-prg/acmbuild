@@ -14,7 +14,13 @@
 # Purpose:								#
 # To simplify the AutoTools distribution build.				#
 #									#
-# Syntax:	acmbuild [ -h || --help || -V || --version ]		#
+# Syntax:	acmbuild	[ -c || --distcheck ] ||		#
+#				[ -d || --debug ] ||			#
+#				[ -D || --dist ] ||			#
+#				[ -f || --distcheckfake ] ||		#
+#				[ -h || --help ] ||			#
+#				[ -m || --make ] ||			#
+#				[ -V || --version-V ]			#
 #									#
 # Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
 #		0 - success						#
