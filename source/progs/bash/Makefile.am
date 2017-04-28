@@ -24,6 +24,7 @@
 #				version 1.0.4.				#
 # 17/10/2015	MG	1.0.5	Restructure to conform to AutoTools	#
 #				General Template v1.0.5.		#
+# 28/04/2017	MG	1.0.6	Rename source file extension .sh.in	#
 #									#
 #########################################################################
 
@@ -31,17 +32,17 @@
 acmbuild: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	test -f ./$@.sh.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
 
 	mv $@.tmp $@
 
 	chmod a+x $@
 
-acmbuild: $(srcdir)/acmbuild.in
+acmbuild: $(srcdir)/acmbuild.sh.in
 
 bin_SCRIPTS = acmbuild
 
-EXTRA_DIST = $(srcdir)/acmbuild.in
+EXTRA_DIST = $(srcdir)/acmbuild.sh.in
 
 CLEANFILES = *.tmp acmbuild
