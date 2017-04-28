@@ -190,4 +190,3 @@ AC_CONFIG_FILES([Makefile
 		source/man/man1/Makefile])
 
 AC_OUTPUT
-

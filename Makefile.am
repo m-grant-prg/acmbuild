@@ -25,4 +25,3 @@
 
 
 SUBDIRS = source/progs/bash source/man/man1
-
