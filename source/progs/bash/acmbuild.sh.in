@@ -55,7 +55,7 @@
 # 24/11/2014	MG	1.0.8	Add overall package version to -V.	#
 # 28/03/2015	MG	1.0.9	Remove BSD support.			#
 # 31/01/2017	MG	1.1.1	Add debug make dist and make options.	#
-# 25/02/2017	MG	1.1.2	Add distcheck & distcheckfake options.	#
+# 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
 #									#
 #########################################################################
 
@@ -64,7 +64,7 @@
 ##################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.1.2"				# set version variable
+version="1.2.0"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 
