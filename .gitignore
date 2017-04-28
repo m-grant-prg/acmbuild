@@ -28,3 +28,4 @@
 **/*.la
 **/.libs/
 **/Version.java
+/cscope.*
