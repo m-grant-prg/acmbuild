@@ -1,3 +1,12 @@
+Release 1.2.0 2017-04-28
+Add normal diskcheck option.
+Add distcheckfake option to allow for a fixed location, (e.g. /etc).
+Rename man page source file extensions .man.in
+Rename bash source file extensions .sh.in
+Correct man page build - output from $(edit) was being ignored.
+Numerous cosmetic changes.
+acmbuild script now at version 1.2.0
+
 Release 1.1.1 2017-01-31
 Add debug, make dist and make options.
 
