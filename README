@@ -10,9 +10,10 @@ Contents
 1 ... Project Description
 =========================
 
-This is a simple script to reduce repetitive typing of some AutoTools commands. It reduces the distribution tarball creation to one command - this script.
+This is a simple script to reduce repetitive typing of some AutoTools commands.
+It reduces the distribution tarball creation to one command - this script.
 
----------------------
+------------------
 
 2 ... Installation
 ==================

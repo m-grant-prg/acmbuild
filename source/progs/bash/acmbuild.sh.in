@@ -56,6 +56,7 @@
 # 28/03/2015	MG	1.0.9	Remove BSD support.			#
 # 31/01/2017	MG	1.1.1	Add debug make dist and make options.	#
 # 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
+# 25/06/2017	MG	1.2.1	Enforce 80 column rule.			#
 #									#
 #########################################################################
 
@@ -64,7 +65,7 @@
 ##################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.2.0"				# set version variable
+version="1.2.1"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 
@@ -123,7 +124,8 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 # Main #
 ########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o cdDfhmV --long distcheck,debug,dist,distcheckfake,help,make,version \
+GETOPTTEMP=`getopt -o cdDfhmV \
+	--long distcheck,debug,dist,distcheckfake,help,make,version \
 	-n "$0" -- "$@"`
 std_cmd_err_handler $?
 
@@ -137,7 +139,8 @@ do
 		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
+			msg="Options c, D, f, & m are mutually exclusive."
+			output "$msg" 1 FALSE
 			script_exit
 		fi
 		distcheck=TRUE
@@ -148,10 +151,12 @@ do
 		shift
 		;;
 	-D|--dist)
-		if [ $make = TRUE -o $distcheck = TRUE -o $distcheckfake = TRUE ]
+		if [ $make = TRUE -o $distcheck = TRUE \
+			-o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
+			msg="Options c, D, f, & m are mutually exclusive."
+			output "$msg" 1 FALSE
 			script_exit
 		fi
 		dist=TRUE
@@ -161,7 +166,8 @@ do
 		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
+			msg="Options c, D, f, & m are mutually exclusive."
+			output "$msg" 1 FALSE
 			script_exit
 		fi
 		distcheckfake=TRUE
@@ -181,10 +187,12 @@ do
 		script_exit
 		;;
 	-m|--make)
-		if [ $dist = TRUE -o $distcheck = TRUE -o $distcheckfake = TRUE ]
+		if [ $dist = TRUE -o $distcheck = TRUE \
+			-o $distcheckfake = TRUE ]
 		then
 			script_exit_code=64
-			output "Options c, D, f, & m are mutually exclusive." 1 FALSE
+			msg="Options c, D, f, & m are mutually exclusive."
+			output "$msg" 1 FALSE
 			script_exit
 		fi
 		make=TRUE
@@ -221,7 +229,8 @@ then
 fi
 
 # One option has to be selected.
-if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE -a $distcheckfake = FALSE ]
+if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
+	-a $distcheckfake = FALSE ]
 then
 	script_exit_code=64
 	output "Either c, D, m or r must be set." 1 FALSE
