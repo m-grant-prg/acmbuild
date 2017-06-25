@@ -1,3 +1,6 @@
+Release 1.2.1 2017-06-25
+Enforce 80 column rule across source files.
+
 Release 1.2.0 2017-04-28
 Add normal diskcheck option.
 Add distcheckfake option to allow for a fixed location, (e.g. /etc).

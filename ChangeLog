@@ -1,3 +1,7 @@
+2017-06-25 v 1.2.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Enforce 80 column rule across source files.
+	acmbuild script now at version 1.2.1
+
 2017-04-28 v 1.2.0 Mark Grant <m.grant.prg@gmail.com>
 	*  Add normal diskcheck option.
 	Add distcheckfake option to allow for a fixed location, (e.g. /etc).
