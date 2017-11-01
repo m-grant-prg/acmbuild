@@ -27,5 +27,8 @@
 **/*.lo
 **/*.la
 **/.libs/
-**/Version.java
+**/.dirstamp
 /cscope.*
+/nbproject/private/
+/distribution
+**/Version.java
