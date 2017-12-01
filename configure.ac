@@ -1,7 +1,10 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2014-2017  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 # Autoconfigure script file to configure acmbuild project.		#
@@ -38,10 +41,11 @@
 # 25/02/2017	MG	1.0.10	Update sed edit substitution variable.	#
 # 28/04/2017	MG	1.0.11	Make AC_INIT and pkgversion AC_SUBST	#
 #				multi-line.				#
+# 01/12/2017	MG	1.0.12	Add SPDX license tags to source files.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.11 $])
+AC_REVISION([$Revision: 1.0.12 $])
 
 AC_PREREQ([2.65])
 

@@ -9,7 +9,10 @@
 #########################################################################
 #									#
 # Script ID: acmbuild							#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2014-2017  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 # To simplify the AutoTools distribution build.				#
@@ -57,6 +60,7 @@
 # 31/01/2017	MG	1.1.1	Add debug make dist and make options.	#
 # 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
 # 25/06/2017	MG	1.2.1	Enforce 80 column rule.			#
+# 01/12/2017	MG	1.2.2	Add SPDX license tags to source files.	#
 #									#
 #########################################################################
 
@@ -65,7 +69,7 @@
 ##################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.2.1"				# set version variable
+version="1.2.2"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 

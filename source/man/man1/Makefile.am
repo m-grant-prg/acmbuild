@@ -2,7 +2,10 @@
 #########################################################################
 #									#
 # Script ID: source/man/man1/Makefile.am				#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2014-2017  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 # Automake script file to generate acmbuild manual pages from source.	#
@@ -24,6 +27,7 @@
 #				General Template v1.0.5.		#
 # 28/04/2017	MG	1.0.5	Output from $(edit) was being ignored.	#
 #				Rename source file extension .man.in	#
+# 01/12/2017	MG	1.0.6	Add SPDX license tags to source files.	#
 #									#
 #########################################################################
 
