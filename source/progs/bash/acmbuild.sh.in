@@ -61,6 +61,8 @@
 # 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
 # 25/06/2017	MG	1.2.1	Enforce 80 column rule.			#
 # 01/12/2017	MG	1.2.2	Add SPDX license tags to source files.	#
+# 04/12/2017	NG	1.2.3	Adopt standard exit codes; 0 on success	#
+#				1 on failure.				#
 #									#
 #########################################################################
 
@@ -69,7 +71,7 @@
 ##################
 script_exit_code=0
 osname=$(uname -s)			# Get system name for OS differentiation
-version="1.2.2"				# set version variable
+version="1.2.3"				# set version variable
 outputprefix="acmbuild: "
 packageversion=@pkgversion@		# Version of the complete package
 
@@ -116,7 +118,7 @@ script_exit()
 # Standard trap exit function
 trap_exit()
 {
-script_exit_code=67
+script_exit_code=1
 output "Script terminating due to trap received." 1
 script_exit
 }
@@ -142,7 +144,7 @@ do
 	-c|--distcheck)
 		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE ]
 		then
-			script_exit_code=64
+			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
 			output "$msg" 1 FALSE
 			script_exit
@@ -158,7 +160,7 @@ do
 		if [ $make = TRUE -o $distcheck = TRUE \
 			-o $distcheckfake = TRUE ]
 		then
-			script_exit_code=64
+			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
 			output "$msg" 1 FALSE
 			script_exit
@@ -169,7 +171,7 @@ do
 	-f|--distcheckfake)
 		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE ]
 		then
-			script_exit_code=64
+			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
 			output "$msg" 1 FALSE
 			script_exit
@@ -194,7 +196,7 @@ do
 		if [ $dist = TRUE -o $distcheck = TRUE \
 			-o $distcheckfake = TRUE ]
 		then
-			script_exit_code=64
+			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
 			output "$msg" 1 FALSE
 			script_exit
@@ -222,7 +224,7 @@ done
 # Script can accept 1 other argument, the base directory.
 if [ $# -gt 1 ]
 then
-	script_exit_code=64
+	script_exit_code=1
 	output "Invalid argument." 1
 	script_exit
 fi
@@ -236,7 +238,7 @@ fi
 if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
 	-a $distcheckfake = FALSE ]
 then
-	script_exit_code=64
+	script_exit_code=1
 	output "Either c, D, m or r must be set." 1 FALSE
 	script_exit
 fi

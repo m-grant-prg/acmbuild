@@ -24,10 +24,7 @@ EXIT STATUS
 if OK,
 
 1
-if minor problems,
-
-64
-error in command line arguments.
+on failure.
 
 AUTHOR
 Written by Mark Grant.
