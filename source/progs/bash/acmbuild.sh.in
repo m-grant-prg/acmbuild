@@ -25,11 +25,8 @@
 #				[ -m || --make ] ||			#
 #				[ -V || --version-V ]			#
 #									#
-# Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
-#		0 - success						#
-#		64 - Invalid arguments					#
-#		65 - File(s) already exist				#
-#		67 - trap received					#
+# Exit Codes:	0 - success						#
+#		1 - failure.						#
 #									#
 # Further Info:								#
 #									#
