@@ -2,7 +2,7 @@
 #########################################################################
 #									#
 # Script ID: source/man/man1/Makefile.am				#
-# Author: Copyright (C) 2014-2017  Mark Grant				#
+# Author: Copyright (C) 2014-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -32,11 +32,13 @@
 #				target suffix. If the suffix is blank	#
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
+# 06/02/2018	MG	1.0.7	Update for new -g --gnulib option and	#
+#				name change to acmbuild.sh		#
 #									#
 #########################################################################
 
 
-acmbuild.1: Makefile
+acmbuild.sh.1: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
@@ -55,10 +57,10 @@ acmbuild.1: Makefile
 	txt2manwrap $(@F) $$section "acmbuild Manual" $@.tmp $@
 	rm -f $@.tmp
 
-acmbuild.1: $(srcdir)/acmbuild.1.man.in
+acmbuild.sh.1: $(srcdir)/acmbuild.sh.1.man.in
 
-man_MANS = acmbuild.1
+man_MANS = acmbuild.sh.1
 
-EXTRA_DIST = $(srcdir)/acmbuild.1.man.in
+EXTRA_DIST = $(srcdir)/acmbuild.sh.1.man.in
 
-CLEANFILES = *.tmp acmbuild.1
+CLEANFILES = *.tmp acmbuild.sh.1

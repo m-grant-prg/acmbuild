@@ -9,21 +9,16 @@
 #########################################################################
 #									#
 # Script ID: acmbuild							#
-# Author: Copyright (C) 2014-2017  Mark Grant				#
+# Author: Copyright (C) 2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
-# To simplify the AutoTools distribution build.				#
+# Wrapper script to bootstrap.sh which simplifies the AutoTools		#
+# distribution build.							#
 #									#
-# Syntax:	acmbuild	[ -c || --distcheck ] ||		#
-#				[ -d || --debug ] ||			#
-#				[ -D || --dist ] ||			#
-#				[ -f || --distcheckfake ] ||		#
-#				[ -h || --help ] ||			#
-#				[ -m || --make ] ||			#
-#				[ -V || --version-V ]			#
+# Syntax:	acmbuild	Parameters as per boostrap.sh		#
 #									#
 # Exit Codes:	0 - success						#
 #		1 - failure.						#
@@ -38,28 +33,7 @@
 #									#
 # Date		Author	Version	Description				#
 #									#
-# 25/06/2014	MG	1.0.1	Created.				#
-# 02/08/2014	MG	1.0.2	Change naming from AutoTools to		#
-#				AutoConf and Make.			#
-# 27/10/2014	MG	1.0.3	Seperated each command in order to test	#
-#				exit status.				#
-# 13/11/2014	MG	1.0.4	Switched from getopts to GNU getopt to	#
-#				allow long options.			#
-# 16/11/2014	MG	1.0.5	Modify getopt processing to allow for	#
-#				FreeBSD's quirk of 2 different getopt	#
-#				programs. See comments at the start of	#
-#				"Main"					#
-# 16/11/2014	MG	1.0.6	Remove erroneous option.		#
-# 18/11/2014	MG	1.0.7	Change FreeBSD specifics to *BSD and	#
-#				change Linux to be the default.		#
-# 24/11/2014	MG	1.0.8	Add overall package version to -V.	#
-# 28/03/2015	MG	1.0.9	Remove BSD support.			#
-# 31/01/2017	MG	1.1.1	Add debug make dist and make options.	#
-# 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
-# 25/06/2017	MG	1.2.1	Enforce 80 column rule.			#
-# 01/12/2017	MG	1.2.2	Add SPDX license tags to source files.	#
-# 04/12/2017	NG	1.2.3	Adopt standard exit codes; 0 on success	#
-#				1 on failure.				#
+# 06/02/2018	MG	1.0.1	Created.				#
 #									#
 #########################################################################
 
@@ -67,44 +41,13 @@
 # Init variables #
 ##################
 script_exit_code=0
-osname=$(uname -s)			# Get system name for OS differentiation
-version="1.2.3"				# set version variable
-outputprefix="acmbuild: "
-packageversion=@pkgversion@		# Version of the complete package
-
-debug=""
-dist=FALSE
-distcheck=FALSE
-distcheckfake=FALSE
-make=FALSE
-basedir="."
-cmdline=""
+version="1.0.1"			# set version variable
+packageversion=@pkgversion@	# Version of the complete package
 
 
 #############
 # Functions #
 #############
-
-# Output $1 to stdout or stderr depending on $2.
-output()
-{
-	if [ $2 = 0 ]
-	then
-		echo "$outputprefix$1"
-	else
-		echo "$outputprefix$1" 1>&2
-	fi
-}
-
-# Standard function to test command error ($1 is $?) and exit if non-zero
-std_cmd_err_handler()
-{
-	if [ $1 != 0 ]
-	then
-		script_exit_code=$1
-		script_exit
-	fi
-}
 
 # Standard function to cleanup and return exit code
 script_exit()
@@ -126,159 +69,6 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 ########
 # Main #
 ########
-# Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o cdDfhmV \
-	--long distcheck,debug,dist,distcheckfake,help,make,version \
-	-n "$0" -- "$@"`
-std_cmd_err_handler $?
-
-eval set -- "$GETOPTTEMP"
-std_cmd_err_handler $?
-
-while true
-do
-	case "$1" in
-	-c|--distcheck)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE ]
-		then
-			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
-			script_exit
-		fi
-		distcheck=TRUE
-		shift
-		;;
-	-d|--debug)
-		debug="--enable-debug=yes"
-		shift
-		;;
-	-D|--dist)
-		if [ $make = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE ]
-		then
-			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
-			script_exit
-		fi
-		dist=TRUE
-		shift
-		;;
-	-f|--distcheckfake)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE ]
-		then
-			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
-			script_exit
-		fi
-		distcheckfake=TRUE
-		shift
-		;;
-	-h|--help)
-		echo "Usage is $0 [options]"
-		echo "  -c or --distcheck perform normal distcheck"
-		echo "	-d or --debug build with appropriate debug flags"
-		echo "	-D or --dist perform a make dist"
-		echo "  -f or --distcheckfake fake a distcheck for fixed root"
-		echo "	-h or --help displays usage information"
-		echo "	-m or --make compile and link - plain make"
-		echo "	-V or --version displays version information"
-		shift
-		script_exit_code=0
-		script_exit
-		;;
-	-m|--make)
-		if [ $dist = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE ]
-		then
-			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
-			script_exit
-		fi
-		make=TRUE
-		shift
-		;;
-	-V|--version)
-		echo "$0 Script version "$version
-		echo "$0 Package version "$packageversion
-		shift
-		script_exit_code=0
-		script_exit
-		;;
-	--)	shift
-		break
-		;;
-	*)	script_exit_code=1
-		output "Internal error." 1
-		script_exit
-		;;
-	esac
-done
-
-# Script can accept 1 other argument, the base directory.
-if [ $# -gt 1 ]
-then
-	script_exit_code=1
-	output "Invalid argument." 1
-	script_exit
-fi
-
-if [ $# -eq 1 ]
-then
-	basedir=$1
-fi
-
-# One option has to be selected.
-if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
-	-a $distcheckfake = FALSE ]
-then
-	script_exit_code=1
-	output "Either c, D, m or r must be set." 1 FALSE
-	script_exit
-fi
-
-autoreconf -if $basedir
-status=$?
-output "autoreconf -if "$basedir" completed with exit status: "$status $status
-std_cmd_err_handler $status
-
-cmdline=$basedir"/configure --enable-silent-rules=yes "$debug
-
-if [ $distcheckfake = TRUE ]
-then
-	cmdline=$cmdline" --enable-distcheckfake=yes"
-fi
-
-eval "$cmdline"
-status=$?
-output "$cmdline completed with exit status: $status" $status
-std_cmd_err_handler $status
-
-cmdline="make --quiet"
-if [ $dist = TRUE ]
-then
-	cmdline=$cmdline" dist clean distclean"
-fi
-
-if [ $distcheck = TRUE ]
-then
-	cmdline=$cmdline" distcheck distclean"
-fi
-
-if [ $distcheckfake = TRUE ]
-then
-	cmdline=$cmdline" distcheck distclean"
-	cmdline=$cmdline" DISTCHECK_CONFIGURE_FLAGS=--enable-distcheckfake=yes"
-fi
-
-eval "$cmdline"
-status=$?
-output "$cmdline completed with exit status: $status" $status
-std_cmd_err_handler $status
-
-
-script_exit_code=0
+bootstrap.sh "$@"
+script_exit_code=$?
 script_exit

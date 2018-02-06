@@ -1,5 +1,5 @@
 NAME
-acmbuild - acmbuild script
+acmbuild.sh - acmbuild script
 SYNOPSIS
 acmbuild [OPTION]
 DESCRIPTION
@@ -14,11 +14,14 @@ OPTIONS
 -f, --distcheckfake run a make distcheck using a fake AT standard directory as a
 substitute for an absolute path which distcheck does not support.
 
--h, --help  prints usage information.
+-g, --gnulib run gnulib-tool --update. Checks for the existence of the cache
+file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
+
+-h, --help prints usage information.
 
 -m, --make compile and link - plain make.
 
--V, --version  prints version information
+-V, --version prints version information
 EXIT STATUS
 0
 if OK,
@@ -31,7 +34,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright 2014-2017 Mark Grant.
+Copyright 2014-2018 Mark Grant.
 .br
 License GPLv3+: GNU GPL version 3 or later
 .br
