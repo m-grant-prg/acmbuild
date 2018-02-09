@@ -1,0 +1,12 @@
+# This .gitignore file is to ensure that this directory exists even though
+# none of it's contents will ever be tracked. This is required because
+# otherwise, after cloning, the project build will fail citing this missing
+# directory.
+# In other words, this is a git hack to satisfy AutoTools.
+
+# Ignore everything ...
+*
+
+# ... except myself and the cache file.
+!.gitignore
+!/gnulib-cache.m4
