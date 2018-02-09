@@ -1,14 +1,14 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-#	acmbuild is automatically generated,				#
+#	acmbuild.sh is automatically generated,				#
 #		please do not modify!					#
 #									#
 #########################################################################
 
 #########################################################################
 #									#
-# Script ID: acmbuild							#
+# Script ID: acmbuild.sh						#
 # Author: Copyright (C) 2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
