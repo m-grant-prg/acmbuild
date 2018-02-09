@@ -47,6 +47,8 @@
 #				Update minimum AutoTools version.	#
 #				Standardise configure.ac and macro	#
 #				directory.				#
+#				Use automake sub-directory and tar	#
+#				Posix format directives.		#
 #									#
 #########################################################################
 
@@ -148,10 +150,10 @@ AC_SUBST([edit], ["sed \
 
 
 # Passes the options to all am files. Puts objects in the sub-directory
-# containing the source.
+# containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects tar-pax])
 
 
 ########################
