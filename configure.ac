@@ -153,7 +153,7 @@ AC_SUBST([edit], ["sed \
 # containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE([subdir-objects tar-pax])
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 
 
 ########################
