@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: source/man/man1/Makefile.am				#
+# Script ID: src/man/1/Makefile.am					#
 # Author: Copyright (C) 2014-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#

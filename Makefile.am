@@ -24,8 +24,10 @@
 # 17/10/2015	MG	1.0.3	Restructure to conform to AutoTools	#
 #				General Template v1.0.5.		#
 # 01/12/2017	MG	1.0.4	Add SPDX license tags to source files.	#
+# 09/02/2018	MG	1.0.5	Shorten directory names to reduce	#
+#				overall path length.			#
 #									#
 #########################################################################
 
 
-SUBDIRS = source/progs/bash source/man/man1
+SUBDIRS = src/prg/bash src/man/1

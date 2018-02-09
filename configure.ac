@@ -42,10 +42,12 @@
 # 28/04/2017	MG	1.0.11	Make AC_INIT and pkgversion AC_SUBST	#
 #				multi-line.				#
 # 01/12/2017	MG	1.0.12	Add SPDX license tags to source files.	#
+# 09/02/2018	MG	1.0.13	Shorten directory names to reduce	#
+#				overall path length.			#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.12 $])
+AC_REVISION([$Revision: 1.0.13 $])
 
 AC_PREREQ([2.65])
 
@@ -197,7 +199,7 @@ fi
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/progs/bash/Makefile
-		source/man/man1/Makefile])
+		src/prg/bash/Makefile
+		src/man/1/Makefile])
 
 AC_OUTPUT
