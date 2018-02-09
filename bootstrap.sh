@@ -64,6 +64,9 @@
 # 06/02/2018	MG	1.3.1	Renamed from acmbuild.			#
 #				Add -g option.				#
 #				General script tidy up.			#
+# 09/02/2018	MG	1.3.2	Remove script name from -V --version	#
+#				print as this may have been invoked by	#
+#				acmbuild.sh.				#
 #									#
 #########################################################################
 
@@ -71,8 +74,8 @@
 # Init variables #
 ##################
 script_exit_code=0
-version="1.3.1"			# set version variable
-packageversion=v1.2.2-2-gf7ed38d	# Version of the complete package
+version="1.3.2"			# set version variable
+packageversion=v1.2.2-7-gfcffb44	# Version of the complete package
 
 debug=""
 dist=FALSE
@@ -210,8 +213,8 @@ do
 		shift
 		;;
 	-V|--version)
-		echo "$0 Script version "$version
-		echo "$0 Package version "$packageversion
+		echo "Script version "$version
+		echo "Package version "$packageversion
 		shift
 		script_exit_code=0
 		script_exit
