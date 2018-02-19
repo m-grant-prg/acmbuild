@@ -1,3 +1,11 @@
+2018-02-19 v 1.2.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Extract all functionality to a new bootstrap.sh script and make
+	acmbuild.sh a wrapper script for it. This package still performs the
+	same function but the bootstrap script can be copied to each AutoTools
+	project so that contributors and users can build that project with ease.
+	Add standard bootstrap script to this project itself.
+	Bring project up to latest structure standard.
+
 2017-12-04 v 1.2.2 Mark Grant <m.grant.prg@gmail.com>
 	*  Adopt normal exit code policy; 0 on success, 1 on failure.
 	Add SPDX license tags to source files.
