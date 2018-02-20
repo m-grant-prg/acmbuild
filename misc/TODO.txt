@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# File ID: ./docs/TODO.txt						#
+# File ID: ./misc/TODO.txt						#
 # Author: Mark Grant							#
 #									#
 # Purpose:								#
