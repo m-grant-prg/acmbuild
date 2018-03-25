@@ -21,6 +21,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -m, --make compile and link - plain make.
 
+-s, --sparse pass --enable-sparse=yes to configure.
+
 -V, --version prints version information
 EXIT STATUS
 0
