@@ -4,6 +4,9 @@ SYNOPSIS
 acmbuild [OPTION]
 DESCRIPTION
 A script to automate AutoConf and Make builds of distribution tarballs.
+
+As even -s --quiet output can be quite voluminous, this script also copies
+stderr to ./build-stderr.txt.
 OPTIONS
 -c, --distcheck perform a normal make distcheck.
 
