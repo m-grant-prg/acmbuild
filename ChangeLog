@@ -1,3 +1,8 @@
+2018-03-25 v 1.2.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Update this project bootstrap.sh to latest version 1.3.3.
+	Copy stderr to ./build-stderr.txt.
+	Add support for using sparse.
+
 2018-02-20 v 1.2.4 Mark Grant <m.grant.prg@gmail.com>
 	*  Standardise on misc directory.
 
