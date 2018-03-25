@@ -24,6 +24,7 @@
 #				[ -g || --gnulib ] ||			#
 #				[ -h || --help ] ||			#
 #				[ -m || --make ] ||			#
+#				[ -s || --sparse ] ||			#
 #				[ -V || --version-V ]			#
 #									#
 # Exit Codes:	0 - success						#
@@ -67,6 +68,8 @@
 # 09/02/2018	MG	1.3.2	Remove script name from -V --version	#
 #				print as this may have been invoked by	#
 #				acmbuild.sh.				#
+# 24/03/2018	MG	1.3.3	Add support for sparse CLA.		#
+#				Add stderr log file.			#
 #									#
 #########################################################################
 
@@ -74,8 +77,8 @@
 # Init variables #
 ##################
 script_exit_code=0
-version="1.3.2"			# set version variable
-packageversion=v1.2.2-7-gfcffb44	# Version of the complete package
+version="1.3.3"			# set version variable
+packageversion=v1.2.4-2-gbbf1742	# Version of the complete package
 
 debug=""
 dist=FALSE
@@ -83,6 +86,7 @@ distcheck=FALSE
 distcheckfake=FALSE
 gnulib=FALSE
 make=FALSE
+sparse=FALSE
 basedir="."
 cmdline=""
 
@@ -133,8 +137,8 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 # Main #
 ########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o cdDfghmV \
-	--long distcheck,debug,dist,distcheckfake,gnulib,help,make,version \
+GETOPTTEMP=`getopt -o cdDfghmsV \
+	--long distcheck,debug,dist,distcheckfake,gnulib,help,make,sparse,version \
 	-n "$0" -- "$@"`
 std_cmd_err_handler $?
 
@@ -145,10 +149,11 @@ while true
 do
 	case "$1" in
 	-c|--distcheck)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE ]
+		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE \
+			-o $sparse = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
+			msg="Options c, D, f, & m or s are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -161,10 +166,10 @@ do
 		;;
 	-D|--dist)
 		if [ $make = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE ]
+			-o $distcheckfake = TRUE -o $sparse = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
+			msg="Options c, D, f, & m or s are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -172,10 +177,11 @@ do
 		shift
 		;;
 	-f|--distcheckfake)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE ]
+		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE \
+			-o $sparse = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
+			msg="Options c, D, f, & m or s are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -195,6 +201,7 @@ do
 		echo "	-g or --gnulib run gnulib-tool --update"
 		echo "	-h or --help displays usage information"
 		echo "	-m or --make compile and link - plain make"
+		echo "	-s or --sparse build using sparse"
 		echo "	-V or --version displays version information"
 		shift
 		script_exit_code=0
@@ -210,6 +217,18 @@ do
 			script_exit
 		fi
 		make=TRUE
+		shift
+		;;
+	-s|--sparse)
+		if [ $dist = TRUE -o $distcheck = TRUE \
+			-o $distcheckfake = TRUE ]
+		then
+			script_exit_code=1
+			msg="Options c, D, f & s are mutually exclusive."
+			output "$msg" 1
+			script_exit
+		fi
+		sparse=TRUE
 		shift
 		;;
 	-V|--version)
@@ -247,10 +266,15 @@ if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
 	-a $distcheckfake = FALSE ]
 then
 	script_exit_code=1
-	output "Either c, D, m or r must be set." 1
+	output "Either c, D, f or m must be set." 1
 	script_exit
 fi
 
+# Create build error log.
+exec 2> >(tee build-stderr.txt >&2)
+
+
+# Now the main processing.
 if [ $gnulib = TRUE ]
 then
 	if [ -f $basedir/m4/gnulib-cache.m4 ]
@@ -277,6 +301,11 @@ cmdline=$basedir"/configure --enable-silent-rules=yes "$debug
 if [ $distcheckfake = TRUE ]
 then
 	cmdline=$cmdline" --enable-distcheckfake=yes"
+fi
+
+if [ $sparse = TRUE ]
+then
+	cmdline=$cmdline" --enable-sparse=yes"
 fi
 
 eval "$cmdline"
