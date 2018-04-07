@@ -25,6 +25,7 @@
 #				[ -h || --help ] ||			#
 #				[ -m || --make ] ||			#
 #				[ -s || --sparse ] ||			#
+#				[ -t || --source-tarball ] ||		#
 #				[ -V || --version-V ]			#
 #									#
 # Exit Codes:	0 - success						#
@@ -70,6 +71,8 @@
 #				acmbuild.sh.				#
 # 24/03/2018	MG	1.3.3	Add support for sparse CLA.		#
 #				Add stderr log file.			#
+# 07/04/2018	MG	1.3.4	Add -t --source-tarball CLA to build a	#
+#				source tarball.				#
 #									#
 #########################################################################
 
@@ -77,8 +80,8 @@
 # Init variables #
 ##################
 script_exit_code=0
-version="1.3.3"			# set version variable
-packageversion=v1.2.4-2-gbbf1742	# Version of the complete package
+version="1.3.4"			# set version variable
+packageversion=v1.2.5+rc1	# Version of the complete package
 
 debug=""
 dist=FALSE
@@ -86,7 +89,8 @@ distcheck=FALSE
 distcheckfake=FALSE
 gnulib=FALSE
 make=FALSE
-sparse=FALSE
+sparse=""
+tarball=FALSE
 basedir="."
 cmdline=""
 
@@ -137,23 +141,24 @@ trap trap_exit SIGHUP SIGINT SIGTERM
 # Main #
 ########
 # Process command line arguments with GNU getopt.
-GETOPTTEMP=`getopt -o cdDfghmsV \
-	--long distcheck,debug,dist,distcheckfake,gnulib,help,make,sparse,version \
-	-n "$0" -- "$@"`
-std_cmd_err_handler $?
-
+tmp="getopt -o cdDfghmstV "
+tmp+="--long distcheck,debug,dist,distcheckfake,gnulib,help,make,sparse,"
+tmp+="source-tarball,version "
+tmp+="-n $0 -- $@"
+GETOPTTEMP=`eval $tmp`
 eval set -- "$GETOPTTEMP"
 std_cmd_err_handler $?
+
 
 while true
 do
 	case "$1" in
 	-c|--distcheck)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheckfake = TRUE \
-			-o $sparse = TRUE ]
+		if [ $dist = TRUE -o $distcheckfake = TRUE -o $make = TRUE \
+			-o $tarball = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m or s are mutually exclusive."
+			msg="Options c, D, f, m and t are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -161,15 +166,15 @@ do
 		shift
 		;;
 	-d|--debug)
-		debug="--enable-debug=yes"
+		debug=" --enable-debug=yes"
 		shift
 		;;
 	-D|--dist)
-		if [ $make = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE -o $sparse = TRUE ]
+		if [ $distcheck = TRUE -o $distcheckfake = TRUE \
+			-o $make = TRUE -o $tarball = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m or s are mutually exclusive."
+			msg="Options c, D, f, m and t are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -177,11 +182,11 @@ do
 		shift
 		;;
 	-f|--distcheckfake)
-		if [ $make = TRUE -o $dist = TRUE -o $distcheck = TRUE \
-			-o $sparse = TRUE ]
+		if [ $distcheck = TRUE -o $dist = TRUE -o $make = TRUE \
+			-o $tarball = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m or s are mutually exclusive."
+			msg="Options c, D, f, m and t are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -202,17 +207,18 @@ do
 		echo "	-h or --help displays usage information"
 		echo "	-m or --make compile and link - plain make"
 		echo "	-s or --sparse build using sparse"
+		echo "	-t or --source-tarball create source tarball"
 		echo "	-V or --version displays version information"
 		shift
 		script_exit_code=0
 		script_exit
 		;;
 	-m|--make)
-		if [ $dist = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE ]
+		if [ $distcheck = TRUE -o $dist = TRUE \
+			-o $distcheckfake = TRUE -o $tarball = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f, & m are mutually exclusive."
+			msg="Options c, D, f, m and t are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
@@ -220,15 +226,19 @@ do
 		shift
 		;;
 	-s|--sparse)
-		if [ $dist = TRUE -o $distcheck = TRUE \
-			-o $distcheckfake = TRUE ]
+		sparse=" --enable-sparse=yes"
+		shift
+		;;
+	-t|--source-tarball)
+		if [ $distcheck = TRUE -o $dist = TRUE \
+			-o $distcheckfake = TRUE -o $make = TRUE ]
 		then
 			script_exit_code=1
-			msg="Options c, D, f & s are mutually exclusive."
+			msg="Options c, D, f, m and t are mutually exclusive."
 			output "$msg" 1
 			script_exit
 		fi
-		sparse=TRUE
+		tarball=TRUE
 		shift
 		;;
 	-V|--version)
@@ -262,11 +272,11 @@ then
 fi
 
 # One option has to be selected.
-if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
-	-a $distcheckfake = FALSE ]
+if [ $distcheck = FALSE -a $dist = FALSE -a $distcheckfake = FALSE \
+	-a $make = FALSE -a $tarball = FALSE ]
 then
 	script_exit_code=1
-	output "Either c, D, f or m must be set." 1
+	output "Either c, D, f, m or t must be set." 1
 	script_exit
 fi
 
@@ -296,16 +306,11 @@ status=$?
 output "autoreconf -if "$basedir" completed with exit status: $status" $status
 std_cmd_err_handler $status
 
-cmdline=$basedir"/configure --enable-silent-rules=yes "$debug
+cmdline=$basedir"/configure --enable-silent-rules=yes"$debug$sparse
 
 if [ $distcheckfake = TRUE ]
 then
 	cmdline=$cmdline" --enable-distcheckfake=yes"
-fi
-
-if [ $sparse = TRUE ]
-then
-	cmdline=$cmdline" --enable-sparse=yes"
 fi
 
 eval "$cmdline"
@@ -314,20 +319,25 @@ output "$cmdline completed with exit status: $status" $status
 std_cmd_err_handler $status
 
 cmdline="make --quiet"
-if [ $dist = TRUE ]
-then
-	cmdline=$cmdline" dist clean distclean"
-fi
-
 if [ $distcheck = TRUE ]
 then
 	cmdline=$cmdline" distcheck distclean"
+fi
+
+if [ $dist = TRUE ]
+then
+	cmdline=$cmdline" dist clean distclean"
 fi
 
 if [ $distcheckfake = TRUE ]
 then
 	cmdline=$cmdline" distcheck distclean"
 	cmdline=$cmdline" DISTCHECK_CONFIGURE_FLAGS=--enable-distcheckfake=yes"
+fi
+
+if [ $tarball = TRUE ]
+then
+	cmdline=$cmdline" srctarball distclean"
 fi
 
 eval "$cmdline"
