@@ -1,3 +1,6 @@
+2018-04-07 v 1.2.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Enhance the README file.
+
 2018-04-07 v 1.2.6 Mark Grant <m.grant.prg@gmail.com>
 	*  Update this project bootstrap.sh to latest version 1.3.4.
 	Add -t --source-tarball command line argument (CLA) to build a source
