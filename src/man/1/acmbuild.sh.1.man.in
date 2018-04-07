@@ -3,7 +3,7 @@ acmbuild.sh - acmbuild script
 SYNOPSIS
 acmbuild [OPTION]
 DESCRIPTION
-A script to automate AutoConf and Make builds of distribution tarballs.
+A script to automate AutoConf and Make builds.
 
 As even -s --quiet output can be quite voluminous, this script also copies
 stderr to ./build-stderr.txt.
@@ -25,6 +25,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 -m, --make compile and link - plain make.
 
 -s, --sparse pass --enable-sparse=yes to configure.
+
+-t, --source-tarball perform a make srctarball to build a source tarball.
 
 -V, --version prints version information
 EXIT STATUS
