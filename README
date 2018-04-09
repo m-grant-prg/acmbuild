@@ -46,16 +46,19 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 2 ... AutoTools (configure and make) Installation
 =================================================
 
-1 ... Download the tarball (the .tar.gz file) from:-
+1 ... Download either the source or distribution tarball (the .tar.gz file)
+	from:-
 	https://github.com/m-grant-prg/acmbuild/releases
 
 2 ... Extract the tarball preserving the directory structure.
 
 3 ... cd to the directory created.
 
-4 ... Type './configure'
+4 ... If you downloaded the source tarball type 'autoreconf -if'
 
-5 ... As root or sudo, type 'make install clean'
+5 ... Type './configure'
+
+6 ... As root or sudo, type 'make install clean'
 
 (Quote marks are for textual clarity only).
 
