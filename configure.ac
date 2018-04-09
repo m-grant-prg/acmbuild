@@ -75,7 +75,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT(AutoTools Build Script, v1.2.7, m.grant.prg@gmail.com, acmbuild)
+AC_INIT(AutoTools Build Script, v1.2.8, m.grant.prg@gmail.com, acmbuild)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
