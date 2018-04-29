@@ -10,6 +10,8 @@ Contents
 
 4 ... Debian and Raspbian Installation
 
+5 ... Utility Scripts
+
 
 
 -------------------------
@@ -100,3 +102,51 @@ Debian and Raspbian '.deb' packages can be downloaded from:-
 
 They can then be installed using a utility such as GDebi which is available in
 the standard repos.
+
+
+---------------------
+5 ... Utility Scripts
+=====================
+In the project root directory there is 1 helper script; bootstrap.sh.
+
+bootstrap.sh
+------------
+This misleadingly named script bootstraps the project build and provides other
+useful features. The main options below are probably c, D, m and t.
+
+In AutoTools it is usually advisable to perform parallel builds. This means you
+build somewhere other than the project root. This is because building creates
+files and they would confuse the project root downwards. I always create a build
+directory straight off the project root, cd to there and do all build and git
+work from there, (.gitignore is already set to ignore such a directory).
+
+Assuming you adopt the preceding paragraph then a typical invocation of the
+script would be:-
+../bootstrap.sh --make ..
+The last '..' points the way to project root.
+
+The full list of arguments to bootstrap.sh are:-
+	-c, --distcheck perform a normal make distcheck.
+
+	-d, --debug build with appropriate debug flags.
+
+	-D, --dist perform a make dist.
+
+	-f, --distcheckfake run a make  distcheck  using  a  fake  AT  standard
+	directory as a substitute for an absolute path which distcheck does not
+	support.
+
+	-g, --gnulib run gnulib-tool --update. Checks for the existence of  the
+	cache  file  proj-root/m4/gnulib-cache.m4.  If  it  does  not exist the
+	update is not run.
+
+	-h, --help prints usage information.
+
+	-m, --make compile and link - plain make.
+
+	-s, --sparse pass --enable-sparse=yes to configure.
+
+	-t, --source-tarball perform a make srctarball to build a source
+	tarball.
+
+	-V, --version prints version information
