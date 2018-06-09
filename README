@@ -43,6 +43,14 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -V, --version prints version information
 
+N.B.
+----
+At a source modification / development level, this project expects to reside in
+a git environment. This manifests itself in 2 places:-
+1) ... .gitignore files are included in the source.
+2) ... The make target, 'srctarball', relies on the command 'git am' so it will
+	fail if git is not installed or it is not in a git repository.
+
 
 -------------------------------------------------
 2 ... AutoTools (configure and make) Installation
