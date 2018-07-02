@@ -8,13 +8,17 @@ A script to automate AutoConf and Make builds.
 As even -s --quiet output can be quite voluminous, this script also copies
 stderr to ./build-stderr.txt.
 OPTIONS
--c, --distcheck perform a normal make distcheck.
+-b, --build make the project.
+
+-c, --config configure the project.
+
+-C, --distcheck perform a normal make distcheck.
 
 -d, --debug build with appropriate debug flags.
 
 -D, --dist perform a make dist.
 
--f, --distcheckfake run a make distcheck using a fake AT standard directory as a
+-F, --distcheckfake run a make distcheck using a fake AT standard directory as a
 substitute for an absolute path which distcheck does not support.
 
 -g, --gnulib run gnulib-tool --update. Checks for the existence of the cache
@@ -22,13 +26,17 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -h, --help prints usage information.
 
--m, --make compile and link - plain make.
-
 -s, --sparse pass --enable-sparse=yes to configure.
 
--t, --source-tarball perform a make srctarball to build a source tarball.
+-T, --source-tarball perform a make srctarball to build a source tarball.
 
 -V, --version prints version information
+
+Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
+mutually exclusive.
+
+Options d debug, F distcheckfake and s sparse are enabled by configure so
+require option c config.
 EXIT STATUS
 0
 if OK,
