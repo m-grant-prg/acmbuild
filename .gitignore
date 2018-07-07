@@ -12,6 +12,7 @@
 **/*.tar.gz
 **/conffiles
 **/*~
+**/*.swp
 **/*.log
 **/*.scan
 **/depcomp
