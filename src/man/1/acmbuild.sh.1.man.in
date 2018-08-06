@@ -26,6 +26,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -h, --help prints usage information.
 
+-H, --header-check passes --enable-headercheck=yes to configure.
+
 -s, --sparse pass --enable-sparse=yes to configure.
 
 -T, --source-tarball perform a make srctarball to build a source tarball.
@@ -35,8 +37,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
 mutually exclusive.
 
-Options d debug, F distcheckfake and s sparse are enabled by configure so
-require option c config.
+Options d debug, F distcheckfake, H header-check and s sparse are enabled by
+configure so require option c config.
 EXIT STATUS
 0
 if OK,
