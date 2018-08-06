@@ -1,3 +1,10 @@
+2018-08-06 v 1.2.10 Mark Grant <m.grant.prg@gmail.com>
+	*  Add -H --header-check option. This passes --enable-headercheck=yes
+	to configure which can then make a variable available to Makefiles to
+	invoke the compiler with the -H option to display included files and
+	their depth in the include stack.
+	Make the error log into a plain build log as output can be large.
+
 2018-07-02 v 1.2.9 Mark Grant <m.grant.prg@gmail.com>
 	*  Separate configure and make stages.
 	Make options more standard.
