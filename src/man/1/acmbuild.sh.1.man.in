@@ -6,7 +6,7 @@ DESCRIPTION
 A script to automate AutoConf and Make builds.
 
 As even -s --quiet output can be quite voluminous, this script also copies
-stderr to ./build-stderr.txt.
+stdout and stderr to ./build-output.txt.
 OPTIONS
 -b, --build make the project.
 
