@@ -1,3 +1,6 @@
+Release 1.2.11 2018-08-23
+Add verbose option.
+
 Release 1.2.10 2018-08-06
 Add -H --header-check option. This passes --enable-headercheck=yes to configure
 which can then make a variable available to Makefiles to invoke the compiler

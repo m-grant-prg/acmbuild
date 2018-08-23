@@ -1,3 +1,6 @@
+2018-08-23 v 1.2.11 Mark Grant <m.grant.prg@gmail.com>
+	*  Add verbose option.
+
 2018-08-06 v 1.2.10 Mark Grant <m.grant.prg@gmail.com>
 	*  Add -H --header-check option. This passes --enable-headercheck=yes
 	to configure which can then make a variable available to Makefiles to
