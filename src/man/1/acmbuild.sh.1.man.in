@@ -32,13 +32,15 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -T, --source-tarball perform a make srctarball to build a source tarball.
 
+-v, --verbose emit extra information
+
 -V, --version prints version information
 
 Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
 mutually exclusive.
 
-Options d debug, F distcheckfake, H header-check and s sparse are enabled by
-configure so require option c config.
+Options d debug, F distcheckfake, H header-check, s sparse and v verbose are
+enabled by configure so require option c config.
 EXIT STATUS
 0
 if OK,
