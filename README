@@ -1,3 +1,6 @@
+-----------------------------------
+AutoConf and AutoMake Build Scripts
+===================================
 --------
 Contents
 ========
@@ -96,17 +99,23 @@ Archive (PPA). If you add this PPA to your software sources then you can easily
 install, update and remove the package.
 
 To view the details of this PPA please follow the link below:-
+
 	https://code.launchpad.net/~m-grant-prg/+archive/ubuntu/utils
 
 To add this PPA to your system please type the following:-
+
 	sudo add-apt-repository ppa:m-grant-prg/utils
+
 	sudo apt-get update
 
 To install this script on your system for use please type the following:-
+
 	sudo apt-get update
+
 	sudo apt-get install acmbuild
 
 To uninstall this package at any time please type:-
+
 	sudo apt-get remove acmbuild
 
 
@@ -138,10 +147,13 @@ work from there, (.gitignore is already set to ignore such a directory).
 
 Assuming you adopt the preceding paragraph then a typical invocation of the
 script would be:-
+
 ../bootstrap.sh --build ..
+
 The last '..' points the way to project root.
 
 The full list of arguments to bootstrap.sh are:-
+
 	-b, --build make the project.
 
 	-c, --config configure the project.
@@ -174,3 +186,4 @@ mutually exclusive.
 
 Options d debug, F distcheckfake and s sparse are enabled by configure so
 require option c config.
+
