@@ -1,3 +1,8 @@
+Release 1.2.12 2018-10-17
+Add markdown symlink to README.
+Beautify README for GitHub markdown presentation.
+Modify README to refer to new wiki.
+
 Release 1.2.11 2018-08-23
 Add verbose option.
 
