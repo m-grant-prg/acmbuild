@@ -296,16 +296,15 @@ if ! $build && ! $config && ! $distcheck && ! $dist && ! $distcheckfake \
 fi
 
 # Script can accept 1 other argument, the base directory.
-if [ $# -gt 1 ]; then
+if [[ $# > 1 ]]; then
 	script_exit_code=1
 	output "Invalid argument." 1
 	script_exit
 fi
 
-if [ $# -eq 1 ]; then
+if [[ $# == 1 ]]; then
 	basedir=$1
 fi
-
 
 # Create build log.
 exec 1> >(tee build-output.txt) 2>&1
@@ -313,7 +312,7 @@ exec 1> >(tee build-output.txt) 2>&1
 
 # Now the main processing.
 if $gnulib ; then
-	if [ -f $basedir/m4/gnulib-cache.m4 ]; then
+	if [[ -f $basedir/m4/gnulib-cache.m4 ]]; then
 		cmdline="gnulib-tool --update"$verbosemake$verbosemake
 		cmdline+=" --dir="$basedir
 		eval "$cmdline"
@@ -369,12 +368,15 @@ if $tarball ; then
 fi
 
 # May get here with cmdline empty if, for example, only the -g option was set.
-if [ "$cmdline" != "" ]; then
-	eval "$cmdline"
-	status=$?
-	output "$cmdline completed with exit status: $status" $status
-	std_cmd_err_handler $status
+if [[ ! $cmdline ]]; then
+	script_exit_code=0
+	script_exit
 fi
+
+eval "$cmdline"
+status=$?
+output "$cmdline completed with exit status: $status" $status
+std_cmd_err_handler $status
 
 
 script_exit_code=0
