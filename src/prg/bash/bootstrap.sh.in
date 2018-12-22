@@ -83,13 +83,15 @@
 # 22/08/2018	MG	1.3.7	Add verbose option.			#
 # 22/12/2018	MG	1.3.8	Style if, for and while loops after C.	#
 #				Use -proper- booleans.			#
+#				Remove script_exit_code variable 	#
+#				propogating the exit code as a function	#
+#				argument instead.			#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-script_exit_code=0
 version="1.3.8"			# set version variable
 packageversion=@pkgversion@	# Version of the complete package
 
@@ -125,27 +127,29 @@ output()
 	fi
 }
 
-# Standard function to test command error ($1 is $?) and exit if non-zero
+# Standard function to test command error and exit if non-zero.
+# Parameters - 	$1 is the exit code, (normally $? from the preceeding command).
+# No return value.
 std_cmd_err_handler()
 {
 	if [ $1 != 0 ]; then
-		script_exit_code=$1
-		script_exit
+		script_exit $1
 	fi
 }
 
-# Standard function to cleanup and return exit code
+# Standard function to tidy up and return exit code.
+# Parameters - 	$1 is the exit code.
+# No return value.
 script_exit()
 {
-	exit $script_exit_code
+	exit $1
 }
 
 # Standard trap exit function
 trap_exit()
 {
-script_exit_code=1
 output "Script terminating due to trap received." 1
-script_exit
+script_exit 1
 }
 
 # Setup trap
@@ -168,10 +172,9 @@ while true; do
 	case "$1" in
 	-b|--build)
 		if $distcheck || $dist || $distcheckfake || $tarball ; then
-			script_exit_code=1
 			msg="Options b, C, D, F and T are mutually exclusive."
 			output "$msg" 1
-			script_exit
+			script_exit 1
 		fi
 		build=true
 		shift
@@ -182,10 +185,9 @@ while true; do
 		;;
 	-C|--distcheck)
 		if $build || $dist || $distcheckfake || $tarball ; then
-			script_exit_code=1
 			msg="Options b, C, D, F and T are mutually exclusive."
 			output "$msg" 1
-			script_exit
+			script_exit 1
 		fi
 		distcheck=true
 		shift
@@ -196,20 +198,18 @@ while true; do
 		;;
 	-D|--dist)
 		if $build || $distcheck || $distcheckfake || $tarball ; then
-			script_exit_code=1
 			msg="Options b, C, D, F and T are mutually exclusive."
 			output "$msg" 1
-			script_exit
+			script_exit 1
 		fi
 		dist=true
 		shift
 		;;
 	-F|--distcheckfake)
 		if $build || $distcheck || $dist || $tarball ; then
-			script_exit_code=1
 			msg="Options b, C, D, F and T are mutually exclusive."
 			output "$msg" 1
-			script_exit
+			script_exit 1
 		fi
 		distcheckfake=true
 		shift
@@ -234,8 +234,7 @@ while true; do
 		echo "	-v or --verbose emit extra information"
 		echo "	-V or --version displays version information"
 		shift
-		script_exit_code=0
-		script_exit
+		script_exit 0
 		;;
 	-H|--header-check)
 		headercheck=" --enable-headercheck=yes"
@@ -247,10 +246,9 @@ while true; do
 		;;
 	-T|--source-tarball)
 		if $build || $distcheck || $dist || $distcheckfake ; then
-			script_exit_code=1
 			msg="Options b, C, D, F and T are mutually exclusive."
 			output "$msg" 1
-			script_exit
+			script_exit 1
 		fi
 		tarball=true
 		shift
@@ -265,41 +263,36 @@ while true; do
 		echo "Script version "$version
 		echo "Package version "$packageversion
 		shift
-		script_exit_code=0
-		script_exit
+		script_exit 0
 		;;
 	--)	shift
 		break
 		;;
-	*)	script_exit_code=1
-		output "Internal error." 1
-		script_exit
+	*)	output "Internal error." 1
+		script_exit 1
 		;;
 	esac
 done
 
 if [[ $debug || $headercheck || $sparse ]] || $distcheckfake || $verbose ; then
 	if ! $config ; then
-		script_exit_code=1
 		msg="Options d, F, H, s and v require option c."
 		output "$msg" 1
-		script_exit
+		script_exit 1
 	fi
 fi
 
 # One option has to be selected.
 if ! $build && ! $config && ! $distcheck && ! $dist && ! $distcheckfake \
 	&& ! $gnulib && ! $tarball ; then
-	script_exit_code=1
 	output "Either b, c, C, D, F, g or T must be set." 1
-	script_exit
+	script_exit 1
 fi
 
 # Script can accept 1 other argument, the base directory.
 if [[ $# > 1 ]]; then
-	script_exit_code=1
 	output "Invalid argument." 1
-	script_exit
+	script_exit 1
 fi
 
 if [[ $# == 1 ]]; then
@@ -369,8 +362,7 @@ fi
 
 # May get here with cmdline empty if, for example, only the -g option was set.
 if [[ ! $cmdline ]]; then
-	script_exit_code=0
-	script_exit
+	script_exit 0
 fi
 
 eval "$cmdline"
@@ -379,5 +371,5 @@ output "$cmdline completed with exit status: $status" $status
 std_cmd_err_handler $status
 
 
-script_exit_code=0
-script_exit
+script_exit 0
+
