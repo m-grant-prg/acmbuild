@@ -81,11 +81,12 @@
 # 06/08/2018	MG	1.3.6	Add -H --header-check option.		#
 #				Change error log file to build log.	#
 # 22/08/2018	MG	1.3.7	Add verbose option.			#
-# 22/12/2018	MG	1.3.8	Style if, for and while loops after C.	#
+# 23/12/2018	MG	1.3.8	Style if, for and while loops after C.	#
 #				Use -proper- booleans.			#
 #				Remove script_exit_code variable 	#
 #				propogating the exit code as a function	#
 #				argument instead.			#
+#				Improve trap exit code handling.	#
 #									#
 #########################################################################
 
@@ -145,15 +146,21 @@ script_exit()
 	exit $1
 }
 
-# Standard trap exit function
+# Standard trap exit function.
+# No parameters.
+# No return value.
 trap_exit()
 {
-output "Script terminating due to trap received." 1
-script_exit 1
+	local exit_code=$?
+	local msg
+
+	msg="Script terminating with exit code $exit_code due to trap received."
+	output "$msg" 1 0
+	script_exit $exit_code
 }
 
 # Setup trap
-trap trap_exit SIGHUP SIGINT SIGTERM
+trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
 ########
 # Main #
