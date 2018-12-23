@@ -31,8 +31,29 @@
 #				[ -v || --verbose ] ||			#
 #				[ -V || --version ]			#
 #									#
-# Exit Codes:	0 - success						#
-#		1 - failure.						#
+# Exit codes used:-							#
+# Bash standard Exit Codes:	0 - success				#
+#				1 - general failure			#
+# User-defined exit code range is 64 - 113				#
+#	C/C++ Semi-standard exit codes from sysexits.h range is 64 - 78	#
+#		EX_USAGE	64	command line usage error	#
+#		EX_DATAERR	65	data format error		#
+#		EX_NOINPUT	66	cannot open input		#
+#		EX_NOUSER	67	addressee unknown		#
+#		EX_NOHOST	68	host name unknown		#
+#		EX_UNAVAILABLE	69	service unavailable		#
+#		EX_SOFTWARE	70	internal software error		#
+#		EX_OSERR	71	system error (e.g., can't fork)	#
+#		EX_OSFILE	72	critical OS file missing	#
+#		EX_CANTCREAT	73	can't create (user) output file	#
+#		EX_IOERR	74	input/output error		#
+#		EX_TEMPFAIL	75	temp failure; user is invited	#
+#					to retry			#
+#		EX_PROTOCOL	76	remote error in protocol	#
+#		EX_NOPERM	77	permission denied		#
+#		EX_CONFIG	78	configuration error		#
+#	User-defined (here) exit codes range 79 - 113:			#
+#		None							#
 #									#
 # Further Info:								#
 #									#
@@ -88,6 +109,7 @@
 #				argument instead.			#
 #				Improve trap exit code handling.	#
 #				Re-factor into functions.		#
+#				Introduce more meaningful exit codes.	#
 #									#
 #########################################################################
 
@@ -213,7 +235,7 @@ proc_CL()
 				msg="Options b, C, D, F and T are mutually "
 				msg+="exclusive."
 				output "$msg" 1
-				script_exit 1
+				script_exit 64
 			fi
 			build=true
 			shift
@@ -227,7 +249,7 @@ proc_CL()
 				msg="Options b, C, D, F and T are mutually "
 				msg+="exclusive."
 				output "$msg" 1
-				script_exit 1
+				script_exit 64
 			fi
 			distcheck=true
 			shift
@@ -242,7 +264,7 @@ proc_CL()
 				msg="Options b, C, D, F and T are mutually "
 				msg+="exclusive."
 				output "$msg" 1
-				script_exit 1
+				script_exit 64
 			fi
 			dist=true
 			shift
@@ -252,7 +274,7 @@ proc_CL()
 				msg="Options b, C, D, F and T are mutually "
 				msg+="exclusive."
 				output "$msg" 1
-				script_exit 1
+				script_exit 64
 			fi
 			distcheckfake=true
 			shift
@@ -280,7 +302,7 @@ proc_CL()
 				msg="Options b, C, D, F and T are mutually "
 				msg+="exclusive."
 				output "$msg" 1
-				script_exit 1
+				script_exit 64
 			fi
 			tarball=true
 			shift
@@ -301,7 +323,7 @@ proc_CL()
 			break
 			;;
 		*)	output "Internal error." 1
-			script_exit 1
+			script_exit 64
 			;;
 		esac
 	done
@@ -311,7 +333,7 @@ proc_CL()
 		if ! $config ; then
 			msg="Options d, F, H, s and v require option c."
 			output "$msg" 1
-			script_exit 1
+			script_exit 64
 		fi
 	fi
 
@@ -319,13 +341,13 @@ proc_CL()
 	if ! $build && ! $config && ! $distcheck && ! $dist \
 		&& ! $distcheckfake && ! $gnulib && ! $tarball ; then
 		output "Either b, c, C, D, F, g or T must be set." 1
-		script_exit 1
+		script_exit 64
 	fi
 
 	# Script can accept 1 other argument, the base directory.
 	if [[ $# > 1 ]]; then
 		output "Invalid argument." 1
-		script_exit 1
+		script_exit 64
 	fi
 
 	if [[ $# == 1 ]]; then
