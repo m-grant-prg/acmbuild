@@ -118,13 +118,17 @@ cmdline=""
 # Functions #
 #############
 
-# Output $1 to stdout or stderr depending on $2.
+# Standard function to emit messages depending on various parameters.
+# Parameters -	$1 What:-	The message to emit.
+#		$2 Where:-	stdout == 0
+#				stderr == 1
+# No return value.
 output()
 {
 	if [ $2 = 0 ]; then
-		echo "$1"
+		printf "%s\n" "$1"
 	else
-		echo "$1" 1>&2
+		printf "%s\n" "$1" 1>&2
 	fi
 }
 
@@ -267,8 +271,8 @@ while true; do
 		shift
 		;;
 	-V|--version)
-		echo "Script version "$version
-		echo "Package version "$packageversion
+		printf "Script version %s\n" $version
+		printf "Package version %s\n" $packageversion
 		shift
 		script_exit 0
 		;;
