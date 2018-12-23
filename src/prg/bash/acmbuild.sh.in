@@ -38,14 +38,15 @@
 #				propogating the exit code as a function	#
 #				argument instead.			#
 #				Improve trap exit code handling.	#
+#				Tidy up local and global variables.	#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-version="1.0.2"			# set version variable
-packageversion=@pkgversion@	# Version of the complete package
+readonly version="1.0.2"		# set version variable
+readonly packageversion=@pkgversion@	# Version of the complete package
 
 
 #############
@@ -80,6 +81,7 @@ trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 ########
 # Main #
 ########
+
 bootstrap.sh "$@"
 script_exit $?
 

@@ -110,14 +110,15 @@
 #				Improve trap exit code handling.	#
 #				Re-factor into functions.		#
 #				Introduce more meaningful exit codes.	#
+#				Tidy up local and global variables.	#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-version="1.3.8"			# set version variable
-packageversion=@pkgversion@	# Version of the complete package
+readonly version="1.3.8"			# set version variable
+readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
 build=false
