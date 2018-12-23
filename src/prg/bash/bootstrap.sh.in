@@ -87,6 +87,7 @@
 #				propogating the exit code as a function	#
 #				argument instead.			#
 #				Improve trap exit code handling.	#
+#				Re-factor into functions.		#
 #									#
 #########################################################################
 
@@ -111,12 +112,34 @@ verbose=false
 verboseconfig=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
 basedir="."
-cmdline=""
 
 
 #############
 # Functions #
 #############
+
+# -h --help output.
+# No parameters
+# No return value
+usage ()
+{
+cat << EOF
+Usage is $0 [options]
+	-b or --build make the project
+	-c or --config congigure the project
+	-C or --distcheck perform normal distcheck
+	-d or --debug build with appropriate debug flags
+	-D or --dist perform a make dist
+	-F or --distcheckfake fake a distcheck for fixed root
+	-g or --gnulib run gnulib-tool --update
+	-h or --help displays usage information
+	-H or --header-check show include stack depth
+	-s or --sparse build using sparse
+	-T or --source-tarball create source tarball
+	-v or --verbose emit extra information
+	-V or --version displays version information
+EOF
+}
 
 # Standard function to emit messages depending on various parameters.
 # Parameters -	$1 What:-	The message to emit.
@@ -166,156 +189,159 @@ trap_exit()
 # Setup trap
 trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
-########
-# Main #
-########
 # Process command line arguments with GNU getopt.
-tmp="getopt -o bcCdDFghHsTvV "
-tmp+="--long build,config,distcheck,debug,dist,distcheckfake,gnulib,help,"
-tmp+="header-check,sparse,source-tarball,verbose,version "
-tmp+="-n $0 -- $@"
-GETOPTTEMP=`eval $tmp`
-eval set -- "$GETOPTTEMP"
-std_cmd_err_handler $?
+# Parameters -	$1 is the command line.
+# No return value.
+proc_CL()
+{
+	local GETOPTTEMP
+	local tmp
 
+	tmp="getopt -o bcCdDFghHsTvV "
+	tmp+="--long build,config,distcheck,debug,dist,distcheckfake,gnulib,"
+	tmp+="help,header-check,sparse,source-tarball,verbose,version "
+	tmp+="-n $0 -- $@"
+	GETOPTTEMP=`eval $tmp`
+	eval set -- "$GETOPTTEMP"
+	std_cmd_err_handler $?
 
-while true; do
-	case "$1" in
-	-b|--build)
-		if $distcheck || $dist || $distcheckfake || $tarball ; then
-			msg="Options b, C, D, F and T are mutually exclusive."
-			output "$msg" 1
+	while true; do
+		case "$1" in
+		-b|--build)
+			if $distcheck || $dist || $distcheckfake || $tarball; \
+				then
+				msg="Options b, C, D, F and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 1
+			fi
+			build=true
+			shift
+			;;
+		-c|--config)
+			config=true
+			shift
+			;;
+		-C|--distcheck)
+			if $build || $dist || $distcheckfake || $tarball ; then
+				msg="Options b, C, D, F and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 1
+			fi
+			distcheck=true
+			shift
+			;;
+		-d|--debug)
+			debug=" --enable-debug=yes"
+			shift
+			;;
+		-D|--dist)
+			if $build || $distcheck || $distcheckfake \
+				|| $tarball ; then
+				msg="Options b, C, D, F and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 1
+			fi
+			dist=true
+			shift
+			;;
+		-F|--distcheckfake)
+			if $build || $distcheck || $dist || $tarball ; then
+				msg="Options b, C, D, F and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 1
+			fi
+			distcheckfake=true
+			shift
+			;;
+		-g|--gnulib)
+			gnulib=true
+			shift
+			;;
+		-h|--help)
+			usage
+			shift
+			script_exit 0
+			;;
+		-H|--header-check)
+			headercheck=" --enable-headercheck=yes"
+			shift
+			;;
+		-s|--sparse)
+			sparse=" --enable-sparse=yes"
+			shift
+			;;
+		-T|--source-tarball)
+			if $build || $distcheck || $dist || $distcheckfake ; \
+				then
+				msg="Options b, C, D, F and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 1
+			fi
+			tarball=true
+			shift
+			;;
+		-v|--verbose)
+			verbose=true
+			verboseconfig=""
+			verbosemake=""
+			shift
+			;;
+		-V|--version)
+			printf "Script version %s\n" $version
+			printf "Package version %s\n" $packageversion
+			shift
+			script_exit 0
+			;;
+		--)	shift
+			break
+			;;
+		*)	output "Internal error." 1
 			script_exit 1
-		fi
-		build=true
-		shift
-		;;
-	-c|--config)
-		config=true
-		shift
-		;;
-	-C|--distcheck)
-		if $build || $dist || $distcheckfake || $tarball ; then
-			msg="Options b, C, D, F and T are mutually exclusive."
-			output "$msg" 1
-			script_exit 1
-		fi
-		distcheck=true
-		shift
-		;;
-	-d|--debug)
-		debug=" --enable-debug=yes"
-		shift
-		;;
-	-D|--dist)
-		if $build || $distcheck || $distcheckfake || $tarball ; then
-			msg="Options b, C, D, F and T are mutually exclusive."
-			output "$msg" 1
-			script_exit 1
-		fi
-		dist=true
-		shift
-		;;
-	-F|--distcheckfake)
-		if $build || $distcheck || $dist || $tarball ; then
-			msg="Options b, C, D, F and T are mutually exclusive."
-			output "$msg" 1
-			script_exit 1
-		fi
-		distcheckfake=true
-		shift
-		;;
-	-g|--gnulib)
-		gnulib=true
-		shift
-		;;
-	-h|--help)
-		echo "Usage is:-"
-		echo "	-b or --build make the project"
-		echo "	-c or --config congigure the project"
-		echo "	-C or --distcheck perform normal distcheck"
-		echo "	-d or --debug build with appropriate debug flags"
-		echo "	-D or --dist perform a make dist"
-		echo "	-F or --distcheckfake fake a distcheck for fixed root"
-		echo "	-g or --gnulib run gnulib-tool --update"
-		echo "	-h or --help displays usage information"
-		echo "	-H or --header-check show include stack depth"
-		echo "	-s or --sparse build using sparse"
-		echo "	-T or --source-tarball create source tarball"
-		echo "	-v or --verbose emit extra information"
-		echo "	-V or --version displays version information"
-		shift
-		script_exit 0
-		;;
-	-H|--header-check)
-		headercheck=" --enable-headercheck=yes"
-		shift
-		;;
-	-s|--sparse)
-		sparse=" --enable-sparse=yes"
-		shift
-		;;
-	-T|--source-tarball)
-		if $build || $distcheck || $dist || $distcheckfake ; then
-			msg="Options b, C, D, F and T are mutually exclusive."
-			output "$msg" 1
-			script_exit 1
-		fi
-		tarball=true
-		shift
-		;;
-	-v|--verbose)
-		verbose=true
-		verboseconfig=""
-		verbosemake=""
-		shift
-		;;
-	-V|--version)
-		printf "Script version %s\n" $version
-		printf "Package version %s\n" $packageversion
-		shift
-		script_exit 0
-		;;
-	--)	shift
-		break
-		;;
-	*)	output "Internal error." 1
-		script_exit 1
-		;;
-	esac
-done
+			;;
+		esac
+	done
 
-if [[ $debug || $headercheck || $sparse ]] || $distcheckfake || $verbose ; then
-	if ! $config ; then
-		msg="Options d, F, H, s and v require option c."
-		output "$msg" 1
+	if [[ $debug || $headercheck || $sparse ]] || $distcheckfake \
+		|| $verbose ; then
+		if ! $config ; then
+			msg="Options d, F, H, s and v require option c."
+			output "$msg" 1
+			script_exit 1
+		fi
+	fi
+
+	# One option has to be selected.
+	if ! $build && ! $config && ! $distcheck && ! $dist \
+		&& ! $distcheckfake && ! $gnulib && ! $tarball ; then
+		output "Either b, c, C, D, F, g or T must be set." 1
 		script_exit 1
 	fi
-fi
 
-# One option has to be selected.
-if ! $build && ! $config && ! $distcheck && ! $dist && ! $distcheckfake \
-	&& ! $gnulib && ! $tarball ; then
-	output "Either b, c, C, D, F, g or T must be set." 1
-	script_exit 1
-fi
+	# Script can accept 1 other argument, the base directory.
+	if [[ $# > 1 ]]; then
+		output "Invalid argument." 1
+		script_exit 1
+	fi
 
-# Script can accept 1 other argument, the base directory.
-if [[ $# > 1 ]]; then
-	output "Invalid argument." 1
-	script_exit 1
-fi
+	if [[ $# == 1 ]]; then
+		basedir=$1
+	fi
+}
 
-if [[ $# == 1 ]]; then
-	basedir=$1
-fi
+# Process gnulib option
+# No parameters.
+# No return value
+proc_gnulib()
+{
+	local cmdline
+	local msg
+	local status
 
-# Create build log.
-exec 1> >(tee build-output.txt) 2>&1
-
-
-# Now the main processing.
-if $gnulib ; then
 	if [[ -f $basedir/m4/gnulib-cache.m4 ]]; then
 		cmdline="gnulib-tool --update"$verbosemake$verbosemake
 		cmdline+=" --dir="$basedir
@@ -328,9 +354,17 @@ if $gnulib ; then
 		msg+="missing $basedir/m4/gnulib-cache.m4"
 		output "$msg" 0
 	fi
-fi
+}
 
-if $config ; then
+# Process configure
+# No parameters
+# No return value
+proc_config()
+{
+	local cmdline
+	local msg
+	local status
+
 	autoreconf -if $basedir
 	status=$?
 	msg="autoreconf -if "$basedir" completed with exit status: $status"
@@ -347,40 +381,70 @@ if $config ; then
 	status=$?
 	output "$cmdline completed with exit status: $status" $status
 	std_cmd_err_handler $status
+}
+
+# Process the correct make variation.
+# No parameters.
+# Returns 0 or command line error.
+proc_make()
+{
+	local cmdline
+	local status
+
+	if $build ; then
+		cmdline="make"$verbosemake
+	fi
+
+	if $distcheck ; then
+		cmdline="make"$verbosemake" distcheck clean"
+	fi
+
+	if $dist ; then
+		cmdline="make"$verbosemake" dist clean"
+	fi
+
+	if $distcheckfake ; then
+		cmdline="make"$verbosemake" distcheck clean "
+		cmdline+="DISTCHECK_CONFIGURE_FLAGS=--enable-distcheckfake=yes"
+	fi
+
+	if $tarball ; then
+		cmdline="make"$verbosemake" srctarball clean"
+	fi
+
+	# May get here with cmdline empty if, for example, only the -g option
+	# was set.
+	if [[ ! $cmdline ]]; then
+		return 0
+	fi
+
+	eval "$cmdline"
+	status=$?
+	output "$cmdline completed with exit status: $status" $status
+	return $status
+}
+
+
+########
+# Main #
+########
+
+proc_CL $@
+
+# Create build log.
+exec 1> >(tee build-output.txt) 2>&1
+
+# Now the main processing.
+if $gnulib ; then
+	proc_gnulib
 fi
 
-cmdline=""
-if $build ; then
-	cmdline="make"$verbosemake
+if $config ; then
+	proc_config
 fi
 
-if $distcheck ; then
-	cmdline="make"$verbosemake" distcheck clean"
-fi
-
-if $dist ; then
-	cmdline="make"$verbosemake" dist clean"
-fi
-
-if $distcheckfake ; then
-	cmdline="make"$verbosemake" distcheck clean"
-	cmdline=$cmdline" DISTCHECK_CONFIGURE_FLAGS=--enable-distcheckfake=yes"
-fi
-
-if $tarball ; then
-	cmdline="make"$verbosemake" srctarball clean"
-fi
-
-# May get here with cmdline empty if, for example, only the -g option was set.
-if [[ ! $cmdline ]]; then
-	script_exit 0
-fi
-
-eval "$cmdline"
-status=$?
-output "$cmdline completed with exit status: $status" $status
-std_cmd_err_handler $status
-
+proc_make
+std_cmd_err_handler $?
 
 script_exit 0
 
