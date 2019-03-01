@@ -28,6 +28,7 @@
 #				[ -h || --help ] ||			#
 #				[ -H || --header-check ] ||		#
 #				[ -s || --sparse ] ||			#
+#				[ -t || --testing-hacks ] ||		#
 #				[ -T || --source-tarball ] ||		#
 #				[ -v || --verbose ] ||			#
 #				[ -V || --version ]			#
@@ -113,6 +114,7 @@
 #				Introduce more meaningful exit codes.	#
 #				Tidy up local and global variables.	#
 #				Add -a --at-only option.		#
+#				Add -t --testing-hacks option.		#
 #									#
 #########################################################################
 
@@ -134,6 +136,7 @@ gnulib=false
 headercheck=""
 sparse=""
 tarball=false
+testinghacks=""
 verbose=false
 verboseconfig=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
@@ -166,6 +169,10 @@ Usage is $0 [options]
 	-h or --help displays usage information
 	-H or --header-check show include stack depth
 	-s or --sparse build using sparse
+	-t or --testing-hacks some build changes may be required for testing
+		purposes. e.g. A script may invoke a project jar file which
+		when installed will be somewhere under datadir, but during
+		testing it is in the project tree.
 	-T or --source-tarball create source tarball
 	-v or --verbose emit extra information
 	-V or --version displays version information
@@ -228,9 +235,10 @@ proc_CL()
 	local GETOPTTEMP
 	local tmp
 
-	tmp="getopt -o abcCdDFghHsTvV "
+	tmp="getopt -o abcCdDFghHstTvV "
 	tmp+="--long at-only,build,config,distcheck,debug,dist,distcheckfake,"
-	tmp+="gnulib,help,header-check,sparse,source-tarball,verbose,version "
+	tmp+="gnulib,help,header-check,sparse,source-tarball,testing-hacks,"
+	tmp+="verbose,version "
 	tmp+="-n $0 -- $@"
 	GETOPTTEMP=`eval $tmp`
 	eval set -- "$GETOPTTEMP"
@@ -309,6 +317,10 @@ proc_CL()
 			sparse=" --enable-sparse=yes"
 			shift
 			;;
+		-t|--testing-hacks)
+			testinghacks=" --enable-testinghacks=yes"
+			shift
+			;;
 		-T|--source-tarball)
 			if $build || $distcheck || $dist || $distcheckfake ; \
 				then
@@ -342,9 +354,9 @@ proc_CL()
 	done
 
 	if [[ $atonly || $debug || $headercheck || $sparse ]] \
-		|| $distcheckfake || $verbose ; then
+		|| $distcheckfake || $testinghacks || $verbose ; then
 		if ! $config ; then
-			msg="Options a, d, F, H, s and v require option c."
+			msg="Options a, d, F, H, s, t and v require option c."
 			output "$msg" 1
 			script_exit 64
 		fi
@@ -407,7 +419,7 @@ proc_config()
 	std_cmd_err_handler $status
 
 	cmdline="$basedir/configure$verboseconfig$atonly$debug$headercheck"
-	cmdline+="$sparse"
+	cmdline+="$sparse$testinghacks"
 
 	if $distcheckfake ; then
 		cmdline=$cmdline" --enable-distcheckfake=yes"
