@@ -1,8 +1,7 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
-# Author: Copyright (C) 2014-2018  Mark Grant				#
+# Author: Copyright (C) 2014-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -34,6 +33,7 @@
 # 27/10/2018	MG	1.0.8	Change srctarball target to build with	#
 #				src between package name and version in	#
 #				filename.				#
+# 16/03/2019	MG	1.0.9	Remove unnecessary shebang.		#
 #									#
 #########################################################################
 
