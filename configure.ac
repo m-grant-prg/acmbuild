@@ -60,6 +60,7 @@
 #				probably use the source tarball rather	#
 #				than a dist tarball.			#
 # 16/03/2019	MG	1.1.1	Pass bash path to scripts and Makefiles	#
+#				Remove leading v from package version.	#
 #									#
 #########################################################################
 
@@ -76,7 +77,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT(AutoTools Build Script, v1.2.13, m.grant.prg@gmail.com, acmbuild)
+AC_INIT(AutoTools Build Script, 1.2.13, m.grant.prg@gmail.com, acmbuild)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 

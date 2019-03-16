@@ -34,6 +34,9 @@
 #				src between package name and version in	#
 #				filename.				#
 # 16/03/2019	MG	1.0.9	Remove unnecessary shebang.		#
+#				Change source tarball name to be the	#
+#				same as that in GitHub releases. This	#
+#				aids integrating with rpm generation.	#
 #									#
 #########################################################################
 
@@ -46,7 +49,7 @@ SUBDIRS = src/prg/bash src/man/1
 
 srctarball:
 	@cwd="$${PWD}" && \
-	targ="$${cwd}/@PACKAGE_TARNAME@-src-@PACKAGE_VERSION@.tar.gz" && \
+	targ="$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz" && \
 	cd @srcdir@ && \
 	echo "making srctarball from @srcdir@" && \
 	echo "GA	$${targ}" && \
