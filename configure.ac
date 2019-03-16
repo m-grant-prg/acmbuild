@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2014-2018  Mark Grant				#
+# Author: Copyright (C) 2014-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -59,10 +59,11 @@
 #				Because of this, other packaging should	#
 #				probably use the source tarball rather	#
 #				than a dist tarball.			#
+# 16/03/2019	MG	1.1.1	Pass bash path to scripts and Makefiles	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.14 $])
+AC_REVISION([$Revision: 1.1.1 $])
 
 AC_PREREQ([2.69])
 
@@ -119,6 +120,7 @@ AC_SUBST(pkgversion, $PACKAGE_VERSION)
 ########################
 
 AC_SUBST([edit], ["sed \
+		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
@@ -203,9 +205,9 @@ if test "x$GETOPT" = "xno" ; then
 	AC_MSG_ERROR([getopt not found])
 fi
 
-AC_CHECK_PROG([BASH], [bash], [yes], [no])
+AC_PATH_PROG([BASH], [bash], [no])
 if test "x$BASH" = "xno" ; then
-   	AC_MSG_ERROR([bash not found])
+	AC_MSG_ERROR([bash not found])
 fi
 
 AC_CHECK_PROG([TXT2MAN], [txt2man], [yes], [no])

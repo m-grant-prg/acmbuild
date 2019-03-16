@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! @bashlocation@
 #########################################################################
 #									#
 #	bootstrap.sh is automatically generated,			#
@@ -125,6 +125,8 @@
 #				allows support for things like		#
 #				--prefix=... etc.			#
 #				Add missing error check after getopt.	#
+#				Replace #! env bash with absolute path	#
+#				via configure.				#
 #									#
 #########################################################################
 

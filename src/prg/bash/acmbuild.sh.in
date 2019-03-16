@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! @bashlocation@
 #########################################################################
 #									#
 #	acmbuild.sh is automatically generated,				#
@@ -9,7 +9,7 @@
 #########################################################################
 #									#
 # Script ID: acmbuild.sh						#
-# Author: Copyright (C) 2018  Mark Grant				#
+# Author: Copyright (C) 2018-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -39,13 +39,15 @@
 #				argument instead.			#
 #				Improve trap exit code handling.	#
 #				Tidy up local and global variables.	#
+# 16/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
+#				via configure.				#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-readonly version="1.0.2"		# set version variable
+readonly version="1.0.3"		# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 
