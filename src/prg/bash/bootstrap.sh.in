@@ -229,16 +229,13 @@ script_exit()
 # No return value.
 trap_exit()
 {
-	local exit_code=$?
+	local -i exit_code=$?
 	local msg
 
 	msg="Script terminating with exit code $exit_code due to trap received."
 	output "$msg" 1 0
 	script_exit $exit_code
 }
-
-# Setup trap
-trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
 # Process command line arguments with GNU getopt.
 # Parameters -	$1 is the command line.
@@ -490,6 +487,9 @@ proc_make()
 ########
 # Main #
 ########
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
 proc_CL $@
 
