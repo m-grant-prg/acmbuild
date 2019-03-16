@@ -233,7 +233,7 @@ trap_exit()
 	local msg
 
 	msg="Script terminating with exit code $exit_code due to trap received."
-	output "$msg" 1 0
+	output "$msg" 1
 	script_exit $exit_code
 }
 
