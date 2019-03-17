@@ -133,7 +133,8 @@
 ##################
 # Init variables #
 ##################
-readonly version="1.3.9"		# set version variable
+
+readonly version=1.3.9+rc1		# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
