@@ -167,7 +167,7 @@ configcli_extra_args=""
 usage ()
 {
 cat << EOF
-Usage is $0 [options]
+Usage:- acmbuild.sh / $0 [options] [-- configure options to pass on]
 	-a or --at-only during testing and for an AutoTools-only install, some
 		build changes are required. e.g. You may reference an external
 		Java jar in datadir but in AT builds and installations this
@@ -244,13 +244,14 @@ trap_exit()
 proc_CL()
 {
 	local GETOPTTEMP
+	local script_name="acmbuild.sh/bootstrap.sh"
 	local tmp
 
 	tmp="getopt -o abcCdDFghHstTvV "
 	tmp+="--long at-only,build,config,distcheck,debug,dist,distcheckfake,"
 	tmp+="gnulib,help,header-check,sparse,source-tarball,testing-hacks,"
 	tmp+="verbose,version "
-	tmp+="-n $0 -- $@"
+	tmp+="-n $script_name -- $@"
 	GETOPTTEMP=`eval $tmp`
 	std_cmd_err_handler $?
 
