@@ -39,8 +39,9 @@
 #				argument instead.			#
 #				Improve trap exit code handling.	#
 #				Tidy up local and global variables.	#
-# 16/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
+# 17/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
 #				via configure.				#
+#				bootstrap.sh is now in pkglibexecdir.	#
 #									#
 #########################################################################
 
@@ -84,6 +85,6 @@ trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 # Main #
 ########
 
-bootstrap.sh "$@"
+@pkglibexecdir@/bootstrap.sh "$@"
 script_exit $?
 

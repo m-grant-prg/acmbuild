@@ -29,7 +29,8 @@
 # 28/04/2017	MG	1.0.6	Rename source file extension .sh.in	#
 # 01/12/2017	MG	1.0.7	Add SPDX license tags to source files.	#
 # 06/02/2018	MG	1.0.8	Add build of bootstrap.sh		#
-# 16/03/2019	MG	1.0.9	Remove unnecessary shebang.		#
+# 17/03/2019	MG	1.0.9	Remove unnecessary shebang.		#
+#				Install bootstrap.sh in pkglibexecdir.	#
 #									#
 #########################################################################
 
@@ -41,12 +42,17 @@ acmbuild.sh bootstrap.sh: Makefile
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-
 acmbuild.sh: $(srcdir)/acmbuild.sh.in
 bootstrap.sh: $(srcdir)/bootstrap.sh.in
 
-bin_SCRIPTS = acmbuild.sh bootstrap.sh
+
+bin_SCRIPTS = acmbuild.sh
+
+pkglibexec_SCRIPTS = bootstrap.sh
+
 
 EXTRA_DIST = $(srcdir)/acmbuild.sh.in $(srcdir)/bootstrap.sh.in
 
+
 CLEANFILES = *.tmp acmbuild.sh bootstrap.sh
+
