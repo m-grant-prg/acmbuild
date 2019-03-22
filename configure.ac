@@ -82,6 +82,29 @@ AC_INIT(AutoTools Build Script, 1.2.13+rc1, m.grant.prg@gmail.com, acmbuild)
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
+#
+# The following allows for an enable-testinghacks=yes/no command line option.
+# The conditional TESTINGHACKS is made available to the makefiles.
+# This allows different variable substitutions depending on whether in a test
+# environment or a production build / install environment.
+#
+AC_ARG_ENABLE(testinghacks,
+	--enable-testinghacks    Build with testing hacks for local testing,
+	[case "${enableval}" in
+	yes) testinghacks=true ;;
+	no)  testinghacks=false ;;
+	*) AC_MSG_ERROR(bad value ${enableval} for --enable-testinghacks) ;;
+	esac],testinghacks=false)
+AM_CONDITIONAL(TESTINGHACKS, test x$testinghacks = xtrue)
+
+if test "x${testinghacks}" = xtrue; then
+	AC_MSG_NOTICE(Building with testing hacks for local testing.)
+	AC_SUBST(scriptloc,"\$(builddir)")
+else
+	AC_SUBST(scriptloc,"\$(pkglibexecdir)")
+fi
+
+
 ########################
 #
 # Now set up a sed sequence to substitute bookmarks in script files with either
@@ -121,6 +144,7 @@ AC_SUBST(pkgversion, $PACKAGE_VERSION)
 ########################
 
 AC_SUBST([edit], ["sed \
+		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
