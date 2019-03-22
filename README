@@ -22,8 +22,62 @@ Contents
 1 ... Project Description
 =========================
 
-This is a simple script to reduce repetitive typing of some AutoTools commands.
+This project produces a helper script for AutoTools projects. It has two main
+goals; to reduce repetitive typing of some AutoTools commands, and, to afford a
+more standard interface for the programmer across AutoTools projects.
 
+
+Design
+------
+At the command line level the script offers it's own options and option
+pass-through, the latter passes arguments unparsed and untouched straight to the
+configure command line. For example:-
+
+	acmbuild.sh --config .. -- --prefix=/usr
+
+In this case --config is an acmbuild.sh option to configure the project and
+anything after the " -- " is passed untouched to configure, invoking:-
+
+	configure --prefix=/usr
+
+
+The acmbuild.sh options come in two flavours; action options and enabling
+options.
+
+b, c, C, D, F, g and T are action options. -b, for instance will run make,
+whereas -D will run make dist.
+
+The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
+
+	acmbuild.sh --config --debug ..
+
+will run
+
+	configure --enable-debug=yes
+
+That is all. For it to be meaningful the developer must process this argument
+in configure. The script does not know if the option is sensible, or indeed, if
+it is supported by configure, so, in the above example, if the developer had not
+written code in configure to process this argument, configure will issue a
+warning and then just ignore the option.
+
+
+Implementation
+--------------
+The project functionality is implemented as two scripts; acmbuild.sh and
+bootstrap.sh. acmbuild.sh does nothing more than invoke bootstrap.sh with the
+same arguments. This means that all the functionality is in bootstrap.sh. On
+project install both scripts are installed but only acmbuild.sh is installed in
+the PATH. So all usage is via acmbuild.sh. The reason for this is that it
+enables a secondary usage of bootstrap.sh. bootstrap.sh can be copied and pasted
+into the project-root of all AutoTools project to provide a simplified and
+standardised build bootstrap as is generally recommended. This eliminates any
+possible confusion as to which version of bootstrap.sh is being used whilst also
+obviating any dependency on this project.
+
+
+Options
+-------
 The script offers the following options:-
 
 	-a, --at-only
