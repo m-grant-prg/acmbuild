@@ -9,8 +9,26 @@
 # Purpose:								#
 # Autoconfigure script file to configure acmbuild project.		#
 #									#
-# configure cmd line syntax: ./configure				#
+# configure cmd line syntax:						#
+# ./configure	[ --enable-testinghacks=<yes|no> [default: no] ]	#
 #									#
+# Layout: (Only relevant sections will exist).				#
+# ChangeLog : High level ChangeLog					#
+# SECTION  1: Initialisation & Setup					#
+# SECTION  2: Architecture, target and host checks			#
+# SECTION  3: Command line arguments					#
+# SECTION  4: Compiler setup						#
+# SECTION  5: Check for programs					#
+# SECTION  6: Check for libraries					#
+# SECTION  7: Check for header files					#
+# SECTION  8: Check for types						#
+# SECTION  9: Check for structures					#
+# SECTION 10: Check for compiler characteristics			#
+# SECTION 11: Check for library functions				#
+# SECTION 12: Check for pkg-config files				#
+# SECTION 13: Check for system services					#
+# SECTION 14: Additional checks & variables				#
+# SECTION 15: Specify the output files					#
 #									#
 #########################################################################
 
@@ -59,28 +77,61 @@
 #				Because of this, other packaging should	#
 #				probably use the source tarball rather	#
 #				than a dist tarball.			#
-# 16/03/2019	MG	1.1.1	Pass bash path to scripts and Makefiles	#
+# 22/03/2019	MG	1.1.1	Pass bash path to scripts and Makefiles	#
 #				Remove leading v from package version.	#
+#				Add --enable-testinghacks option.	#
+#				Re-vamp to new standard layout.		#
 #									#
 #########################################################################
+
+
+#########################################
+#					#
+# SECTION  1: Initialisation & Setup	#
+#					#
+#########################################
 
 AC_REVISION([$Revision: 1.1.1 $])
 
 AC_PREREQ([2.69])
 
-
-########################
 #
 # The package version in ac init will be used to create an output variable which
 # can be used by ac output and / or the sed setup below to substitute bookmarks
 # in source files.
 #
-########################
-
 AC_INIT(AutoTools Build Script, 1.2.13+rc1, m.grant.prg@gmail.com, acmbuild)
+
+AC_MSG_NOTICE(initialisation and setup)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
+#
+# Passes the options to all am files. Puts objects in the sub-directory
+# containing the source. Forces tar to use --format=posix in make dist.
+# This also checks :-	BSD install	make variable set	mkdir -p
+#			gawk
+#
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
+
+#
+# Standard macros will be automatically placed in m4.
+# Programmer defined macros should be placed in, say, m4extra which allows us
+# to exclude the standard macros from being git tracked. This other directory
+# must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
+# e.g.
+# ACLOCAL_AMFLAGS = -I m4 -I m4extra
+#
+AC_CONFIG_MACRO_DIR([m4])
+
+
+#########################################
+#					#
+# SECTION  3: Command line arguments	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(checking command line arguments)
 
 #
 # The following allows for an enable-testinghacks=yes/no command line option.
@@ -105,12 +156,107 @@ else
 fi
 
 
-########################
+#########################################
+#					#
+# SECTION  5: Check for programs	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(checking for basic programs that have AutoConf checks)
+
+#
+# The small set of tools you can expect to find on any machine.
+#
+# awk		date		grep		od
+# basename	diff		join		rm
+# cat		dirname		ln		rmdir
+# cc		egrep		ls		sed
+# chgrp		expr		mkdir		sleep
+# chown		expr (‘|’)	mkfifo		sort
+# chmod		expr (‘:’)	mknod		tar
+# cmp		fgrep		mktemp		touch
+# cp		find		mv		tr
+#
+# (For further information including limitations to the above, see Section 11.15
+# in the GNU AutoConf Manual).
+#
+# If using am init automake, gl early or lt init the following programs are
+# automatically checked:-
+#
+# am init automake
+#	BSD install	mkdir -p	gawk
+#
+# gl early
+#	ar	grep	egrep	ranlib
+#
+# lt init
+#	fgrep	ranlib	sed
+#
+# Basic and AutoTools program checks.
+#
+AC_PROG_AWK
+AC_PROG_EGREP
+AC_PROG_FGREP
+AC_PROG_GREP
+AC_PROG_LN_S
+AC_PROG_MKDIR_P
+AC_PROG_SED
+
+AC_MSG_NOTICE(checking for some standard AutoTools required programs)
+AC_PROG_INSTALL
+
+AC_MSG_NOTICE(checking for particular programs required by this build)
+AC_CHECK_PROG([TAR], [tar], [yes], [no])
+if test "x$TAR" = "xno" ; then
+	AC_MSG_ERROR([tar not found])
+fi
+
+AC_CHECK_PROG([TXT2MAN], [txt2man], [yes], [no])
+if test "x$TXT2MAN" = "xno" ; then
+	AC_MSG_ERROR([txt2man not found])
+fi
+
+AC_CHECK_PROG([TXT2MANWRAP], [txt2manwrap], [yes], [no])
+if test "x$TXT2MANWRAP" = "xno" ; then
+	AC_MSG_ERROR([txt2manwrap not found])
+fi
+
+AC_MSG_NOTICE(checking for particular programs required at build and run time)
+AC_PATH_PROG([BASH], [bash], [no])
+if test "x$BASH" = "xno" ; then
+	AC_MSG_ERROR([bash not found])
+fi
+
+AC_MSG_NOTICE(checking for particular programs required at run time)
+AC_CHECK_PROG(ECHO, echo, yes, no)
+if test "x$ECHO" = "xno" ; then
+	AC_MSG_WARN(echo not found - needed at run time)
+fi
+
+AC_CHECK_PROG(PRINTF, printf, yes, no)
+if test "x$PRINTF" = "xno" ; then
+	AC_MSG_WARN(printf not found - needed at run time)
+fi
+
+AC_CHECK_PROG([GETOPT], [getopt], [yes], [no])
+if test "x$GETOPT" = "xno" ; then
+	AC_MSG_WARN(getopt not found - needed at run time)
+fi
+
+
+#################################################
+#						#
+# SECTION 14: Additional checks & variables	#
+#						#
+#################################################
+
+AC_MSG_NOTICE(processing additional checks and variables)
+
 #
 # Now set up a sed sequence to substitute bookmarks in script files with either
 # standard GNU Directory Variables, or with programmer-defined variables set up
-# using an AC_SUBST macro above. This sed sequence will be invoked at
-# programmer discretion at sub-directory Makefile.am level.
+# using an AC_SUBST macro above. This sed sequence will be invoked at programmer
+# discretion at sub-directory Makefile.am level.
 # ----------------------
 #
 # prefix	/usr/local (typically)
@@ -141,8 +287,6 @@ fi
 #	pkglibdir	${libdir}/${PACKAGE}
 #	pkglibexecdir	${libexecdir}/${PACKAGE}
 #
-########################
-
 AC_SUBST([edit], ["sed \
 		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
@@ -176,86 +320,20 @@ AC_SUBST([edit], ["sed \
 		-e 's|@pkglibexecdir[@]|\$(pkglibexecdir)|g'"])
 
 
-# Passes the options to all am files. Puts objects in the sub-directory
-# containing the source. Forces tar to use --format=posix in make dist.
-# This also checks :-	BSD install	make variable set	mkdir -p
-#			gawk
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
+#########################################
+#					#
+# SECTION 15: Specify the output files	#
+#					#
+#########################################
 
+AC_MSG_NOTICE(processing output files)
 
-########################
 #
-# Standard macros will be automatically placed in m4.
-# Programmer defined macros should be placed in, say, m4extra which allows us
-# to exclude the standard macros from being git tracked. This other directory
-# must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
-# e.g.
-# ACLOCAL_AMFLAGS = -I m4 -I m4extra
+# Non-Makefile files to generate.
+# AC_CONFIG_FILES should not be used to substitute AutoConf Installation
+# Directory Variables, (bindir and friends), except in Makefiles and pkg-config
+# files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
 #
-########################
-
-AC_CONFIG_MACRO_DIR([m4])
-
-
-########################
-#
-# Checks for programs.
-# If using am init automake, gl early or lt init the following programs are
-# automatically checked:-
-#
-# am init automake
-#	BSD install	mkdir -p	gawk
-#
-# gl early
-#	ar	grep	egrep	ranlib
-#
-# lt init
-#	fgrep	ranlib	sed
-#
-# Particular and generic program checks follow:
-#
-########################
-
-AC_MSG_NOTICE([checking for particular programs required by this application])
-AC_PROG_SED
-
-AC_MSG_NOTICE([checking for generic programs required by this application])
-AC_CHECK_PROG([TAR], [tar], [yes], [no])
-if test "x$TAR" = "xno" ; then
-	AC_MSG_ERROR([tar not found])
-fi
-
-AC_CHECK_PROG([GETOPT], [getopt], [yes], [no])
-if test "x$GETOPT" = "xno" ; then
-	AC_MSG_ERROR([getopt not found])
-fi
-
-AC_PATH_PROG([BASH], [bash], [no])
-if test "x$BASH" = "xno" ; then
-	AC_MSG_ERROR([bash not found])
-fi
-
-AC_CHECK_PROG([TXT2MAN], [txt2man], [yes], [no])
-if test "x$TXT2MAN" = "xno" ; then
-   	AC_MSG_ERROR([txt2man not found])
-fi
-
-AC_CHECK_PROG([TXT2MANWRAP], [txt2manwrap], [yes], [no])
-if test "x$TXT2MANWRAP" = "xno" ; then
-   	AC_MSG_ERROR([txt2manwrap not found])
-fi
-
-# Checks for libraries.
-
-# Checks for C header files.
-
-# Checks for C++ header files.
-
-# Checks for typedefs, structures, and compiler characteristics.
-
-# Checks for library functions.
-
-# Checks for pkg-config files.
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
@@ -263,3 +341,4 @@ AC_CONFIG_FILES([Makefile
 		src/man/1/Makefile])
 
 AC_OUTPUT
+
