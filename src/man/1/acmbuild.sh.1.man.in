@@ -1,59 +1,101 @@
 NAME
 acmbuild.sh - acmbuild script
 SYNOPSIS
-acmbuild [OPTION]
+acmbuild [OPTION] [-- PASS_THRU_OPTIONS]
 DESCRIPTION
 A script to automate AutoConf and Make builds.
+
+At the command line level the script offers it's own options and option
+pass-through, the latter passes arguments unparsed and untouched straight to the
+configure command line. For example:-
+
+	acmbuild.sh --config .. -- --prefix=/usr
+
+In this case --config is an acmbuild.sh option to configure the project and
+anything after the " -- " is passed untouched to configure, invoking:-
+
+	configure --prefix=/usr
+
+
+The acmbuild.sh options come in two flavours; action options and enabling
+options.
+
+b, c, C, D, F, g and T are action options. -b, for instance will run make,
+whereas -D will run make dist.
+
+The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
+
+	acmbuild.sh --config --debug ..
+
+will run
+
+	configure --enable-debug=yes
+
+That is all. For it to be meaningful the developer must process this argument
+in configure. The script does not know if the option is sensible, or indeed, if
+it is supported by configure, so, in the above example, if the developer had not
+written code in configure to process this argument, configure will issue a
+warning and then just ignore the option.
 
 As even -s --quiet output can be quite voluminous, this script also copies
 stdout and stderr to ./build-output.txt.
 OPTIONS
--b, --build make the project.
+-a, --at-only  during testing and for an AutoTools-only install, some build
+changes are required. e.g. You may reference an external Java jar in datadir but
+in AT builds and installations this may expand to /usr/local/share... So a
+substitution is required for this scenario.
 
--c, --config configure the project.
+-b, --build  make the project.
 
--C, --distcheck perform a normal make distcheck.
+-c, --config  configure the project.
 
--d, --debug build with appropriate debug flags.
+-C, --distcheck  perform a normal make distcheck.
 
--D, --dist perform a make dist.
+-d, --debug  build with appropriate debug flags.
 
--F, --distcheckfake run a make distcheck using a fake AT standard directory as a
-substitute for an absolute path which distcheck does not support.
+-D, --dist  perform a make dist.
 
--g, --gnulib run gnulib-tool --update. Checks for the existence of the cache
+-F, --distcheckfake  run a make distcheck using a fake AT standard directory as
+a substitute for an absolute path which distcheck does not support.
+
+-g, --gnulib  run gnulib-tool --update. Checks for the existence of the cache
 file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
--h, --help prints usage information.
+-h, --help  prints usage information.
 
--H, --header-check passes --enable-headercheck=yes to configure.
+-H, --header-check  show include stack depth
 
--s, --sparse pass --enable-sparse=yes to configure.
+-s, --sparse  pass --enable-sparse=yes to configure.
 
--T, --source-tarball perform a make srctarball to build a source tarball.
+-t, --testing-hacks  some build changes may be required for testing purposes.
+e.g. A script may invoke a project jar file which when installed will be
+somewhere under datadir, but during testing it is in the project tree.
 
--v, --verbose emit extra information
+-T, --source-tarball  perform a make srctarball to build a source tarball.
 
--V, --version prints version information
+-v, --verbose  emit extra information
+
+-V, --version  prints version information
 
 Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
 mutually exclusive.
 
-Options d debug, F distcheckfake, H header-check, s sparse and v verbose are
-enabled by configure so require option c config.
+Options a at-only, d debug, F distcheckfake, H header-check, s sparse,
+t testing-hacks and v verbose are enabled by configure so require option c
+config.
 EXIT STATUS
-0
-if OK,
+0 - Success
 
-1
-on failure.
+1 - General failure
+
+64 - Error in command line
 
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright 2014-2018 Mark Grant.
+Copyright (C) 2014-2019 Mark Grant.
 .br
 License GPLv3+: GNU GPL version 3 or later
 .br
@@ -62,3 +104,4 @@ License GPLv3+: GNU GPL version 3 or later
 This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
+
