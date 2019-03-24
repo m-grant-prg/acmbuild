@@ -106,7 +106,7 @@
 # 06/08/2018	MG	1.3.6	Add -H --header-check option.		#
 #				Change error log file to build log.	#
 # 22/08/2018	MG	1.3.7	Add verbose option.			#
-# 01/03/2019	MG	1.3.8	Style if, for and while loops after C.	#
+# 24/03/2019	MG	1.4.1	Style if, for and while loops after C.	#
 #				Use -proper- booleans.			#
 #				Remove script_exit_code variable 	#
 #				propogating the exit code as a function	#
@@ -117,7 +117,7 @@
 #				Tidy up local and global variables.	#
 #				Add -a --at-only option.		#
 #				Add -t --testing-hacks option.		#
-# 16/03/2019	MG	1.3.9	Add support for non-option arguments	#
+#				Add support for non-option arguments	#
 #				which are not option arguments being	#
 #				passed straight through to the		#
 #				configure command line apart from the	#
@@ -134,7 +134,7 @@
 # Init variables #
 ##################
 
-readonly version=1.3.9+rc1		# set version variable
+readonly version=1.4.1			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
