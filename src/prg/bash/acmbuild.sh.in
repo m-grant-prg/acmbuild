@@ -21,7 +21,8 @@
 # Syntax:	acmbuild	Parameters as per boostrap.sh		#
 #									#
 # Exit Codes:	0 - success						#
-#		1 - failure.						#
+#		1 - failure						#
+#		Exit codes from bootstrap.sh				#
 #									#
 # Further Info:								#
 #									#
@@ -39,7 +40,7 @@
 #				argument instead.			#
 #				Improve trap exit code handling.	#
 #				Tidy up local and global variables.	#
-# 22/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
+# 24/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
 #				via configure.				#
 #				bootstrap.sh is now in pkglibexecdir.	#
 #				Use scriptloc substitution variable to	#
