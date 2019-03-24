@@ -1,3 +1,30 @@
+Release 1.3.1 2019-03-24
+Update bootstrap.sh to version 1.4.1
+Re-vamp configure.ac to new standard layout
+Implement testing-hacks configure option
+Update man page with latest functionality
+Improve project explanation in README
+Install bootstrap.sh in pkglibexecdir
+Use (( ... )) where appropriate in bash scripts
+Install standard GNU files eg AUTHOR etc
+Correct package versioning
+Replace #! env bash with absolute path from configure
+bootstrap.sh: Add missing error check after getopt
+Remove unnecessary shebangs from Makefile.am's
+README: Add Copyright statement
+bootstrap.sh: Pass non-option args to configure command line
+Add -t --testing-hacks option
+Add -a --at-only option
+Tidy up local / global variables
+Introduce more meaningful exit codes
+Re-factor into functions
+Use more standardised printf AOT echo
+Improve trap exit code handling
+Remove script_exit_code variable
+Use more powerful and neater [[ .. ]] style in bash scripts
+Use -true- booleans
+Style if, for and while loops after C
+
 Release 1.2.13 2018-10-27
 srctarball to use -src- in filename
 
