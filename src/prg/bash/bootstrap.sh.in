@@ -128,6 +128,7 @@
 #				Replace #! env bash with absolute path	#
 #				via configure.				#
 # 05/04/2019	MG	1.4.2	Just execute getopt command AOT eval.	#
+#				Setup trap as early as possible.	#
 #									#
 #########################################################################
 
@@ -238,6 +239,9 @@ trap_exit()
 	output "$msg" 1
 	script_exit $exit_code
 }
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
 # Process command line arguments with GNU getopt.
 # Parameters -	$1 is the command line.
@@ -490,9 +494,6 @@ proc_make()
 ########
 # Main #
 ########
-
-# Setup trap
-trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 
 proc_CL $@
 
