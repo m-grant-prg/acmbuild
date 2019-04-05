@@ -1,3 +1,10 @@
+2019-04-05 v 1.3.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Update bootstrap.sh to version 1.4.2
+	Setup trap as early as possible.
+	Just execute the getopt command AOT using eval.
+	acmbuild.sh script now at version 1.0.3
+	bootstrap.sh script now at version 1.4.2
+
 2019-03-24 v 1.3.1 Mark Grant <m.grant.prg@gmail.com>
 	*  Update bootstrap.sh to version 1.4.1
 	Re-vamp configure.ac to new standard layout
