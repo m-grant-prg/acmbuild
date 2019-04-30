@@ -129,6 +129,7 @@
 #				via configure.				#
 # 05/04/2019	MG	1.4.2	Just execute getopt command AOT eval.	#
 #				Setup trap as early as possible.	#
+# 30/04/2019	MG	1.4.3	Correct getopt CL for proper quoting.	#
 #									#
 #########################################################################
 
@@ -136,7 +137,7 @@
 # Init variables #
 ##################
 
-readonly version=1.4.2			# set version variable
+readonly version=1.4.3			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -255,9 +256,8 @@ proc_CL()
 	tmp="getopt -o abcCdDFghHstTvV "
 	tmp+="--long at-only,build,config,distcheck,debug,dist,distcheckfake,"
 	tmp+="gnulib,help,header-check,sparse,source-tarball,testing-hacks,"
-	tmp+="verbose,version "
-	tmp+="-n $script_name -- $@"
-	GETOPTTEMP=$($tmp)
+	tmp+="verbose,version"
+	GETOPTTEMP=$($tmp -n "$script_name" -- "$@")
 	std_cmd_err_handler $?
 
 	eval set -- "$GETOPTTEMP"
@@ -495,7 +495,7 @@ proc_make()
 # Main #
 ########
 
-proc_CL $@
+proc_CL "$@"
 
 # Create build log.
 exec 1> >(tee build-output.txt) 2>&1
