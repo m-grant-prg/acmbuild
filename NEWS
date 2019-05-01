@@ -1,3 +1,9 @@
+Release 1.3.3 2019-05-01
+Update bootstrap.sh to version 1.4.3
+Improve description and example in documents
+Ensure args passed to other commands are inputised
+Correct getopt CL build WRT quoting
+
 Release 1.3.2 2019-04-05
 Setup trap as early as possible.
 Just execute the getopt command AOT using eval.
