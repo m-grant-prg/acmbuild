@@ -29,17 +29,20 @@ more standard interface for the programmer across AutoTools projects.
 
 Design
 ------
-At the command line level the script offers it's own options and option
-pass-through, the latter passes arguments unparsed and untouched straight to the
-configure command line. For example:-
+At the command line level the script offers it's own options and provides that
+all other arguments are passed unparsed and untouched straight to the configure
+command line. For example:-
 
-	acmbuild.sh --config .. -- --prefix=/usr
+	acmbuild.sh --config .. sysconfdir=/etc -- --prefix=/usr
 
-In this case --config is an acmbuild.sh option to configure the project and
-anything after the " -- " is passed untouched to configure, invoking:-
+In this case --config is an acmbuild.sh option to configure the project, .. is
+the base directory and everything else is passed untouched to configure,
+invoking:-
 
-	configure --prefix=/usr
+	../configure sysconfdir=/etc --prefix=/usr
 
+thereby obviously supporting environment variable setting and option passing for
+configure.
 
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
