@@ -27,6 +27,7 @@
 #				[ -g || --gnulib ] ||			#
 #				[ -h || --help ] ||			#
 #				[ -H || --header-check ] ||		#
+#				[ -K || --check ] ||			#
 #				[ -s || --sparse ] ||			#
 #				[ -t || --testing-hacks ] ||		#
 #				[ -T || --source-tarball ] ||		#
@@ -133,6 +134,8 @@
 #				Ensure variables used as input to other	#
 #				commands are inputised and evaluated	#
 #				with eval.				#
+# 18/06/2019	MG	1.4.4	Add -K --check option to run		#
+#				make --quiet check.			#
 #									#
 #########################################################################
 
@@ -141,12 +144,13 @@
 # Init variables #
 ##################
 
-readonly version=1.4.3			# set version variable
-readonly packageversion=1.3.3	# Version of the complete package
+readonly version=1.4.4			# set version variable
+readonly packageversion=1.3.4	# Version of the complete package
 
 # Set defaults
 atonly=""
 build=false
+check=false
 config=false
 debug=""
 dist=false
@@ -189,6 +193,7 @@ Usage:- acmbuild.sh / $0 [options] [-- configure options to pass on]
 	-g or --gnulib run gnulib-tool --update
 	-h or --help displays usage information
 	-H or --header-check show include stack depth
+	-K or --check run make check
 	-s or --sparse build using sparse
 	-t or --testing-hacks some build changes may be required for testing
 		purposes. e.g. A script may invoke a project jar file which
@@ -257,10 +262,10 @@ proc_CL()
 	local script_name="acmbuild.sh/bootstrap.sh"
 	local tmp
 
-	tmp="getopt -o abcCdDFghHstTvV "
-	tmp+="--long at-only,build,config,distcheck,debug,dist,distcheckfake,"
-	tmp+="gnulib,help,header-check,sparse,source-tarball,testing-hacks,"
-	tmp+="verbose,version"
+	tmp="getopt -o abcCdDFghHKstTvV "
+	tmp+="--long at-only,build,check,config,distcheck,debug,dist,"
+	tmp+="distcheckfake,gnulib,help,header-check,sparse,source-tarball,"
+	tmp+="testing-hacks,verbose,version"
 	GETOPTTEMP=$($tmp -n "$script_name" -- "$@")
 	std_cmd_err_handler $?
 
@@ -336,6 +341,17 @@ proc_CL()
 			headercheck=" --enable-headercheck=yes"
 			shift
 			;;
+		-K|--check)
+			if $distcheck || $dist || $distcheckfake || $tarball; \
+				then
+				msg="Options C, D, F, K and T are mutually "
+				msg+="exclusive."
+				output "$msg" 1
+				script_exit 64
+			fi
+			check=true
+			shift
+			;;
 		-s|--sparse)
 			sparse=" --enable-sparse=yes"
 			shift
@@ -386,9 +402,9 @@ proc_CL()
 	fi
 
 	# One option has to be selected.
-	if ! $build && ! $config && ! $distcheck && ! $dist \
+	if ! $build && ! $check && ! $config && ! $distcheck && ! $dist \
 		&& ! $distcheckfake && ! $gnulib && ! $tarball ; then
-		output "Either b, c, C, D, F, g or T must be set." 1
+		output "Either b, c, C, D, F, g, K or T must be set." 1
 		script_exit 64
 	fi
 
@@ -466,6 +482,13 @@ proc_make()
 
 	if $build ; then
 		cmdline="make"$verbosemake
+	fi
+
+	if $check ; then
+		if [[ ! $cmdline ]]; then
+			cmdline="make"$verbosemake
+		fi
+		cmdline+=" check"
 	fi
 
 	if $distcheck ; then
