@@ -23,7 +23,7 @@ configure.
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
-b, c, C, D, F, g and T are action options. -b, for instance will run make,
+b, c, C, D, F, g, K and T are action options. -b, for instance will run make,
 whereas -D will run make dist.
 
 The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
@@ -40,7 +40,7 @@ it is supported by configure, so, in the above example, if the developer had not
 written code in configure to process this argument, configure will issue a
 warning and then just ignore the option.
 
-As even -s --quiet output can be quite voluminous, this script also copies
+As even --quiet output can be quite voluminous, this script also copies
 stdout and stderr to ./build-output.txt.
 OPTIONS
 -a, --at-only  during testing and for an AutoTools-only install, some build
@@ -67,6 +67,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 -h, --help  prints usage information.
 
 -H, --header-check  show include stack depth
+
+-K, --check  run make check
 
 -s, --sparse  pass --enable-sparse=yes to configure.
 
