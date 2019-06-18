@@ -1,3 +1,7 @@
+Release 1.3.4 2019-06-18
+Update bootstrap.sh to version 1.4.4
+Add -K --check option to run make check.
+
 Release 1.3.3 2019-05-01
 Update bootstrap.sh to version 1.4.3
 Improve description and example in documents
