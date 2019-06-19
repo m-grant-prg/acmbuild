@@ -47,7 +47,7 @@ configure.
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
-b, c, C, D, F, g and T are action options. -b, for instance will run make,
+b, c, C, D, F, g, K and T are action options. -b, for instance will run make,
 whereas -D will run make dist.
 
 The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
@@ -120,6 +120,9 @@ The script offers the following options:-
 
 	-H, --header-check
 		show include stack depth
+
+	-K, --check
+		run make check
 
 	-s, --sparse
 		pass --enable-sparse=yes to configure.
@@ -201,7 +204,7 @@ In the project root directory there is 1 helper script; bootstrap.sh.
 bootstrap.sh
 ------------
 This misleadingly named script bootstraps the project build and provides other
-useful features. The main options below are probably b, c, C, D and T.
+useful features. The main script options are probably b, c, C, D and T.
 
 In AutoTools it is usually advisable to perform parallel builds. This means you
 build somewhere other than the project root. This is because building creates
@@ -216,68 +219,6 @@ script would be:-
 
 The last '..' points the way to project root.
 
-The full list of arguments to bootstrap.sh are:-
-
-	-a, --at-only
-		during testing and for an AutoTools-only install, some build
-		changes are required. e.g. You may reference an external Java
-		jar in datadir but in AT builds and installations this may
-		expand to /usr/local/share... So a substitution is required for
-		this scenario.
-
-	-b, --build
-		make the project.
-
-	-c, --config
-		configure the project.
-
-	-C, --distcheck
-		perform a normal make distcheck.
-
-	-d, --debug
-		build with appropriate debug flags.
-
-	-D, --dist
-		perform a make dist.
-
-	-F, --distcheckfake
-		run a make distcheck using a fake AT standard directory as a
-		substitute for an absolute path which distcheck does not
-		support.
-
-	-g, --gnulib
-		run gnulib-tool --update. Checks for the existence of the cache
-		file proj-root/m4/gnulib-cache.m4. If it does not exist the
-		update is not run.
-
-	-h, --help
-		prints usage information.
-
-	-H, --header-check
-		show include stack depth
-
-	-s, --sparse
-		pass --enable-sparse=yes to configure.
-
-	-t, --testing-hacks
-		some build changes may be required for testing purposes. e.g. A
-		script may invoke a project jar file which when installed will
-		be somewhere under datadir, but during testing it is in the
-		project tree.
-
-	-T, --source-tarball
-		perform a make srctarball to build a source tarball.
-
-	-v, --verbose
-		emit extra information
-
-	-V, --version
-		prints version information
-
-Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
-mutually exclusive.
-
-Options a at-only, d debug, F distcheckfake, H header-check, s sparse,
-t testing-hacks and v verbose  are enabled by configure so require option c
-config.
+For the full list of arguments to bootstrap.sh please look at the acmbuild.sh
+options section above.
 
