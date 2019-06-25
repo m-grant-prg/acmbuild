@@ -47,7 +47,7 @@ configure.
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
-b, c, C, D, F, g, K and T are action options. -b, for instance will run make,
+b, c, C, D, g, K and T are action options. -b, for instance will run make,
 whereas -D will run make dist.
 
 The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
@@ -105,11 +105,6 @@ The script offers the following options:-
 	-D, --dist
 		perform a make dist.
 
-	-F, --distcheckfake
-		run a make distcheck using a fake AT standard directory as a
-		substitute for an absolute path which distcheck does not
-		support.
-
 	-g, --gnulib
 		run gnulib-tool --update. Checks for the existence of the cache
 		file proj-root/m4/gnulib-cache.m4. If it does not exist the
@@ -142,12 +137,11 @@ The script offers the following options:-
 	-V, --version
 		prints version information
 
-Options b build, C distcheck, D dist, F distcheckfake and T source-tarball are
-mutually exclusive.
+Options b build, C distcheck, D dist and T source-tarball are mutually
+exclusive.
 
-Options a at-only, d debug, F distcheckfake, H header-check, s sparse,
-t testing-hacks and v verbose  are enabled by configure so require option c
-config.
+Options a at-only, d debug, H header-check, s sparse, t testing-hacks and v
+verbose  are enabled by configure so require option c config.
 
 N.B.
 ----
