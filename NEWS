@@ -1,3 +1,9 @@
+Release 1.3.6 2019-06-25
+Update bootstrap.sh to version 1.4.5
+Remove distcheckfake option
+at: Set configure args for distcheck in top makefile
+at: configure.ac: Improve header CLA comments
+
 Release 1.3.5 2019-06-20
 Initial setup for project build testing at Travis-CI.
 Update project root gitignore to v1.0.2
