@@ -12,6 +12,19 @@
 # configure cmd line syntax:						#
 # ./configure	[ --enable-testinghacks=<yes|no> [default: no] ]	#
 #									#
+# Parameters generic description. For specifics to this configure.ac	#
+# please see inline comments at the point of definition:-		#
+# --enable-testinghacks							#
+#	This option should be used when the AT testing environment, (ie	#
+#	using the build directory), requires differences in invocation.	#
+#	An example would be a shell script invoking a program / script 	#
+#	/ jar file. In the AT build directory the script should invoke	#
+#	the target in the build system, whereas in production it might	#
+#	invoke the target in datadir, datadir/java or pkgdatadir. If	#
+#	this was left unchanged the test invocation of the script would	#
+#	end up testing any old installed version of the target or	#
+#	failing because it cannot be found.				#
+#									#
 # Layout: (Only relevant sections will exist).				#
 # ChangeLog : High level ChangeLog					#
 # SECTION  1: Initialisation & Setup					#
@@ -81,6 +94,7 @@
 #				Remove leading v from package version.	#
 #				Add --enable-testinghacks option.	#
 #				Re-vamp to new standard layout.		#
+# 25/06/2019	MG	1.1.2	Improve header comments on CLAs.	#
 #									#
 #########################################################################
 
@@ -91,7 +105,7 @@
 #					#
 #########################################
 
-AC_REVISION([$Revision: 1.1.1 $])
+AC_REVISION([$Revision: 1.1.2 $])
 
 AC_PREREQ([2.69])
 
