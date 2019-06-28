@@ -95,6 +95,7 @@
 #				Add --enable-testinghacks option.	#
 #				Re-vamp to new standard layout.		#
 # 25/06/2019	MG	1.1.2	Improve header comments on CLAs.	#
+# 28/06/2019	MG	1.1.3	Correct ARG_ENABLE help text.		#
 #									#
 #########################################################################
 
@@ -105,7 +106,7 @@
 #					#
 #########################################
 
-AC_REVISION([$Revision: 1.1.2 $])
+AC_REVISION([$Revision: 1.1.3 $])
 
 AC_PREREQ([2.69])
 
@@ -154,7 +155,8 @@ AC_MSG_NOTICE(checking command line arguments)
 # environment or a production build / install environment.
 #
 AC_ARG_ENABLE(testinghacks,
-	--enable-testinghacks    Build with testing hacks for local testing,
+	AS_HELP_STRING([--enable-testinghacks], \
+			[build with testing hacks for local testing]),
 	[case "${enableval}" in
 	yes) testinghacks=true ;;
 	no)  testinghacks=false ;;
