@@ -165,7 +165,7 @@ AC_ARG_ENABLE(testinghacks,
 AM_CONDITIONAL(TESTINGHACKS, test x$testinghacks = xtrue)
 
 if test "x${testinghacks}" = xtrue; then
-	AC_MSG_NOTICE(Building with testing hacks for local testing.)
+	AC_MSG_NOTICE(building with testing hacks for local testing)
 	AC_SUBST(scriptloc,"\$(builddir)")
 else
 	AC_SUBST(scriptloc,"\$(pkglibexecdir)")
