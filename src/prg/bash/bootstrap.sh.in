@@ -138,6 +138,7 @@
 # 25/06/2019	MG	1.4.5	Remove distcheckfake option. Now done	#
 #				by distcheck with configure flags in	#
 #				top level makefile.			#
+# 11/10/2019	MG	1.4.6	Move script_exit() before it is used.	#
 #									#
 #########################################################################
 
@@ -146,7 +147,7 @@
 # Init variables #
 ##################
 
-readonly version=1.4.5			# set version variable
+readonly version=1.4.6			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -219,6 +220,14 @@ output()
 	fi
 }
 
+# Standard function to tidy up and return exit code.
+# Parameters - 	$1 is the exit code.
+# No return value.
+script_exit()
+{
+	exit $1
+}
+
 # Standard function to test command error and exit if non-zero.
 # Parameters - 	$1 is the exit code, (normally $? from the preceeding command).
 # No return value.
@@ -227,14 +236,6 @@ std_cmd_err_handler()
 	if (( $1 )); then
 		script_exit $1
 	fi
-}
-
-# Standard function to tidy up and return exit code.
-# Parameters - 	$1 is the exit code.
-# No return value.
-script_exit()
-{
-	exit $1
 }
 
 # Standard trap exit function.
