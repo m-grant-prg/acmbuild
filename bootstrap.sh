@@ -138,6 +138,10 @@
 # 25/06/2019	MG	1.4.5	Remove distcheckfake option. Now done	#
 #				by distcheck with configure flags in	#
 #				top level makefile.			#
+# 28/10/2019	MG	1.4.6	Move script_exit() before it is used.	#
+#				Cannot test for existence of file with	#
+#				a variable which has retained quotes,	#
+#				so introduce unquoted basedirunq.	#
 #									#
 #########################################################################
 
@@ -146,8 +150,8 @@
 # Init variables #
 ##################
 
-readonly version=1.4.5			# set version variable
-readonly packageversion=1.3.6	# Version of the complete package
+readonly version=1.4.6			# set version variable
+readonly packageversion=1.3.8	# Version of the complete package
 
 # Set defaults
 atonly=""
@@ -165,7 +169,8 @@ testinghacks=""
 verbose=false
 verboseconfig=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
-basedir="."
+basedir="."			# Retain quotes
+basedirunq=$basedir		# Without retaining quotes
 configcli_extra_args=""
 
 
@@ -219,6 +224,14 @@ output()
 	fi
 }
 
+# Standard function to tidy up and return exit code.
+# Parameters - 	$1 is the exit code.
+# No return value.
+script_exit()
+{
+	exit $1
+}
+
 # Standard function to test command error and exit if non-zero.
 # Parameters - 	$1 is the exit code, (normally $? from the preceeding command).
 # No return value.
@@ -227,14 +240,6 @@ std_cmd_err_handler()
 	if (( $1 )); then
 		script_exit $1
 	fi
-}
-
-# Standard function to tidy up and return exit code.
-# Parameters - 	$1 is the exit code.
-# No return value.
-script_exit()
-{
-	exit $1
 }
 
 # Standard trap exit function.
@@ -401,6 +406,7 @@ proc_CL()
 	# original quoting. They can then be 'eval'ed.
 	if (( $# )); then
 		basedir=${1@Q}
+		basedirunq="$1"		# Unquoted version
 		shift
 		configcli_extra_args=" "${@@Q}
 	fi
@@ -415,7 +421,7 @@ proc_gnulib()
 	local msg
 	local status
 
-	if [[ -f $basedir/m4/gnulib-cache.m4 ]]; then
+	if [[ -f "$basedirunq/m4/gnulib-cache.m4" ]]; then
 		cmdline="gnulib-tool --update"$verbosemake$verbosemake
 		cmdline+=" --dir="$basedir
 		eval "$cmdline"
