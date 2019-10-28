@@ -1,3 +1,10 @@
+2019-10-28 v1.3.8 Mark Grant <m.grant.prg@gmail.com>
+	*  Update bootstrap.sh to version 1.4.6
+	bash: Use unquoted variable for file test
+	bash: Move script_exit() before it is used
+	acmbuild.sh script still at version 1.0.3
+	bootstrap.sh script now at version 1.4.6
+
 2019-09-19 v1.3.7 Mark Grant <m.grant.prg@gmail.com>
 	*  travis: Reinstate default build environment
 	at: configure: Correct ARG_ENABLE message format
