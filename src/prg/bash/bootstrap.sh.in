@@ -138,7 +138,10 @@
 # 25/06/2019	MG	1.4.5	Remove distcheckfake option. Now done	#
 #				by distcheck with configure flags in	#
 #				top level makefile.			#
-# 11/10/2019	MG	1.4.6	Move script_exit() before it is used.	#
+# 28/10/2019	MG	1.4.6	Move script_exit() before it is used.	#
+#				Cannot test for existence of file with	#
+#				a variable which has retained quotes,	#
+#				so introduce unquoted basedirunq.	#
 #									#
 #########################################################################
 
@@ -166,7 +169,8 @@ testinghacks=""
 verbose=false
 verboseconfig=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
-basedir="."
+basedir="."			# Retain quotes
+basedirunq=$basedir		# Without retaining quotes
 configcli_extra_args=""
 
 
@@ -402,6 +406,7 @@ proc_CL()
 	# original quoting. They can then be 'eval'ed.
 	if (( $# )); then
 		basedir=${1@Q}
+		basedirunq="$1"		# Unquoted version
 		shift
 		configcli_extra_args=" "${@@Q}
 	fi
@@ -416,7 +421,7 @@ proc_gnulib()
 	local msg
 	local status
 
-	if [[ -f $basedir/m4/gnulib-cache.m4 ]]; then
+	if [[ -f "$basedirunq/m4/gnulib-cache.m4" ]]; then
 		cmdline="gnulib-tool --update"$verbosemake$verbosemake
 		cmdline+=" --dir="$basedir
 		eval "$cmdline"
