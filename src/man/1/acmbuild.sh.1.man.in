@@ -24,7 +24,8 @@ The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
 b, c, C, D, g, K and T are action options. -b, for instance will run make,
-whereas -D will run make dist.
+whereas -D will run make dist. (p just sets the number of parallel jobs make
+will use).
 
 The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
 
@@ -66,6 +67,10 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 -H, --header-check  show include stack depth
 
 -K, --check  run make check
+
+-p[X], --parallel-jobs[=X]  if X is specified then make runs with X parallel
+jobs. If X is not specified then make will run with the same number of jobs as
+processors. If this option is not specified then make runs sequentially.
 
 -s, --sparse  pass --enable-sparse=yes to configure.
 
