@@ -27,6 +27,7 @@
 #				[ -h || --help ] ||			#
 #				[ -H || --header-check ] ||		#
 #				[ -K || --check ] ||			#
+#				[ -p || --parallel-jobs ] ||		#
 #				[ -s || --sparse ] ||			#
 #				[ -t || --testing-hacks ] ||		#
 #				[ -T || --source-tarball ] ||		#
@@ -142,6 +143,8 @@
 #				Cannot test for existence of file with	#
 #				a variable which has retained quotes,	#
 #				so introduce unquoted basedirunq.	#
+# 01/12/2019	MG	1.4.7	Add parallel jobs option to pass to	#
+#				make as --jobs				#
 #									#
 #########################################################################
 
@@ -150,8 +153,8 @@
 # Init variables #
 ##################
 
-readonly version=1.4.6			# set version variable
-readonly packageversion=1.3.8	# Version of the complete package
+readonly version=1.4.7			# set version variable
+readonly packageversion=1.3.9	# Version of the complete package
 
 # Set defaults
 atonly=""
@@ -163,6 +166,7 @@ dist=false
 distcheck=false
 gnulib=false
 headercheck=""
+par_jobs=""
 sparse=""
 tarball=false
 testinghacks=""
@@ -199,6 +203,9 @@ Usage:- acmbuild.sh / $0 [options] [-- configure options to pass on]
 	-h or --help displays usage information
 	-H or --header-check show include stack depth
 	-K or --check run make check
+	-p[X] or --parallel-jobs[=X] number of jobs to pass to make as --jobs=
+		If not specified make is sequential
+		If no value X is given then defaults to nproc
 	-s or --sparse build using sparse
 	-t or --testing-hacks some build changes may be required for testing
 		purposes. e.g. A script may invoke a project jar file which
@@ -267,10 +274,10 @@ proc_CL()
 	local script_name="acmbuild.sh/bootstrap.sh"
 	local tmp
 
-	tmp="getopt -o abcCdDghHKstTvV "
+	tmp="getopt -o abcCdDghHKp::stTvV "
 	tmp+="--long at-only,build,check,config,distcheck,debug,dist,gnulib,"
-	tmp+="help,header-check,sparse,source-tarball,testing-hacks,verbose,"
-	tmp+="version"
+	tmp+="help,header-check,parallel-jobs::,sparse,source-tarball,"
+	tmp+="testing-hacks,verbose,version"
 	GETOPTTEMP=$($tmp -n "$script_name" -- "$@")
 	std_cmd_err_handler $?
 
@@ -333,6 +340,14 @@ proc_CL()
 		-H|--header-check)
 			headercheck=" --enable-headercheck=yes"
 			shift
+			;;
+		-p|--parallel-jobs)
+			if [[ -z "$2" ]]; then
+				par_jobs=" --jobs=$(nproc)"
+			else
+				par_jobs=" --jobs=$2"
+			fi
+			shift 2
 			;;
 		-K|--check)
 			if $distcheck || $dist || $tarball; then
@@ -469,26 +484,26 @@ proc_make()
 	local status
 
 	if $build ; then
-		cmdline="make"$verbosemake
+		cmdline="make"$verbosemake$par_jobs
 	fi
 
 	if $check ; then
 		if [[ ! $cmdline ]]; then
-			cmdline="make"$verbosemake
+			cmdline="make"$verbosemake$par_jobs
 		fi
 		cmdline+=" check"
 	fi
 
 	if $distcheck ; then
-		cmdline="make"$verbosemake" distcheck clean"
+		cmdline="make"$verbosemake$par_jobs" distcheck clean"
 	fi
 
 	if $dist ; then
-		cmdline="make"$verbosemake" dist clean"
+		cmdline="make"$verbosemake$par_jobs" dist clean"
 	fi
 
 	if $tarball ; then
-		cmdline="make"$verbosemake" srctarball clean"
+		cmdline="make"$verbosemake$par_jobs" srctarball clean"
 	fi
 
 	# May get here with cmdline empty if, for example, only the -g option
