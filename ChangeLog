@@ -1,3 +1,9 @@
+2019-12-01 v1.3.9 Mark Grant <m.grant.prg@gmail.com>
+	*  Update bootstrap.sh to version 1.4.7
+	Add CL option -p[X] --parallel-jobs[=X]
+	acmbuild.sh script still at version 1.0.3
+	bootstrap.sh script now at version 1.4.7
+
 2019-10-28 v1.3.8 Mark Grant <m.grant.prg@gmail.com>
 	*  Update bootstrap.sh to version 1.4.6
 	bash: Use unquoted variable for file test
