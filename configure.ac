@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2014-2019  Mark Grant				#
+# Author: Copyright (C) 2014-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -96,6 +96,7 @@
 #				Re-vamp to new standard layout.		#
 # 25/06/2019	MG	1.1.2	Improve header comments on CLAs.	#
 # 28/06/2019	MG	1.1.3	Correct ARG_ENABLE help text.		#
+# 11/06/2020	MG	1.1.4	Tighten up program checks.		#
 #									#
 #########################################################################
 
@@ -106,7 +107,7 @@
 #					#
 #########################################
 
-AC_REVISION([$Revision: 1.1.3 $])
+AC_REVISION([$Revision: 1.1.4 $])
 
 AC_PREREQ([2.69])
 
@@ -222,9 +223,9 @@ AC_MSG_NOTICE(checking for some standard AutoTools required programs)
 AC_PROG_INSTALL
 
 AC_MSG_NOTICE(checking for particular programs required by this build)
-AC_CHECK_PROG([TAR], [tar], [yes], [no])
-if test "x$TAR" = "xno" ; then
-	AC_MSG_ERROR([tar not found])
+AC_CHECK_PROG([ECHO], [echo], [yes], [no])
+if test "x$ECHO" = "xno" ; then
+	AC_MSG_ERROR([echo not found])
 fi
 
 AC_CHECK_PROG([TXT2MAN], [txt2man], [yes], [no])
@@ -243,10 +244,20 @@ if test "x$BASH" = "xno" ; then
 	AC_MSG_ERROR([bash not found])
 fi
 
+AC_CHECK_PROG([TAR], [tar], [yes], [no])
+if test "x$TAR" = "xno" ; then
+	AC_MSG_ERROR([tar not found])
+fi
+
 AC_MSG_NOTICE(checking for particular programs required at run time)
-AC_CHECK_PROG(ECHO, echo, yes, no)
-if test "x$ECHO" = "xno" ; then
-	AC_MSG_WARN(echo not found - needed at run time)
+AC_CHECK_PROG(CAT, cat, yes, no)
+if test "x$CAT" = "xno" ; then
+	AC_MSG_WARN(cat not found - needed at run time)
+fi
+
+AC_CHECK_PROG([GETOPT], [getopt], [yes], [no])
+if test "x$GETOPT" = "xno" ; then
+	AC_MSG_WARN(getopt not found - needed at run time)
 fi
 
 AC_CHECK_PROG(PRINTF, printf, yes, no)
@@ -254,9 +265,25 @@ if test "x$PRINTF" = "xno" ; then
 	AC_MSG_WARN(printf not found - needed at run time)
 fi
 
-AC_CHECK_PROG([GETOPT], [getopt], [yes], [no])
-if test "x$GETOPT" = "xno" ; then
-	AC_MSG_WARN(getopt not found - needed at run time)
+AC_MSG_NOTICE(checking for programs which may be required at run time)
+AC_CHECK_PROG(GCC, gcc, yes, no)
+if test "x$GCC" = "xno" ; then
+	AC_MSG_WARN(gcc not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(GIT, git, yes, no)
+if test "x$GIT" = "xno" ; then
+	AC_MSG_WARN(git not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(GNULIB_TOOL, gnulib-tool, yes, no)
+if test "x$GNULIB_TOOL" = "xno" ; then
+	AC_MSG_WARN(gnulib-tool not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(CGCC, cgcc, yes, no)
+if test "x$CGCC" = "xno" ; then
+	AC_MSG_WARN(sparse not found - may be needed at run time)
 fi
 
 
