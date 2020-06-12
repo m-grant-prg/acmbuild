@@ -1,5 +1,8 @@
+Release 1.3.10 2020-06-12
+Correct the git command in the README file from git am to git archive.
+
 Release 1.3.9 2019-12-01
-	Add CL option -p[X] --parallel-jobs[=X]
+Add CL option -p[X] --parallel-jobs[=X]
 
 Release 1.3.8 2019-10-28
 No functional changes.
