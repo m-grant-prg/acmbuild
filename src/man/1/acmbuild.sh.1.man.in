@@ -68,6 +68,10 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -K, --check  run make check
 
+-m, --config-menu  invoke menu of configurable options. The only thing fixed is
+the script name, configurable-options.sh in the project root directory. Usually
+this would be expected to have a whiptail interface.
+
 -p[X], --parallel-jobs[=X]  if X is specified then make runs with X parallel
 jobs. If X is not specified then make will run with the same number of jobs as
 processors. If this option is not specified then make runs sequentially.
@@ -87,8 +91,8 @@ somewhere under datadir, but during testing it is in the project tree.
 Options b build, C distcheck, D dist and T source-tarball are mutually
 exclusive.
 
-Options a at-only, d debug, H header-check, s sparse, t testing-hacks and v
-verbose are enabled by configure so require option c config.
+Options a at-only, d debug, H header-check, m menu-config, s sparse, t
+testing-hacks and v verbose are enabled by configure so require option c config.
 EXIT STATUS
 0 - Success
 
@@ -101,7 +105,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2019 Mark Grant.
+Copyright (C) 2014-2019, 2021 Mark Grant.
 .br
 License GPLv3+: GNU GPL version 3 or later
 .br
