@@ -116,7 +116,7 @@ AC_PREREQ([2.69])
 # can be used by ac output and / or the sed setup below to substitute bookmarks
 # in source files.
 #
-AC_INIT(AutoTools Build Script, 1.3.10+rc3, m.grant.prg@gmail.com, acmbuild)
+AC_INIT(AutoTools Build Script, 1.3.11, m.grant.prg@gmail.com, acmbuild)
 
 AC_MSG_NOTICE(initialisation and setup)
 
