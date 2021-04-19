@@ -1,3 +1,7 @@
+Release 1.3.11 2021-04-19
+Add ability to run a configuration script of fixed name in the project root
+directory.
+
 Release 1.3.10 2020-06-12
 Correct the git command in the README file from git am to git archive.
 
