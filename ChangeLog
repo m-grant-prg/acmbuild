@@ -1,3 +1,12 @@
+2021-04-19 v1.3.11 Mark Grant <m.grant.prg@gmail.com>
+	* bash: Add ability to run configuration script
+	travis: Stop using Travis
+	actions: Initial build action setup
+	at: lxcu: Add lxc test build setup
+	travis: Bionic is the new minimum release
+	acmbuild.sh script still at version 1.0.3
+	bootstrap.sh script now at version 1.4.8
+
 2020-06-12 v1.3.10 Mark Grant <m.grant.prg@gmail.com>
 	*  at: Tighten configure required program checks.
 	README: Correct git am to git archive.
