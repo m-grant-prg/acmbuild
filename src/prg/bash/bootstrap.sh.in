@@ -148,6 +148,9 @@
 #				make as --jobs				#
 # 14/04/2021	MG	1.4.8	Add menu-config option to invoke menu	#
 #				of configurable options.		#
+# 28/05/2021	MG	1.4.9	Process menuconfig before using tee for	#
+#				the build log as menuconfig may involve	#
+#				dialog and redirection.			#
 #									#
 #########################################################################
 
@@ -156,7 +159,7 @@
 # Init variables #
 ##################
 
-readonly version=1.4.8			# set version variable
+readonly version=1.4.9			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -565,16 +568,16 @@ proc_make()
 
 proc_CL "$@"
 
-# Create build log.
-exec 1> >(tee build-output.txt) 2>&1
-
 # Now the main processing.
-if $gnulib ; then
-	proc_gnulib
-fi
-
 if $menuconfig; then
 	proc_menuconfig
+fi
+
+# Create build log after menuconfig which may use dialog and redirections.
+exec 1> >(tee build-output.txt) 2>&1
+
+if $gnulib ; then
+	proc_gnulib
 fi
 
 if $config ; then
