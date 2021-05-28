@@ -151,6 +151,8 @@
 # 28/05/2021	MG	1.4.9	Process menuconfig before using tee for	#
 #				the build log as menuconfig may involve	#
 #				dialog and redirection.			#
+#				Use a temporary file to get result back	#
+#				from configurable-options.sh		#
 #									#
 #########################################################################
 
@@ -480,6 +482,7 @@ proc_gnulib()
 proc_menuconfig()
 {
 	local msg
+	local readonly tmp_file=/tmp/$$.$(basename $0).tmp
 
 	if [[ ! -f $basedirunq/configurable-options.sh \
 		|| ! -r $basedirunq/configurable-options.sh \
@@ -489,7 +492,11 @@ proc_menuconfig()
 		output "$msg" 1
 		script_exit 77
 	fi
-	configcli_extra_args+=$($basedirunq/configurable-options.sh)
+	$basedirunq/configurable-options.sh $tmp_file
+	std_cmd_err_handler $?
+	configcli_extra_args+=$(cat < $tmp_file)
+	std_cmd_err_handler $?
+	rm -f $tmp_file
 	std_cmd_err_handler $?
 }
 
