@@ -70,7 +70,7 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -m, --config-menu  invoke menu of configurable options. The only thing fixed is
 the script name, configurable-options.sh in the project root directory. Usually
-this would be expected to have a whiptail interface.
+this would be expected to have a dialog interface.
 
 -p[X], --parallel-jobs[=X]  if X is specified then make runs with X parallel
 jobs. If X is not specified then make will run with the same number of jobs as
