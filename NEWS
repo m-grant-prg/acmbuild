@@ -1,3 +1,9 @@
+Release 1.3.12 2021-05-31
+Change config-menu option in man page to say dialog AOT whiptail.
+Use a tempprary file to pass back configurable-options.sh result.
+Process the menu-config option before using tee for the  build log as the
+config script uses dialog and redirection.
+
 Release 1.3.11 2021-04-19
 Add ability to run a configuration script of fixed name in the project root
 directory.

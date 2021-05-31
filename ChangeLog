@@ -1,3 +1,11 @@
+2021-05-31 v1.3.12 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.4.9
+	man: Change config-menu to say dialog AOT whiptail
+	Use temp file for configurable-options.sh result
+	proc_menuconfig() before tee and build log
+	git: Add gitattributes file
+	git: Add mailmap file
+
 2021-04-19 v1.3.11 Mark Grant <m.grant.prg@gmail.com>
 	* at: Update bootstrap.sh to v1.4.8
 	bash: Add ability to run configuration script
