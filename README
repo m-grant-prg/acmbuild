@@ -2,7 +2,7 @@
 AutoConf and AutoMake Build Scripts
 ===================================
 
-Author - Copyright (C) 2014-2020 Mark Grant
+Author - Copyright (C) 2014-2021 Mark Grant
 
 --------
 Contents
@@ -47,10 +47,11 @@ configure.
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
-b, c, C, D, g, K and T are action options. -b, for instance will run make,
+b, c, C, D, g, K, m and T are action options. -b, for instance will run make,
 whereas -D will run make dist.
 
-The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
+The rest, (apart from help and version), are enabling options. Invariably these
+are implemented merely by passing an enable argument to configure. For example
 
 	acmbuild.sh --config --debug ..
 
@@ -63,6 +64,17 @@ in configure. The script does not know if the option is sensible, or indeed, if
 it is supported by configure, so, in the above example, if the developer had not
 written code in configure to process this argument, configure will issue a
 warning and then just ignore the option.
+
+As an example of the simplification this script affords, the following
+acmbuild.sh command
+
+	acmbuild.sh -cb .
+
+will run
+
+	autoreconf -if .
+	./configure (plus options)
+	make (plus options)
 
 
 Implementation
@@ -118,6 +130,12 @@ The script offers the following options:-
 
 	-K, --check
 		run make check
+
+	-m or --menu-config Invoke menu of configurable options
+
+	-p[X] or --parallel-jobs[=X] number of jobs to pass to make as --jobs=
+		If not specified make is sequential
+		If no value X is given then defaults to nproc
 
 	-s, --sparse
 		pass --enable-sparse=yes to configure.
