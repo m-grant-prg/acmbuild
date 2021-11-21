@@ -1,3 +1,7 @@
+Release 1.3.13 2021-11-21
+No functional changes.
+Technical change information can be found in the ChangeLog.
+
 Release 1.3.12 2021-05-31
 Change config-menu option in man page to say dialog AOT whiptail.
 Use a tempprary file to pass back configurable-options.sh result.

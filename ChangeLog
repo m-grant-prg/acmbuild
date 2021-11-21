@@ -1,3 +1,15 @@
+2021-11-21 v1.3.13 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.4.10
+	at: Add AC_COPYRIGHT macro
+	all: Tighten SPDX tags
+	git: Update mailmap to v1.0.2
+	git Update gitignore to v1.0.7
+	git: Update gitattributes to v1.0.2
+	at: Use git to enhance package version
+	at: Add misc directory to DIST
+	lxcu: Add support for openSUSE
+	lxcu: Add support for Fedora
+
 2021-05-31 v1.3.12 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.4.9
 	man: Change config-menu to say dialog AOT whiptail
