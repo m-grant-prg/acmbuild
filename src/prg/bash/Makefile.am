@@ -1,10 +1,10 @@
 #########################################################################
 #									#
 # Script ID: src/prg/bash/Makefile.am					#
-# Author: Copyright (C) 2014-2019  Mark Grant				#
+# Author: Copyright (C) 2014-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 # Automake script file to generate acmbuild scripts from source.	#
@@ -31,6 +31,7 @@
 # 06/02/2018	MG	1.0.8	Add build of bootstrap.sh		#
 # 17/03/2019	MG	1.0.9	Remove unnecessary shebang.		#
 #				Install bootstrap.sh in pkglibexecdir.	#
+# 21/11/2021	MG	1.0.10	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

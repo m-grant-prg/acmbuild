@@ -9,10 +9,10 @@
 #########################################################################
 #									#
 # Script ID: acmbuild.sh						#
-# Author: Copyright (C) 2018-2019  Mark Grant				#
+# Author: Copyright (C) 2018-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 # Wrapper script to bootstrap.sh which simplifies the AutoTools		#
@@ -45,13 +45,14 @@
 #				bootstrap.sh is now in pkglibexecdir.	#
 #				Use scriptloc substitution variable to	#
 #				find bootstrap.sh (testing-hacks).	#
+# 21/11/2021	MG	1.0.4	Tighten SPDX tag.			#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-readonly version="1.0.3"		# set version variable
+readonly version="1.0.4"		# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 
