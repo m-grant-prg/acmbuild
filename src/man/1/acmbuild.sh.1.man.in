@@ -27,7 +27,8 @@ b, c, C, D, g, K and T are action options. -b, for instance will run make,
 whereas -D will run make dist. (p just sets the number of parallel jobs make
 will use).
 
-The rest, (apart from help and version), are enabling options. Invariably these are implemented merely by passing an enable argument to configure. For example
+The rest, (apart from help and version), are enabling options. Invariably these
+are implemented merely by passing an enable argument to configure. For example
 
 	acmbuild.sh --config --debug ..
 
@@ -48,6 +49,8 @@ OPTIONS
 changes are required. e.g. You may reference an external Java jar in datadir but
 in AT builds and installations this may expand to /usr/local/share... So a
 substitution is required for this scenario.
+
+-A, --analyzer enable compiler analyzer output.
 
 -b, --build  make the project.
 
@@ -91,8 +94,9 @@ somewhere under datadir, but during testing it is in the project tree.
 Options b build, C distcheck, D dist and T source-tarball are mutually
 exclusive.
 
-Options a at-only, d debug, H header-check, m menu-config, s sparse, t
-testing-hacks and v verbose are enabled by configure so require option c config.
+Options a at-only, A analyzer, d debug, H header-check, m menu-config, s sparse,
+t testing-hacks and v verbose are enabled by configure so require option c
+config.
 EXIT STATUS
 0 - Success
 
@@ -105,7 +109,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2019, 2021 Mark Grant.
+Copyright (C) 2014-2019, 2021, 2022 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
