@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2014-2021  Mark Grant				#
+# Author: Copyright (C) 2014-2022  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -112,7 +112,7 @@
 #					#
 #########################################
 
-AC_COPYRIGHT([Copyright (C) 2014-2021  Mark Grant
+AC_COPYRIGHT([Copyright (C) 2014-2022  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
@@ -134,7 +134,7 @@ AC_PREREQ([2.69])
 # in source files.
 #
 # Set pkg_version for a default hard-coded version number.
-m4_define(pkg_version, 1.3.13)
+m4_define(pkg_version, 1.4.1)
 
 AC_INIT([AutoTools Build Script], m4_esyscmd([ \
 	git describe --always 1>/dev/null 2>/dev/null \
