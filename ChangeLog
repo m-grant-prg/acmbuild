@@ -1,3 +1,8 @@
+2022-06-07 v1.4.1 Mark Grant <m.grant.prg@gmail.com>
+	* at: Update bootstrap.sh to v1.5.1
+	bash: Add compiler analyzer option A analyzer
+	git: Update gitattributes to v1.0.3
+
 2021-11-21 v1.3.13 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.4.10
 	at: Add AC_COPYRIGHT macro
