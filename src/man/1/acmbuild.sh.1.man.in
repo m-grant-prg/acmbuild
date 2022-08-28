@@ -77,6 +77,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -H, --header-check  show include stack depth
 
+-i, --iwyu  Run clang's include-what-you-use to analyse header file usage.
+
 -K, --check  run make check
 
 -m, --config-menu  invoke menu of configurable options. The only thing fixed is
