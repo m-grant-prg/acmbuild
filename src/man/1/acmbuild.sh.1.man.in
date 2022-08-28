@@ -58,6 +58,14 @@ substitution is required for this scenario.
 
 -C, --distcheck  perform a normal make distcheck.
 
+--CC compiler  Specify a compiler to use. Functionally equivalent to:-
+.br
+bootstrap.sh -c . -- CC=compiler
+.br
+More ephemerally, as a one-off you can use:-
+.br
+make CC=compiler
+
 -d, --debug  build with appropriate debug flags.
 
 -D, --dist  perform a make dist.

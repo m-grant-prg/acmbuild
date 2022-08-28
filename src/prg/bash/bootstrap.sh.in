@@ -22,6 +22,7 @@
 #				[ -b || --build ] ||			#
 #				[ -c || --config ] ||			#
 #				[ -C || --distcheck ] ||		#
+#				[       --CC] ||			#
 #				[ -d || --debug ] ||			#
 #				[ -D || --dist ] ||			#
 #				[ -g || --gnulib ] ||			#
@@ -156,6 +157,8 @@
 #				from configurable-options.sh		#
 # 21/11/2021	MG	1.4.10	Tighten SPDX tag.			#
 # 07/06/2022	MG	1.5.1	Add compiler option -A --analyzer.	#
+# 28/08/2022	MG	1.5.2	Add --CC option for compiler. Same as	#
+#				bootstrap.sh -c . -- CC=clang		#
 #									#
 #########################################################################
 
@@ -164,13 +167,14 @@
 # Init variables #
 ##################
 
-readonly version=1.5.1			# set version variable
+readonly version=1.5.2			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
 atonly=""
 analyzer=""
 build=false
+cc=""
 check=false
 config=false
 debug=""
@@ -211,6 +215,7 @@ Usage:- acmbuild.sh / $0 [options] [-- configure options to pass on]
 	-b or --build make the project
 	-c or --config congigure the project
 	-C or --distcheck perform normal distcheck
+	      --CC=compiler Compiler to use, eg gcc, clang etc
 	-d or --debug build with appropriate debug flags
 	-D or --dist perform a make dist
 	-g or --gnulib run gnulib-tool --update
@@ -290,7 +295,7 @@ proc_CL()
 	local tmp
 
 	tmp="getopt -o aAbcCdDghHKmp::stTvV "
-	tmp+="--long at-only,analyzer,build,check,config,distcheck,debug,dist"
+	tmp+="--long at-only,analyzer,build,CC:,check,config,distcheck,debug,dist"
 	tmp+=",gnulib,help,header-check,menu-config,parallel-jobs::,sparse"
 	tmp+=",source-tarball,testing-hacks,verbose,version"
 	GETOPTTEMP=$($tmp -n "$script_name" -- "$@")
@@ -332,6 +337,10 @@ proc_CL()
 			fi
 			distcheck=true
 			shift
+			;;
+		--CC)
+			cc=" CC=$2"
+			shift 2
 			;;
 		-d|--debug)
 			debug=" --enable-debug=yes"
@@ -427,13 +436,21 @@ proc_CL()
 		esac
 	done
 
-	if [[ $atonly || $analyzer || $debug || $headercheck || $sparse \
-		|| $testinghacks ]] || $verbose ; then
+	if [[ $atonly || $analyzer || $cc || $debug || $headercheck \
+		|| $sparse || $testinghacks ]] || $verbose ; then
 		if ! $config ; then
-			msg="Options a, A, d, H, s, t and v require option c."
+			msg="Options a, A, CC, d, H, s, t and v require"
+			msg+=" option c."
 			output "$msg" 1
 			script_exit 64
 		fi
+	fi
+
+	# Sparse and CC conflict, both setting the CC variable.
+	if [[ $cc && $sparse ]]; then
+		msg="Options CC and s are mutually exclusive."
+		output "$msg" 1
+		script_exit 64
 	fi
 
 	# One option has to be selected.
@@ -525,7 +542,7 @@ proc_config()
 	output "$msg" $status
 	std_cmd_err_handler $status
 
-	cmdline="$basedir/configure$configcli_extra_args$verboseconfig"
+	cmdline="$basedir/configure$cc$configcli_extra_args$verboseconfig"
 	cmdline+="$atonly$analyzer$debug$headercheck$sparse$testinghacks"
 
 	eval "$cmdline"
