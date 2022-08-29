@@ -1,3 +1,9 @@
+Release 1.4.2 2022-08-29
+Add option --CC to specify a compiler.
+Add option -i --iwyu to invoke clang's include-what-you-use for header file
+checking.
+Technical change information can be found in the ChangeLog.
+
 Release 1.4.1 2022-06-07
 Add -A --analyzer option to enable compiler analyzer output.
 Technical change information can be found in the ChangeLog.

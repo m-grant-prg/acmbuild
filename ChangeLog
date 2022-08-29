@@ -1,3 +1,10 @@
+2022-08-29 v1.4.2 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.5.2
+	bash: Add option i for clang's include-what-you-use
+	bash: Add --CC option to select compiler
+	git: Update gitignore to v1.0.8
+	editors: Add editorconfig file v1.0.3
+
 2022-06-07 v1.4.1 Mark Grant <m.grant.prg@gmail.com>
 	* at: Update bootstrap.sh to v1.5.1
 	bash: Add compiler analyzer option A analyzer
