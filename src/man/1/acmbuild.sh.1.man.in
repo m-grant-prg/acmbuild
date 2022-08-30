@@ -78,6 +78,10 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 -H, --header-check  show include stack depth
 
 -i, --iwyu  Run clang's include-what-you-use to analyse header file usage.
+.br
+include-what-you-use invokes the clang compiler, so to ensure that clang is
+passed the correct compiler flags, configure must have been built with
+--CC=clang
 
 -K, --check  run make check
 
