@@ -1,3 +1,7 @@
+2022-09-01 v1.4.3 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.5.3
+	bash: Allow --CC option with -i
+
 2022-08-29 v1.4.2 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.5.2
 	bash: Add option i for clang's include-what-you-use

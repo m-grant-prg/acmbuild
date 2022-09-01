@@ -1,3 +1,8 @@
+Release 1.4.3 2022-09-01
+include-what-you-use invokes the clang compiler so configure must have been
+built with --CC=clang. So, allow this option combination.
+Technical change information can be found in the ChangeLog.
+
 Release 1.4.2 2022-08-29
 Add option --CC to specify a compiler.
 Add option -i --iwyu to invoke clang's include-what-you-use for header file
