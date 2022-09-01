@@ -161,6 +161,7 @@
 # 28/08/2022	MG	1.5.2	Add --CC option for compiler. Same as	#
 #				bootstrap.sh -c . -- CC=clang		#
 #				Add option for include-what-you-use.	#
+# 30/08/2022	MG	1.5.3	Allow --CC to be specified alongside -i.#
 #									#
 #########################################################################
 
@@ -169,8 +170,8 @@
 # Init variables #
 ##################
 
-readonly version=1.5.2			# set version variable
-readonly packageversion=1.4.1-4-g43faa4806e08	# Version of the complete package
+readonly version=1.5.3			# set version variable
+readonly packageversion=1.4.2-1-g399b873	# Version of the complete package
 
 # Set defaults
 atonly=""
@@ -455,13 +456,12 @@ proc_CL()
 	fi
 
 	# include-what-you-use cannot be used with a number of other options.
-	if [[ $atonly || $analyzer || $cc || $debug || $headercheck \
-		|| $sparse || $testinghacks ]] || $build || $check || $dist \
-		|| $distcheck || $gnulib || $menuconfig || $tarball \
-		|| $verbose ; then
+	if [[ $atonly || $analyzer || $debug || $headercheck || $sparse \
+		|| $testinghacks ]] || $build || $check || $dist || $distcheck \
+		|| $gnulib || $menuconfig || $tarball || $verbose ; then
 		if $iwyu ; then
-			msg="Options a, A, b, C, CC, d, D, g, H, k, m, s, t"
-			msg+=", T and v cannot be used with option i"
+			msg="Options a, A, b, C, d, D, g, H, k, m, s, t, T and"
+			msg+=" v cannot be used with option i"
 			output "$msg" 1
 			script_exit 64
 		fi
