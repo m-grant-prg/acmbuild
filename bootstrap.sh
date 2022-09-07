@@ -162,6 +162,8 @@
 #				bootstrap.sh -c . -- CC=clang		#
 #				Add option for include-what-you-use.	#
 # 30/08/2022	MG	1.5.3	Allow --CC to be specified alongside -i.#
+# 06/09/2022	MG	1.5.4	Add missing $verbosemake to iwyu make	#
+#				CL.					#
 #									#
 #########################################################################
 
@@ -170,8 +172,8 @@
 # Init variables #
 ##################
 
-readonly version=1.5.3			# set version variable
-readonly packageversion=1.4.2-1-g399b873	# Version of the complete package
+readonly version=1.5.4			# set version variable
+readonly packageversion=1.4.3-1-g2cf11f5	# Version of the complete package
 
 # Set defaults
 atonly=""
@@ -600,7 +602,8 @@ proc_make()
 	fi
 
 	if $iwyu ; then
-		cmdline="make -k CC=include-what-you-use$par_jobs"
+		cmdline="make"$verbosemake$par_jobs" -k"
+		cmdline+=" CC=include-what-you-use"
 	fi
 
 	if $tarball ; then
