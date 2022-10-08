@@ -33,6 +33,8 @@
 # 02/11/2021	MG	1.0.6	Create editor section and add .vimrc	#
 # 21/11/2021	MG	1.0.7	Tighten SPDX tag.			#
 # 18/08/2022	MG	1.0.8	Remove local vimrc exclusion.		#
+# 04/10/2022	MG	1.0.9	Exclude build-aux directory. Used by	#
+#				AC_CONFIG_AUX_DIR.			#
 #									#
 #########################################################################
 
@@ -57,6 +59,7 @@ test-driver
 **/aclocal.*
 **/ar-lib
 **/autom4te.cache/
+**/build-aux/
 **/config.h.in
 **/libtool
 **/Makefile
