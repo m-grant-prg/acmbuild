@@ -102,8 +102,9 @@
 #				further package version information.	#
 # 21/11/2021	MG	1.1.6	Tighten SPDX tag.			#
 #				Add AC_COPYRIGHT macro.			#
-# 08/10/2022	MG	1.1.7	Separate AutoTools generated files from	#
+# 09/10/2022	MG	1.1.7	Separate AutoTools generated files from	#
 #				project root.				#
+#				Use AC MSG CHECKING where appropriate.	#
 #									#
 #########################################################################
 
@@ -195,10 +196,12 @@ AC_ARG_ENABLE(testinghacks,
 	esac],testinghacks=false)
 AM_CONDITIONAL(TESTINGHACKS, test x$testinghacks = xtrue)
 
+AC_MSG_CHECKING([whether to use TESTINGHACKS for local testing])
 if test "x${testinghacks}" = xtrue; then
-	AC_MSG_NOTICE(building with testing hacks for local testing)
+	AC_MSG_RESULT([yes])
 	AC_SUBST(scriptloc,"\$(builddir)")
 else
+	AC_MSG_RESULT([no])
 	AC_SUBST(scriptloc,"\$(pkglibexecdir)")
 fi
 
