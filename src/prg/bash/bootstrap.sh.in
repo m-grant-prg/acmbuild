@@ -9,7 +9,7 @@
 #########################################################################
 #									#
 # Script ID: bootstrap.sh						#
-# Author: Copyright (C) 2014-2019, 2021, 2022  Mark Grant		#
+# Author: Copyright (C) 2014-2019, 2021-2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -164,6 +164,8 @@
 # 30/08/2022	MG	1.5.3	Allow --CC to be specified alongside -i.#
 # 06/09/2022	MG	1.5.4	Add missing $verbosemake to iwyu make	#
 #				CL.					#
+# 05/03/2023	MG	1.5.5	configure must use clang for		#
+#				include-what-you-use.			#
 #									#
 #########################################################################
 
@@ -172,7 +174,7 @@
 # Init variables #
 ##################
 
-readonly version=1.5.4			# set version variable
+readonly version=1.5.5			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -448,9 +450,9 @@ proc_CL()
 	done
 
 	if [[ $atonly || $analyzer || $cc || $debug || $headercheck \
-		|| $sparse || $testinghacks ]] || $verbose ; then
+		|| $iwyu || $sparse || $testinghacks ]] || $verbose ; then
 		if ! $config ; then
-			msg="Options a, A, CC, d, H, s, t and v require"
+			msg="Options a, A, CC, d, H, i, s, t and v require"
 			msg+=" option c."
 			output "$msg" 1
 			script_exit 64
@@ -474,6 +476,11 @@ proc_CL()
 		msg="Options CC and s are mutually exclusive."
 		output "$msg" 1
 		script_exit 64
+	fi
+
+	# include-what-you-use needs clang as compiler.
+	if [[ $iwyu && -z $cc ]]; then
+		cc=" CC=clang"
 	fi
 
 	# One option has to be selected.
