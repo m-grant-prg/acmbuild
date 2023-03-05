@@ -166,6 +166,8 @@
 #				CL.					#
 # 05/03/2023	MG	1.5.5	configure must use clang for		#
 #				include-what-you-use.			#
+#				Pass enable-iwyu to configure which	#
+#				allows it to do  some checking.		#
 #									#
 #########################################################################
 
@@ -190,6 +192,7 @@ distcheck=false
 gnulib=false
 headercheck=""
 iwyu=false
+iwyu_cli=""
 menuconfig=false
 par_jobs=""
 sparse=""
@@ -380,6 +383,7 @@ proc_CL()
 			;;
 		-i| --iwyu)
 			iwyu=true
+			iwyu_cli=" --enable-iwyu=yes"
 			shift
 			;;
 		-K|--check)
@@ -573,7 +577,8 @@ proc_config()
 	std_cmd_err_handler $status
 
 	cmdline="$basedir/configure$cc$configcli_extra_args$verboseconfig"
-	cmdline+="$atonly$analyzer$debug$headercheck$sparse$testinghacks"
+	cmdline+="$atonly$analyzer$debug$headercheck$iwyu_cli$sparse"
+	cmdline+="$testinghacks"
 
 	eval "$cmdline"
 	status=$?
