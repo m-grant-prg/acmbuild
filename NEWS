@@ -1,3 +1,8 @@
+Release 1.5.1 2023-03-06
+Check for include-what-you-use executable if option selected.
+If iwyu is selected, as default, select clang and force use of option c.
+Technical change information can be found in the ChangeLog.
+
 Release 1.4.4 2022-09-07
 Add missing verbosity control on iwyu make command line.
 Technical change information can be found in the ChangeLog.

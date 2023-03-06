@@ -1,3 +1,15 @@
+2023-03-06 v1.5.1 Mark Grant <m.grant.prg@gmail.com>
+	* at: Update bootstrap.sh to v1.5.5
+	bash: Add configure enable-iwyu CLA
+	bash: configure must use clang for iwyu
+	git: Update mailmap to v1.0.3
+	git: Update gitignore to v1.0.11
+	git: Update gitattributes to v1.0.4
+	editors: Update editorconfig to v1.0.4
+	actions: Run on focal
+	at: Use AC_MSG_CHECKING where appropriate
+	at: Use AC_CONFIG_AUX_DIR
+
 2022-09-07 v1.4.4 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.5.4
 	bash: Add missing $verbosemake to iwyu make CL
