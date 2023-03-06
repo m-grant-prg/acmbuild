@@ -9,7 +9,7 @@
 #########################################################################
 #									#
 # Script ID: bootstrap.sh						#
-# Author: Copyright (C) 2014-2019, 2021, 2022  Mark Grant		#
+# Author: Copyright (C) 2014-2019, 2021-2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -164,6 +164,10 @@
 # 30/08/2022	MG	1.5.3	Allow --CC to be specified alongside -i.#
 # 06/09/2022	MG	1.5.4	Add missing $verbosemake to iwyu make	#
 #				CL.					#
+# 05/03/2023	MG	1.5.5	configure must use clang for		#
+#				include-what-you-use.			#
+#				Pass enable-iwyu to configure which	#
+#				allows it to do  some checking.		#
 #									#
 #########################################################################
 
@@ -172,8 +176,8 @@
 # Init variables #
 ##################
 
-readonly version=1.5.4			# set version variable
-readonly packageversion=1.4.3-1-g2cf11f5	# Version of the complete package
+readonly version=1.5.5			# set version variable
+readonly packageversion=1.5.0-6-g1bb1df4	# Version of the complete package
 
 # Set defaults
 atonly=""
@@ -188,6 +192,7 @@ distcheck=false
 gnulib=false
 headercheck=""
 iwyu=false
+iwyu_cli=""
 menuconfig=false
 par_jobs=""
 sparse=""
@@ -378,6 +383,7 @@ proc_CL()
 			;;
 		-i| --iwyu)
 			iwyu=true
+			iwyu_cli=" --enable-iwyu=yes"
 			shift
 			;;
 		-K|--check)
@@ -448,9 +454,9 @@ proc_CL()
 	done
 
 	if [[ $atonly || $analyzer || $cc || $debug || $headercheck \
-		|| $sparse || $testinghacks ]] || $verbose ; then
+		|| $iwyu || $sparse || $testinghacks ]] || $verbose ; then
 		if ! $config ; then
-			msg="Options a, A, CC, d, H, s, t and v require"
+			msg="Options a, A, CC, d, H, i, s, t and v require"
 			msg+=" option c."
 			output "$msg" 1
 			script_exit 64
@@ -474,6 +480,11 @@ proc_CL()
 		msg="Options CC and s are mutually exclusive."
 		output "$msg" 1
 		script_exit 64
+	fi
+
+	# include-what-you-use needs clang as compiler.
+	if [[ $iwyu && -z $cc ]]; then
+		cc=" CC=clang"
 	fi
 
 	# One option has to be selected.
@@ -566,7 +577,8 @@ proc_config()
 	std_cmd_err_handler $status
 
 	cmdline="$basedir/configure$cc$configcli_extra_args$verboseconfig"
-	cmdline+="$atonly$analyzer$debug$headercheck$sparse$testinghacks"
+	cmdline+="$atonly$analyzer$debug$headercheck$iwyu_cli$sparse"
+	cmdline+="$testinghacks"
 
 	eval "$cmdline"
 	status=$?
