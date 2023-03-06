@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2014-2022  Mark Grant				#
+# Author: Copyright (C) 2014-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -105,6 +105,7 @@
 # 09/10/2022	MG	1.1.7	Separate AutoTools generated files from	#
 #				project root.				#
 #				Use AC MSG CHECKING where appropriate.	#
+# 06/03/2023	MG	1.1.8	Update Copyright for 2023.		#
 #									#
 #########################################################################
 
@@ -115,11 +116,11 @@
 #					#
 #########################################
 
-AC_COPYRIGHT([Copyright (C) 2014-2022  Mark Grant
+AC_COPYRIGHT([Copyright (C) 2014-2023  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION([$Revision: 1.1.7 $])
+AC_REVISION([$Revision: 1.1.8 $])
 
 AC_PREREQ([2.69])
 
@@ -137,7 +138,7 @@ AC_PREREQ([2.69])
 # in source files.
 #
 # Set pkg_version for a default hard-coded version number.
-m4_define(pkg_version, 1.5.0)
+m4_define(pkg_version, 1.5.1)
 
 AC_INIT([AutoTools Build Script], m4_esyscmd([ \
 	git describe --always 1>/dev/null 2>/dev/null \
