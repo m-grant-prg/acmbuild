@@ -168,6 +168,8 @@
 #				include-what-you-use.			#
 #				Pass enable-iwyu to configure which	#
 #				allows it to do  some checking.		#
+# 09/03/2023	MG	1.5.6	Fix conditional for cc when iwyu is	#
+#				selected.				#
 #									#
 #########################################################################
 
@@ -176,7 +178,7 @@
 # Init variables #
 ##################
 
-readonly version=1.5.5			# set version variable
+readonly version=1.5.6			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -483,7 +485,7 @@ proc_CL()
 	fi
 
 	# include-what-you-use needs clang as compiler.
-	if [[ $iwyu && -z $cc ]]; then
+	if $iwyu && [[ -z $cc ]]; then
 		cc=" CC=clang"
 	fi
 
