@@ -197,8 +197,7 @@ dist=false
 distcheck=false
 gnulib=false
 headercheck=""
-iwyu=false
-iwyu_cli=""
+iwyu=""
 menuconfig=false
 par_jobs=""
 scan_build=""
@@ -391,8 +390,7 @@ proc_CL()
 			shift
 			;;
 		-i| --iwyu)
-			iwyu=true
-			iwyu_cli=" --enable-iwyu=yes"
+			iwyu=" --enable-iwyu=yes"
 			shift
 			;;
 		-K|--check)
@@ -480,9 +478,8 @@ proc_CL()
 	# include-what-you-use cannot be used with a number of other options.
 	if [[ $atonly || $analyzer || $debug || $headercheck || $scan_build \
 		|| $sparse || $testinghacks ]] || $build || $check || $dist \
-		|| $distcheck || $gnulib || $menuconfig || $tarball \
-		|| $verbose ; then
-		if $iwyu ; then
+		|| $distcheck || $gnulib || $menuconfig || $tarball ; then
+		if [[ $iwyu ]]; then
 			msg="Options a, A, b, C, d, D, g, H, k, m, s, S, t and"
 			msg+=" T cannot be used with option i"
 			output "$msg" 1
@@ -510,15 +507,15 @@ proc_CL()
 	fi
 
 	# include-what-you-use needs clang as compiler.
-	if $iwyu && [[ -z $cc ]]; then
+	if [[ $iwyu && -z $cc ]]; then
 		cc="clang"
 		cc_cli=" CC=clang"
 	fi
 
 	# One option has to be selected.
 	if ! $build && ! $check && ! $config && ! $distcheck && ! $dist \
-		&& ! $gnulib && ! $iwyu && ! $tarball \
-		&& [[ ! $scan_build ]]; then
+		&& ! $gnulib && ! $tarball \
+		&& [[ ! $iwyu || ! $scan_build ]]; then
 		output "Either b, c, C, D, g, i, K, S  or T must be set." 1
 		script_exit 64
 	fi
@@ -606,7 +603,7 @@ proc_config()
 	std_cmd_err_handler $status
 
 	cmdline="$basedir/configure$cc_cli$configcli_extra_args$verboseconfig"
-	cmdline+="$atonly$analyzer$debug$headercheck$iwyu_cli$sparse"
+	cmdline+="$atonly$analyzer$debug$headercheck$iwyu$sparse"
 	cmdline+="$scan_build$testinghacks"
 
 	eval "$cmdline"
@@ -642,7 +639,7 @@ proc_make()
 		cmdline="make"$verbosemake$par_jobs" dist clean"
 	fi
 
-	if $iwyu ; then
+	if [[ $iwyu ]]; then
 		cmdline="make"$verbosemake$par_jobs" -k"
 		cmdline+=" CC=include-what-you-use"
 	fi
