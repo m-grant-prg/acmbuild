@@ -95,6 +95,8 @@ processors. If this option is not specified then make runs sequentially.
 
 -s, --sparse  pass --enable-sparse=yes to configure.
 
+-S, --scan-build  Run clang's scan-build static analyser.
+
 -t, --testing-hacks  some build changes may be required for testing purposes.
 e.g. A script may invoke a project jar file which when installed will be
 somewhere under datadir, but during testing it is in the project tree.
