@@ -105,7 +105,9 @@
 # 09/10/2022	MG	1.1.7	Separate AutoTools generated files from	#
 #				project root.				#
 #				Use AC MSG CHECKING where appropriate.	#
-# 06/03/2023	MG	1.1.8	Update Copyright for 2023.		#
+# 12/03/2023	MG	1.1.8	Update Copyright for 2023.		#
+#				Add run-time warning checks for clang,	#
+#				iwyu and scan-build.			#
 #									#
 #########################################################################
 
@@ -305,9 +307,24 @@ if test "x$GCC" = "xno" ; then
 	AC_MSG_WARN(gcc not found - may be needed at run time)
 fi
 
-AC_CHECK_PROG(GIT, git, yes, no)
-if test "x$GIT" = "xno" ; then
-	AC_MSG_WARN(git not found - may be needed at run time)
+AC_CHECK_PROG(CGCC, cgcc, yes, no)
+if test "x$CGCC" = "xno" ; then
+	AC_MSG_WARN(sparse not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(CLANG, clang, yes, no)
+if test "x$CLANG" = "xno" ; then
+	AC_MSG_WARN(clang not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(IWYU, iwyu, yes, no)
+if test "x$IWYU" = "xno" ; then
+	AC_MSG_WARN(iwyu not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(SCAN_BUILD, scan-build, yes, no)
+if test "x$SCAN_BUILD" = "xno" ; then
+	AC_MSG_WARN(scan-build not found - may be needed at run time)
 fi
 
 AC_CHECK_PROG(GNULIB_TOOL, gnulib-tool, yes, no)
@@ -315,9 +332,9 @@ if test "x$GNULIB_TOOL" = "xno" ; then
 	AC_MSG_WARN(gnulib-tool not found - may be needed at run time)
 fi
 
-AC_CHECK_PROG(CGCC, cgcc, yes, no)
-if test "x$CGCC" = "xno" ; then
-	AC_MSG_WARN(sparse not found - may be needed at run time)
+AC_CHECK_PROG(GIT, git, yes, no)
+if test "x$GIT" = "xno" ; then
+	AC_MSG_WARN(git not found - may be needed at run time)
 fi
 
 
