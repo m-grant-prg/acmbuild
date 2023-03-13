@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # File ID: ./.github/workflows/build-test.yml				#
-# Author: Copyright (C) 2021, 2022  Mark Grant                          #
+# Author: Copyright (C) 2021-2023  Mark Grant                           #
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -23,6 +23,7 @@
 #                               AC_INIT.                                #
 # 21/11/2021    MG      1.0.3   Tighten SPDX tag.                       #
 # 13/10/2022    MG      1.0.4   Run on focal.                           #
+# 13/03/2023    MG      1.0.5   Run on ubuntu-latest.                   #
 #									#
 #########################################################################
 
@@ -37,7 +38,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
