@@ -1,3 +1,7 @@
+Release 1.5.2 2023-03-13
+Add support for clang's scan-build.
+Technical change information can be found in the ChangeLog.
+
 Release 1.5.1 2023-03-06
 Check for include-what-you-use executable if option selected.
 If iwyu is selected, as default, select clang and force use of option c.

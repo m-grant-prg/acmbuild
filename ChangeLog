@@ -1,3 +1,10 @@
+2023-03-13 v1.5.2 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.5.6
+	actions: Run on ubuntu-latest
+	at: Add 3 warning checks for possible run-time executables
+	bash: man: Add support for clang's scan-build
+	bash: Fix conditional for cc when iwyu is selected
+
 2023-03-06 v1.5.1 Mark Grant <m.grant.prg@gmail.com>
 	* at: Update bootstrap.sh to v1.5.5
 	bash: Add configure enable-iwyu CLA
