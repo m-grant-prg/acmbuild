@@ -23,7 +23,7 @@ configure.
 The acmbuild.sh options come in two flavours; action options and enabling
 options.
 
-b, c, C, D, g, K and T are action options. -b, for instance will run make,
+b, c, C, D, g, i, K, S and T are action options. -b, for instance will run make,
 whereas -D will run make dist. (p just sets the number of parallel jobs make
 will use).
 
@@ -50,7 +50,7 @@ changes are required. e.g. You may reference an external Java jar in datadir but
 in AT builds and installations this may expand to /usr/local/share... So a
 substitution is required for this scenario.
 
--A, --analyzer enable compiler analyzer output.
+-A, --analyzer  enable compiler analyzer output.
 
 -b, --build  make the project.
 
@@ -79,9 +79,8 @@ file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
 
 -i, --iwyu  Run clang's include-what-you-use to analyse header file usage.
 .br
-include-what-you-use invokes the clang compiler, so to ensure that clang is
-passed the correct compiler flags, configure must have been built with
---CC=clang
+include-what-you-use invokes the clang compiler, so this option automatically
+sets clang as the compiler and requires that option c is specified.
 
 -K, --check  run make check
 
@@ -110,8 +109,9 @@ somewhere under datadir, but during testing it is in the project tree.
 Options b build, C distcheck, D dist and T source-tarball are mutually
 exclusive.
 
-Options a at-only, A analyzer, d debug, H header-check, m menu-config, s sparse,
-t testing-hacks and v verbose are enabled by configure so require option c
+Options a at-only, A analyzer, CC, d debug, H header-check, i iwyu,
+m menu-config, s sparse, S scan-build, t testing-hacks and v verbose are
+enabled by configure so require option c
 config.
 EXIT STATUS
 0 - Success
@@ -125,7 +125,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2019, 2021, 2022 Mark Grant.
+Copyright (C) 2014-2019, 2021-2023 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
