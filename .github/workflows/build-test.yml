@@ -25,6 +25,8 @@
 # 13/10/2022    MG      1.0.4   Run on focal.                           #
 # 13/03/2023    MG      1.0.5   Run on ubuntu-latest.                   #
 # 01/08/2023    MG      1.0.6   Run on jammy.                           #
+#                               Delete txt2man install, rely on         #
+#                               dependencies.                           #
 #									#
 #########################################################################
 
@@ -52,7 +54,7 @@ jobs:
       - name: Update the package list
         run: sudo apt-get update
       - name: Add the extra PPA packages
-        run: sudo apt-get install -y txt2man txt2manwrap
+        run: sudo apt-get install -y txt2manwrap
 
       - name: Autoreconf
         run: autoreconf -if .
