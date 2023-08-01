@@ -1,3 +1,11 @@
+2023-08-01 v1.6.0 Mark Grant <m.grant.prg@gmail.com>
+	* at: Add support for ~ in version numbers
+	actions: Delete txt2man install, rely on dependencies
+	lxcu: Delete txt2man, rely on dependencies
+	lxcu: Add in-file help text
+	actions: Run on jammy
+	man: Update
+
 2023-03-13 v1.5.2 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.5.6
 	actions: Run on ubuntu-latest

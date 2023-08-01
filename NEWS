@@ -1,3 +1,7 @@
+Release 1.6.0 2023-08-01
+No user visible changes.
+Technical change information can be found in the ChangeLog.
+
 Release 1.5.2 2023-03-13
 Add support for clang's scan-build.
 Technical change information can be found in the ChangeLog.
