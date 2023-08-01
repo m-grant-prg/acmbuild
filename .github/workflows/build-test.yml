@@ -24,6 +24,7 @@
 # 21/11/2021    MG      1.0.3   Tighten SPDX tag.                       #
 # 13/10/2022    MG      1.0.4   Run on focal.                           #
 # 13/03/2023    MG      1.0.5   Run on ubuntu-latest.                   #
+# 01/08/2023    MG      1.0.6   Run on jammy.                           #
 #									#
 #########################################################################
 
@@ -38,7 +39,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
