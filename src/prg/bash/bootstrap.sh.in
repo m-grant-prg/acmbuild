@@ -571,7 +571,8 @@ proc_gnulib()
 proc_menuconfig()
 {
 	local msg
-	local readonly tmp_file=/tmp/$$.$(basename "$0").tmp
+	local tmp_file=/tmp/$$.$(basename "$0").tmp
+	readonly tmp_file
 
 	if [[ ! -f $basedirunq/configurable-options.sh \
 		|| ! -r $basedirunq/configurable-options.sh \
