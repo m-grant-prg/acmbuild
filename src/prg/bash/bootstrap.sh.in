@@ -173,6 +173,7 @@
 #				selected.				#
 #				Add -S --scan-build option to support	#
 #				clang's scan-build static analyser.	#
+# 28/08/2023	MG	1.5.7	Fix shellcheck warnings.		#
 #									#
 #########################################################################
 
@@ -181,7 +182,7 @@
 # Init variables #
 ##################
 
-readonly version=1.5.6			# set version variable
+readonly version=1.5.7			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -275,7 +276,7 @@ output()
 # No return value.
 script_exit()
 {
-	exit $1
+	exit "$1"
 }
 
 # Standard function to test command error and exit if non-zero.
@@ -284,7 +285,7 @@ script_exit()
 std_cmd_err_handler()
 {
 	if (( $1 )); then
-		script_exit $1
+		script_exit "$1"
 	fi
 }
 
@@ -298,7 +299,7 @@ trap_exit()
 
 	msg="Script terminating with exit code $exit_code due to trap received."
 	output "$msg" 1
-	script_exit $exit_code
+	script_exit "$exit_code"
 }
 
 # Setup trap
@@ -568,7 +569,7 @@ proc_gnulib()
 proc_menuconfig()
 {
 	local msg
-	local readonly tmp_file=/tmp/$$.$(basename $0).tmp
+	local readonly tmp_file=/tmp/$$.$(basename "$0").tmp
 
 	if [[ ! -f $basedirunq/configurable-options.sh \
 		|| ! -r $basedirunq/configurable-options.sh \
@@ -578,11 +579,11 @@ proc_menuconfig()
 		output "$msg" 1
 		script_exit 77
 	fi
-	$basedirunq/configurable-options.sh $tmp_file
+	"$basedirunq"/configurable-options.sh "$tmp_file"
 	std_cmd_err_handler $?
-	configcli_extra_args+=$(cat < $tmp_file)
+	configcli_extra_args+=$(cat < "$tmp_file")
 	std_cmd_err_handler $?
-	rm -f $tmp_file
+	rm -f "$tmp_file"
 	std_cmd_err_handler $?
 }
 
