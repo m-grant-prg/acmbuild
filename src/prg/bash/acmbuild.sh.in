@@ -9,7 +9,7 @@
 #########################################################################
 #									#
 # Script ID: acmbuild.sh						#
-# Author: Copyright (C) 2018-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2018-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -46,13 +46,16 @@
 #				Use scriptloc substitution variable to	#
 #				find bootstrap.sh (testing-hacks).	#
 # 21/11/2021	MG	1.0.4	Tighten SPDX tag.			#
+# 28/08/2023	MG	1.0.5	Fix shellcheck warnings.		#
 #									#
 #########################################################################
 
 ##################
 # Init variables #
 ##################
-readonly version="1.0.4"		# set version variable
+# shellcheck disable=SC2034  # Unused variable left, possibly useful
+readonly version=1.0.5		# set version variable
+# shellcheck disable=SC2034  # Unused variable left, possibly useful
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 
