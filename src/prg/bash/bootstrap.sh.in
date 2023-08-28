@@ -409,7 +409,7 @@ proc_CL()
 		-m|--menu-config)
 			which whiptail > /dev/null
 			status=$?
-			if (( $status != 0 )); then
+			if (( status != 0 )); then
 				output "Please first install whiptail." 1
 				script_exit 64
 			fi
