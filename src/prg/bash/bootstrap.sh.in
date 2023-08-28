@@ -603,7 +603,7 @@ proc_config()
 	cmdline="autoreconf -if $basedir"
 	eval "$cmdline"
 	status=$?
-	msg="autoreconf -if "$basedir" completed with exit status: $status"
+	msg="autoreconf -if $basedir completed with exit status: $status"
 	output "$msg" $status
 	std_cmd_err_handler $status
 
