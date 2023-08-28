@@ -178,6 +178,9 @@
 #########################################################################
 
 
+set -o pipefail
+
+
 ##################
 # Init variables #
 ##################
@@ -210,7 +213,7 @@ verboseconfig=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
 basedir="."			# Retain quotes
 basedirunq=$basedir		# Without retaining quotes
-configcli_extra_args=""
+configcli_extra_args=()
 
 
 #############
@@ -538,7 +541,7 @@ proc_CL()
 		basedir=${1@Q}
 		basedirunq="$1"		# Unquoted version
 		shift
-		configcli_extra_args+=" "${@@Q}
+		configcli_extra_args+=( ' ' "$@" )
 	fi
 }
 
@@ -571,6 +574,7 @@ proc_gnulib()
 proc_menuconfig()
 {
 	local msg
+	local tmp_extra_args=()
 	local tmp_file
 	tmp_file=/tmp/$$.$(basename "$0").tmp
 	readonly tmp_file
@@ -585,7 +589,9 @@ proc_menuconfig()
 	fi
 	"$basedirunq"/configurable-options.sh "$tmp_file"
 	std_cmd_err_handler $?
-	configcli_extra_args+=$(cat < "$tmp_file")
+	mapfile -t tmp_extra_args < <( head -n 1 "$tmp_file" )
+	std_cmd_err_handler $?
+	configcli_extra_args+=( "${tmp_extra_args[@]}" )
 	std_cmd_err_handler $?
 	rm -f "$tmp_file"
 	std_cmd_err_handler $?
@@ -607,8 +613,8 @@ proc_config()
 	output "$msg" $status
 	std_cmd_err_handler $status
 
-	cmdline="$basedir/configure$cc_cli$configcli_extra_args$verboseconfig"
-	cmdline+="$atonly$analyzer$debug$headercheck$iwyu$sparse"
+	cmdline="$basedir/configure$cc_cli${configcli_extra_args[*]}"
+	cmdline+="$verboseconfig$atonly$analyzer$debug$headercheck$iwyu$sparse"
 	cmdline+="$scan_build$testinghacks"
 
 	eval "$cmdline"
