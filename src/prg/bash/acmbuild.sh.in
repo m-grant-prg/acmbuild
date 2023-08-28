@@ -68,7 +68,7 @@ readonly packageversion=@pkgversion@	# Version of the complete package
 # No return value.
 script_exit()
 {
-	exit $1
+	exit "$1"
 }
 
 # Standard trap exit function.
@@ -81,7 +81,7 @@ trap_exit()
 
 	msg="Script terminating with exit code $exit_code due to trap received."
 	output "$msg" 1 0
-	script_exit $exit_code
+	script_exit "$exit_code"
 }
 
 # Setup trap.
