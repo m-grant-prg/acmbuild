@@ -1,3 +1,16 @@
+2023-08-29 v1.6.1 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.5.7
+	bootstrap: Assign array to array
+	bootstrap: Remove unquoting quotes
+	bootstrap: Do not mask return value
+	bootstrap: Fix local readonly var
+	bootstrap: $/${} unnecessary on arithmetic variables
+	bootstrap: Do not warn of unreachable commands in trap functions
+	bootstrap: Double quote to prevent globbing and word splitting
+	acmbuild: Do not warn of unreachable code in trap function
+	acmbuild: Double quote to prevent globbing and word splitting
+	acmbuild: Allow unused variables
+
 2023-08-01 v1.6.0 Mark Grant <m.grant.prg@gmail.com>
 	* at: Add support for ~ in version numbers
 	actions: Delete txt2man install, rely on dependencies
