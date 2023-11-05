@@ -8,7 +8,6 @@
 
 #########################################################################
 #									#
-# Script ID: acmbuild.sh						#
 # Author: Copyright (C) 2018-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
@@ -28,27 +27,6 @@
 #									#
 #########################################################################
 
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 06/02/2018	MG	1.0.1	Created.				#
-# 23/12/2018	MG	1.0.2	Remove script_exit_code variable 	#
-#				propogating the exit code as a function	#
-#				argument instead.			#
-#				Improve trap exit code handling.	#
-#				Tidy up local and global variables.	#
-# 24/03/2019	MG	1.0.3	Replace #! env bash with absolute path	#
-#				via configure.				#
-#				bootstrap.sh is now in pkglibexecdir.	#
-#				Use scriptloc substitution variable to	#
-#				find bootstrap.sh (testing-hacks).	#
-# 21/11/2021	MG	1.0.4	Tighten SPDX tag.			#
-# 28/08/2023	MG	1.0.5	Fix shellcheck warnings.		#
-#									#
-#########################################################################
 
 ##################
 # Init variables #
