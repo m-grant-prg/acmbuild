@@ -2,7 +2,7 @@
 AutoConf and AutoMake Build Scripts
 ===================================
 
-Author - Copyright (C) 2014-2021 Mark Grant
+Author - Copyright (C) 2014-2021, 2023 Mark Grant
 
 --------
 Contents
@@ -33,19 +33,17 @@ At the command line level the script offers it's own options and provides that
 all other arguments are passed unparsed and untouched straight to the configure
 command line. For example:-
 
-	acmbuild.sh --config .. sysconfdir=/etc -- --prefix=/usr
+	acmbuild --config .. sysconfdir=/etc -- --prefix=/usr
 
-In this case --config is an acmbuild.sh option to configure the project, .. is
-the base directory and everything else is passed untouched to configure,
-invoking:-
+In this case --config is an acmbuild option to configure the project, .. is the
+base directory and everything else is passed untouched to configure, invoking:-
 
 	../configure sysconfdir=/etc --prefix=/usr
 
 thereby obviously supporting environment variable setting and option passing for
 configure.
 
-The acmbuild.sh options come in two flavours; action options and enabling
-options.
+The acmbuild options come in two flavours; action options and enabling options.
 
 b, c, C, D, g, K, m and T are action options. -b, for instance will run make,
 whereas -D will run make dist.
@@ -53,7 +51,7 @@ whereas -D will run make dist.
 The rest, (apart from help and version), are enabling options. Invariably these
 are implemented merely by passing an enable argument to configure. For example
 
-	acmbuild.sh --config --debug ..
+	acmbuild --config --debug ..
 
 will run
 
@@ -65,10 +63,10 @@ it is supported by configure, so, in the above example, if the developer had not
 written code in configure to process this argument, configure will issue a
 warning and then just ignore the option.
 
-As an example of the simplification this script affords, the following
-acmbuild.sh command
+As an example of the simplification this script affords, the following acmbuild
+command
 
-	acmbuild.sh -cb .
+	acmbuild -cb .
 
 will run
 
@@ -79,15 +77,15 @@ will run
 
 Implementation
 --------------
-The project functionality is implemented as two scripts; acmbuild.sh and
-bootstrap.sh. acmbuild.sh does nothing more than invoke bootstrap.sh with the
-same arguments. This means that all the functionality is in bootstrap.sh. On
-project install both scripts are installed but only acmbuild.sh is installed in
-the PATH. So all usage is via acmbuild.sh. The reason for this is that it
-enables a secondary usage of bootstrap.sh. bootstrap.sh can be copied and pasted
-into the project-root of all AutoTools project to provide a simplified and
-standardised build bootstrap as is generally recommended. This eliminates any
-possible confusion as to which version of bootstrap.sh is being used whilst also
+The project functionality is implemented as two scripts; acmbuild and
+bootstrap.sh. acmbuild does nothing more than invoke bootstrap.sh with the same
+arguments. This means that all the functionality is in bootstrap.sh. On project
+install both scripts are installed but only acmbuild is installed in the PATH.
+So all usage is via acmbuild. The reason for this is that it enables a secondary
+usage of bootstrap.sh. bootstrap.sh can be copied and pasted into the
+project-root of all AutoTools project to provide a simplified and standardised
+build bootstrap as is generally recommended. This eliminates any possible
+confusion as to which version of bootstrap.sh is being used whilst also
 obviating any dependency on this project.
 
 
@@ -231,6 +229,6 @@ script would be:-
 
 The last '..' points the way to project root.
 
-For the full list of arguments to bootstrap.sh please look at the acmbuild.sh
+For the full list of arguments to bootstrap.sh please look at the acmbuild
 options section above.
 

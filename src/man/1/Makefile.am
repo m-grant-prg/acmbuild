@@ -11,7 +11,7 @@
 #########################################################################
 
 
-acmbuild.sh.1: Makefile
+acmbuild.1: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
@@ -30,10 +30,10 @@ acmbuild.sh.1: Makefile
 	txt2manwrap $(@F) $$section "acmbuild Manual" $@.tmp $@
 	rm -f $@.tmp
 
-acmbuild.sh.1: $(srcdir)/acmbuild.sh.1.man.in
+acmbuild.1: $(srcdir)/acmbuild.1.man.in
 
-man_MANS = acmbuild.sh.1
+man_MANS = acmbuild.1
 
-EXTRA_DIST = $(srcdir)/acmbuild.sh.1.man.in
+EXTRA_DIST = $(srcdir)/acmbuild.1.man.in
 
-CLEANFILES = *.tmp acmbuild.sh.1
+CLEANFILES = *.tmp acmbuild.1

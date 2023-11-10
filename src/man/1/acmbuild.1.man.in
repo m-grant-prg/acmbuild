@@ -1,5 +1,5 @@
 NAME
-acmbuild.sh - acmbuild script
+acmbuild - acmbuild script
 SYNOPSIS
 acmbuild [OPTION] [-- PASS_THRU_OPTIONS]
 DESCRIPTION
@@ -9,9 +9,9 @@ At the command line level the script offers it's own options and provides that
 all other arguments are passed unparsed and untouched straight to the configure
 command line. For example:-
 
-	acmbuild.sh --config .. sysconfdir=/etc -- --prefix=/usr
+	acmbuild --config .. sysconfdir=/etc -- --prefix=/usr
 
-In this case --config is an acmbuild.sh option to configure the project, .. is
+In this case --config is an acmbuild option to configure the project, .. is
 the base directory and everything else is passed untouched to configure,
 invoking:-
 
@@ -20,7 +20,7 @@ invoking:-
 thereby obviously supporting environment variable setting and option passing for
 configure.
 
-The acmbuild.sh options come in two flavours; action options and enabling
+The acmbuild options come in two flavours; action options and enabling
 options.
 
 b, c, C, D, g, i, K, S and T are action options. -b, for instance will run make,
@@ -30,7 +30,7 @@ will use).
 The rest, (apart from help and version), are enabling options. Invariably these
 are implemented merely by passing an enable argument to configure. For example
 
-	acmbuild.sh --config --debug ..
+	acmbuild --config --debug ..
 
 will run
 

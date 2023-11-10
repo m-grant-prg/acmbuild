@@ -95,7 +95,7 @@ configcli_extra_args=()
 usage()
 {
 cat << EOF
-Usage is also true for acmbuild.sh
+Usage is also true for acmbuild
 Usage is:-
 ${0##*/} -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
 		[-g] [-K] [-pX] [-- PASS_THRU_OPTIONS ...]
@@ -205,7 +205,7 @@ trap trap_exit SIGHUP SIGINT SIGQUIT SIGTERM
 proc_CL()
 {
 	local GETOPTTEMP
-	local script_name="acmbuild.sh/bootstrap.sh"
+	local script_name="acmbuild/bootstrap.sh"
 	local tmp
 
 	tmp="getopt -o aAbcCdDghHiKmp::sStTvV "

@@ -11,18 +11,26 @@
 #########################################################################
 
 
-acmbuild.sh bootstrap.sh: Makefile
+acmbuild: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+acmbuild: $(srcdir)/acmbuild.sh.in
+
+bootstrap.sh: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-acmbuild.sh: $(srcdir)/acmbuild.sh.in
 bootstrap.sh: $(srcdir)/bootstrap.sh.in
 
 
-bin_SCRIPTS = acmbuild.sh
+bin_SCRIPTS = acmbuild
 
 pkglibexec_SCRIPTS = bootstrap.sh
 
@@ -30,5 +38,5 @@ pkglibexec_SCRIPTS = bootstrap.sh
 EXTRA_DIST = $(srcdir)/acmbuild.sh.in $(srcdir)/bootstrap.sh.in
 
 
-CLEANFILES = *.tmp acmbuild.sh bootstrap.sh
+CLEANFILES = *.tmp acmbuild bootstrap.sh
 
