@@ -89,16 +89,38 @@ confusion as to which version of bootstrap.sh is being used whilst also
 obviating any dependency on this project.
 
 
+Command Line Syntax
+-------------------
+	acmbuild -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+		[-g] [-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+	acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+		[-- PASS_THRU_OPTIONS ...]
+	acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [-- PASS_THRU_OPTIONS ...]
+	acmbuild {-C|-D|-T} [-c] [-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+	acmbuild -g [-b]
+		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+		[-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+	acmbuild {-h|-V}
+	acmbuild -K [-b]
+		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+		[-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+
+	acmbuild [OPTIONS] [-- PASS_THRU_OPTIONS ...]
+
+
 Options
 -------
 The script offers the following options:-
 
 	-a, --at-only
-		during testing and for an AutoTools-only install, some build
-		changes are required. e.g. You may reference an external Java
-		jar in datadir but in AT builds and installations this may
-		expand to /usr/local/share... So a substitution is required for
+		during  testing  and  for  an AutoTools-only install, some build
+		changes are required. e.g. You may reference  an  external  Java
+		jar  in  datadir but in AT builds and installations this may ex‐
+		pand to /usr/local/share... So a substitution  is  required  for
 		this scenario.
+
+	-A, --analyzer
+		enable compiler analyzer output.
 
 	-b, --build
 		make the project.
@@ -109,6 +131,12 @@ The script offers the following options:-
 	-C, --distcheck
 		perform a normal make distcheck.
 
+	--CC compiler
+		Specify a compiler to use. Functionally equivalent to:-
+		bootstrap.sh -c . -- CC=compiler
+		More ephemerally, as a one-off you can use:-
+		make CC=compiler
+
 	-d, --debug
 		build with appropriate debug flags.
 
@@ -116,9 +144,9 @@ The script offers the following options:-
 		perform a make dist.
 
 	-g, --gnulib
-		run gnulib-tool --update. Checks for the existence of the cache
-		file proj-root/m4/gnulib-cache.m4. If it does not exist the
-		update is not run.
+		run  gnulib-tool --update. Checks for the existence of the cache
+		file proj-root/m4/gnulib-cache.m4. If it does not exist the  up‐
+		date is not run.
 
 	-h, --help
 		prints usage information.
@@ -126,22 +154,36 @@ The script offers the following options:-
 	-H, --header-check
 		show include stack depth
 
+	-i, --iwyu
+		Run clang's include-what-you-use to analyse header file usage.
+		include-what-you-use  invokes the clang compiler, so this option
+		automatically sets clang as the compiler and requires  that  op‐
+		tion c is specified.
+
 	-K, --check
 		run make check
 
-	-m or --menu-config Invoke menu of configurable options
+	-m, --config-menu
+		invoke menu of configurable options. The only thing fixed is the
+		script name, configurable-options.sh in the project root  direc‐
+		tory. Usually this would be expected to have a dialog interface.
 
-	-p[X] or --parallel-jobs[=X] number of jobs to pass to make as --jobs=
-		If not specified make is sequential
-		If no value X is given then defaults to nproc
+	-p[X], --parallel-jobs[=X]
+		if  X  is specified then make runs with X parallel jobs. If X is
+		not specified then make will run with the same number of jobs as
+		processors.  If  this option is not specified then make runs se‐
+		quentially.
 
 	-s, --sparse
 		pass --enable-sparse=yes to configure.
 
+	-S, --scan-build
+		Run clang's scan-build static analyser.
+
 	-t, --testing-hacks
-		some build changes may be required for testing purposes. e.g. A
-		script may invoke a project jar file which when installed will
-		be somewhere under datadir, but during testing it is in the
+		some build changes may be required for testing purposes.  e.g. A
+		script  may  invoke a project jar file which when installed will
+		be somewhere under datadir, but during  testing  it  is  in  the
 		project tree.
 
 	-T, --source-tarball
@@ -153,11 +195,8 @@ The script offers the following options:-
 	-V, --version
 		prints version information
 
-Options b build, C distcheck, D dist and T source-tarball are mutually
-exclusive.
-
-Options a at-only, d debug, H header-check, s sparse, t testing-hacks and v
-verbose  are enabled by configure so require option c config.
+	-- PASS_THRU_OPTIONS The -- stops processing command line arguments and
+		instead passes subsequent arguments on, as-is, to AutoTools
 
 N.B.
 ----
