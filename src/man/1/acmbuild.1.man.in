@@ -1,7 +1,21 @@
 NAME
 acmbuild - acmbuild script
 SYNOPSIS
-acmbuild [OPTION] [-- PASS_THRU_OPTIONS]
+acmbuild -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+	[-g] [-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+	[-- PASS_THRU_OPTIONS ...]
+acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [-- PASS_THRU_OPTIONS ...]
+acmbuild {-C|-D|-T} [-c] [-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+acmbuild -g [-b]
+	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+	[-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+acmbuild {-h|-V}
+acmbuild -K [-b]
+	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+	[-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+
+acmbuild.sh [OPTIONS] [-- PASS_THRU_OPTIONS ...]
 DESCRIPTION
 A script to automate AutoConf and Make builds.
 
@@ -11,17 +25,15 @@ command line. For example:-
 
 	acmbuild --config .. sysconfdir=/etc -- --prefix=/usr
 
-In this case --config is an acmbuild option to configure the project, .. is
-the base directory and everything else is passed untouched to configure,
-invoking:-
+In this case --config is an acmbuild option to configure the project, .. is the
+base directory and everything else is passed untouched to configure, invoking:-
 
 	../configure sysconfdir=/etc --prefix=/usr
 
 thereby obviously supporting environment variable setting and option passing for
 configure.
 
-The acmbuild options come in two flavours; action options and enabling
-options.
+The acmbuild options come in two flavours; action options and enabling options.
 
 b, c, C, D, g, i, K, S and T are action options. -b, for instance will run make,
 whereas -D will run make dist. (p just sets the number of parallel jobs make
@@ -60,7 +72,7 @@ substitution is required for this scenario.
 
 --CC compiler  Specify a compiler to use. Functionally equivalent to:-
 .br
-bootstrap.sh -c . -- CC=compiler
+acmbuild -c . -- CC=compiler
 .br
 More ephemerally, as a one-off you can use:-
 .br
@@ -106,13 +118,8 @@ somewhere under datadir, but during testing it is in the project tree.
 
 -V, --version  prints version information
 
-Options b build, C distcheck, D dist and T source-tarball are mutually
-exclusive.
-
-Options a at-only, A analyzer, CC, d debug, H header-check, i iwyu,
-m menu-config, s sparse, S scan-build, t testing-hacks and v verbose are
-enabled by configure so require option c
-config.
+-- PASS_THRU_OPTIONS The -- stops processing command line arguments and
+instead passes subsequent arguments on, as-is, to AutoTools
 EXIT STATUS
 0 - Success
 
