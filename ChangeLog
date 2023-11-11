@@ -1,3 +1,20 @@
+2023-11-11 v1.6.2 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump actions/checkout from 2 to 4
+dependabot[bot] (1):
+
+	at: Upgrade bootstrap.sh to v1.6.0
+	bash: Bump bootstrap.sh version number
+	bash: Bump acmbuild version number
+	at: README: Update CL syntax and options
+	man: Update CL syntax
+	all: Drop.sh extension from scripts in $PATH
+	at: Improve CL syntax description
+	bash: Improve CL syntax description
+	all: Remove most in-file ChangeLogs and versioning
+	Merge pull request #1 from m-grant-prg/dependabot/github_actions/actions/checkout-4
+	github: Add dependabot version update config
+Mark Grant (11):
+
 2023-08-29 v1.6.1 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.5.7
 	bootstrap: Assign array to array
