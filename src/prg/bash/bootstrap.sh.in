@@ -54,7 +54,7 @@ set -o pipefail
 # Init variables #
 ##################
 
-readonly version=1.5.7			# set version variable
+readonly version=1.6.0			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
