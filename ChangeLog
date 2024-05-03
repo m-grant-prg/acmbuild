@@ -1,3 +1,11 @@
+2024-05-03 v1.6.3 Mark Grant <m.grant.prg@gmail.com>
+	* git: Correct gitignore reasoning, empty not untracked
+	at: Update Copyright for 2024
+	git: Update mailmap to v1.0.4
+	git: Update gitignore to v1.0.12
+	git: Update gitattributes to v1.0.5
+	editors: Update editorconfig to v1.0.6
+
 2023-11-11 v1.6.2 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump actions/checkout from 2 to 4
 dependabot[bot] (1):

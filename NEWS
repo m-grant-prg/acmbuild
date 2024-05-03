@@ -1,3 +1,7 @@
+Release 1.6.3 2024-05-03
+No user visible changes.
+Technical change information can be found in the ChangeLog.
+
 Release 1.6.2 2023-11-11
 Improve help and man page command line syntax.
 Drop .sh extension from acmbuild script name.
