@@ -241,11 +241,6 @@ if test "x$PRINTF" = "xno" ; then
 fi
 
 AC_MSG_NOTICE(checking for programs which may be required at run time)
-AC_CHECK_PROG(GCC, gcc, yes, no)
-if test "x$GCC" = "xno" ; then
-	AC_MSG_WARN(gcc not found - may be needed at run time)
-fi
-
 AC_CHECK_PROG(CGCC, cgcc, yes, no)
 if test "x$CGCC" = "xno" ; then
 	AC_MSG_WARN(sparse not found - may be needed at run time)
@@ -256,6 +251,21 @@ if test "x$CLANG" = "xno" ; then
 	AC_MSG_WARN(clang not found - may be needed at run time)
 fi
 
+AC_CHECK_PROG(GCC, gcc, yes, no)
+if test "x$GCC" = "xno" ; then
+	AC_MSG_WARN(gcc not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(GIT, git, yes, no)
+if test "x$GIT" = "xno" ; then
+	AC_MSG_WARN(git not found - may be needed at run time)
+fi
+
+AC_CHECK_PROG(GNULIB_TOOL, gnulib-tool, yes, no)
+if test "x$GNULIB_TOOL" = "xno" ; then
+	AC_MSG_WARN(gnulib-tool not found - may be needed at run time)
+fi
+
 AC_CHECK_PROG(IWYU, iwyu, yes, no)
 if test "x$IWYU" = "xno" ; then
 	AC_MSG_WARN(iwyu not found - may be needed at run time)
@@ -264,16 +274,6 @@ fi
 AC_CHECK_PROG(SCAN_BUILD, scan-build, yes, no)
 if test "x$SCAN_BUILD" = "xno" ; then
 	AC_MSG_WARN(scan-build not found - may be needed at run time)
-fi
-
-AC_CHECK_PROG(GNULIB_TOOL, gnulib-tool, yes, no)
-if test "x$GNULIB_TOOL" = "xno" ; then
-	AC_MSG_WARN(gnulib-tool not found - may be needed at run time)
-fi
-
-AC_CHECK_PROG(GIT, git, yes, no)
-if test "x$GIT" = "xno" ; then
-	AC_MSG_WARN(git not found - may be needed at run time)
 fi
 
 
