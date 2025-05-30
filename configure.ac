@@ -8,18 +8,14 @@
 # Purpose:								#
 # Autoconfigure script file to configure acmbuild project.		#
 #									#
-# cmd line syntax of standard configure:				#
-# ./configure --help							#
-#									#
-# cmd line syntax of additional functionality:				#
+# configure cmd line syntax:						#
 # ./configure	[--enable-testinghacks[={yes|no}]]			#
 # Parameter defaults:							#
 #	When specified on the CL, but without the [={yes|no}], the	#
 #	default is yes.							#
-#	When not specified the default is no.				#
 #									#
-# Parameters generic description. For specifics to this configure.ac	#
-# please see inline comments at the point of definition:-		#
+# Parameters general description. For specifics please see inline	#
+# comments at the point of definition:-					#
 # --enable-testinghacks							#
 #	This option should be used when the AT testing environment, (ie	#
 #	using the build directory), requires differences in invocation.	#
@@ -30,6 +26,7 @@
 #	this was left unchanged the test invocation of the script would	#
 #	end up testing any old installed version of the target or	#
 #	failing because it cannot be found.				#
+#	If not specified on the CL then the default is no.		#
 #									#
 # Layout: (Only relevant sections will exist).				#
 # SECTION  1: Initialisation & Setup					#
