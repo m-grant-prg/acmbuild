@@ -1,3 +1,19 @@
+2025-10-25 v1.7.0 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump actions/checkout from 4 to 5
+dependabot[bot] (1):
+
+	at: Upgrade bootstrap.sh to v1.6.1
+	bash: gnulib-tool --update must be run in the project root
+	Merge pull request #2 from m-grant-prg/dependabot/github_actions/tip/actions/checkout-5
+	v1.7.0-rc1
+	actions: Run on noble
+	actions: Set dependabot to target stable and old stable branches
+	at: Improve CL arguments comments
+	at: Re-order program checks alphabetically
+	at: Update Copyright for 2025
+	actions: Fix trivial whitespace formatting errors
+Mark Grant (10):
+
 2024-05-03 v1.6.3 Mark Grant <m.grant.prg@gmail.com>
 	* git: Correct gitignore reasoning, empty not untracked
 	at: Update Copyright for 2024
