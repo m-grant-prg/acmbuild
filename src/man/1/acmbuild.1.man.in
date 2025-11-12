@@ -2,20 +2,22 @@ NAME
 acmbuild - acmbuild script
 SYNOPSIS
 acmbuild -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-g] [-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+	[-g] [-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+	[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [PATH_TO_PROJECT_ROOT]
 	[-- PASS_THRU_OPTIONS ...]
-acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [-- PASS_THRU_OPTIONS ...]
-acmbuild {-C|-D|-T} [-c] [-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+acmbuild {-C|-D|-T} [-c] [-g] [-pX] [PATH_TO_PROJECT_ROOT]
+	[-- PASS_THRU_OPTIONS ...]
 acmbuild -g [-b]
 	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+	[-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 acmbuild {-h|-V}
 acmbuild -K [-b]
 	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+	[-g] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
-acmbuild.sh [OPTIONS] [-- PASS_THRU_OPTIONS ...]
+acmbuild.sh [OPTIONS] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 DESCRIPTION
 A script to automate AutoConf and Make builds.
 
@@ -118,6 +120,9 @@ somewhere under datadir, but during testing it is in the project tree.
 
 -V, --version  prints version information
 
+[PATH_TO_PROJECT_ROOT] The absolute or relative path to the project root
+directory (containing configure)
+
 -- PASS_THRU_OPTIONS The -- stops processing command line arguments and
 instead passes subsequent arguments on, as-is, to AutoTools
 EXIT STATUS
@@ -132,7 +137,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2019, 2021-2023 Mark Grant.
+Copyright (C) 2014-2019, 2021-2023, 2025 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

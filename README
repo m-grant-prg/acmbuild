@@ -2,7 +2,7 @@
 AutoConf and AutoMake Build Scripts
 ===================================
 
-Author - Copyright (C) 2014-2021, 2023 Mark Grant
+Author - Copyright (C) 2014-2021, 2023, 2025 Mark Grant
 
 --------
 Contents
@@ -92,20 +92,22 @@ obviating any dependency on this project.
 Command Line Syntax
 -------------------
 	acmbuild -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-g] [-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+		[-g] [-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 	acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+		[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+	acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
-	acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [-- PASS_THRU_OPTIONS ...]
-	acmbuild {-C|-D|-T} [-c] [-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+	acmbuild {-C|-D|-T} [-c] [-g] [-pX] [PATH_TO_PROJECT_ROOT]
+		[-- PASS_THRU_OPTIONS ...]
 	acmbuild -g [-b]
 		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-K] [-pX] [-- PASS_THRU_OPTIONS ...]
+		[-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 	acmbuild {-h|-V}
 	acmbuild -K [-b]
 		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-g] [-pX] [-- PASS_THRU_OPTIONS ...]
+		[-g] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
-	acmbuild [OPTIONS] [-- PASS_THRU_OPTIONS ...]
+	acmbuild [OPTIONS] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
 
 Options
@@ -195,6 +197,9 @@ The script offers the following options:-
 	-V, --version
 		prints version information
 
+	[PATH_TO_PROJECT_ROOT] The absolute or relative path to the project root
+		directory (containing configure)
+
 	-- PASS_THRU_OPTIONS The -- stops processing command line arguments and
 		instead passes subsequent arguments on, as-is, to AutoTools
 
@@ -259,7 +264,10 @@ In AutoTools it is usually advisable to perform parallel builds. This means you
 build somewhere other than the project root. This is because building creates
 files and they would confuse the project root downwards. I always create a build
 directory straight off the project root, cd to there and do all build and git
-work from there, (.gitignore is already set to ignore such a directory).
+work from there, (.gitignore is already set to ignore such a directory). Further
+information on VPATH (parallel) builds can be found at:-
+
+https://www.gnu.org/software/automake/manual/html_node/VPATH-Builds.html
 
 Assuming you adopt the preceding paragraph then a typical invocation of the
 script would be:-
