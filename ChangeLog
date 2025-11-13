@@ -1,3 +1,9 @@
+2025-11-13 v1.7.1 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.6.2
+	at: bash-comp: Add bash completion
+	at: bash: man: Add mention of PATH_TO_PROJECT_ROOT
+Mark Grant (3):
+
 2025-10-25 v1.7.0 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump actions/checkout from 4 to 5
 dependabot[bot] (1):

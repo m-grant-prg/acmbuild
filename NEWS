@@ -1,3 +1,8 @@
+Release 1.7.1 2025-11-13
+Added bash completion.
+Added PATH_TO_PROJECT_ROOT to help and man page.
+Technical change information can be found in the ChangeLog.
+
 Release 1.7.0 2025-10-25
 No user visible changes.
 Technical change information can be found in the ChangeLog.
