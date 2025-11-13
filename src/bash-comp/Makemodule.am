@@ -1,0 +1,33 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2025  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# Purpose:								#
+# AutoMake script file to generate bash-completion from source.		#
+#									#
+#########################################################################
+
+
+bashcompdir = $(datadir)/bash-completion/completions
+
+
+acmbuild: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
+	mv $@.tmp $@
+acmbuild: $(srcdir)/acmbuild.sh.in
+
+
+bashcomp_DATA = acmbuild
+
+
+EXTRA_DIST = $(srcdir)/acmbuild.sh.in
+
+
+CLEANFILES = *.tmp acmbuild
+
