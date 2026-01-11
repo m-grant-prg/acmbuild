@@ -1,3 +1,7 @@
+Release 1.7.3 2026-01-11
+Bump version due to missing commit in 1.7.2
+Technical change information can be found in the ChangeLog.
+
 Release 1.7.2 2026-01-11
 Make source and distribution tarballs have the same name, as is usual (GitHub).
 Add -G --gpg-sign options to sign tarballs.
