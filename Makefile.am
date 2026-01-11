@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2014-2019, 2021, 2023, 2025  Mark Grant		#
+# Author: Copyright (C) 2014-2019, 2021, 2023, 2025, 2026  Mark Grant	#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -40,4 +40,8 @@ srctarball:
 		--output=$${targ} \
 		HEAD && \
 	cd -
+
+
+sign_tarball:
+	gpg --armor --detach-sign @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
 

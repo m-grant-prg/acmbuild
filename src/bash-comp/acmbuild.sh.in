@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 #########################################################################
 #									#
-# Author: Copyright (C) 2025  Mark Grant				#
+# Author: Copyright (C) 2025, 2026  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -19,9 +19,9 @@ _acmbuild()
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 
-	OPTS="-a -A -b -c -C -d -D -g -h -H -i -K -m -p -s -S -t -T -v -V"
+	OPTS="-a -A -b -c -C -d -D -g -G -h -H -i -K -m -p -s -S -t -T -v -V"
 	OPTS+=" --at-only --analyzer --build --CC --check --config --distcheck"
-	OPTS+=" --debug --dist --gnulib --help --header-check --iwyu"
+	OPTS+=" --debug --dist --gnulib --gpg-sign --help --header-check --iwyu"
 	OPTS+=" --menu-config --parallel-jobs --sparse --scan-build"
 	OPTS+=" --source-tarball --testing-hacks --verbose --version"
 

@@ -7,7 +7,7 @@ acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
 	[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [PATH_TO_PROJECT_ROOT]
 	[-- PASS_THRU_OPTIONS ...]
-acmbuild {-C|-D|-T} [-c] [-g] [-pX] [PATH_TO_PROJECT_ROOT]
+acmbuild {-C|-D|-T} [-c] [-g] [-G] [-pX] [PATH_TO_PROJECT_ROOT]
 	[-- PASS_THRU_OPTIONS ...]
 acmbuild -g [-b]
 	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
@@ -37,9 +37,9 @@ configure.
 
 The acmbuild options come in two flavours; action options and enabling options.
 
-b, c, C, D, g, i, K, S and T are action options. -b, for instance will run make,
-whereas -D will run make dist. (p just sets the number of parallel jobs make
-will use).
+b, c, C, D, g, G, i, K, S and T are action options. -b, for instance will run
+make, whereas -D will run make dist. (p just sets the number of parallel jobs
+make will use).
 
 The rest, (apart from help and version), are enabling options. Invariably these
 are implemented merely by passing an enable argument to configure. For example
@@ -86,6 +86,10 @@ make CC=compiler
 
 -g, --gnulib  run gnulib-tool --update. Checks for the existence of the cache
 file proj-root/m4/gnulib-cache.m4. If it does not exist the update is not run.
+
+-G, --gpg-sign  gpg sign the output distribution or source tarball. The
+signature file will have the same filename as the original tarball with .asc
+appended.
 
 -h, --help  prints usage information.
 
@@ -137,7 +141,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2014-2019, 2021-2023, 2025 Mark Grant.
+Copyright (C) 2014-2019, 2021-2023, 2025, 2026 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
