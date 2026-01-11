@@ -1,3 +1,13 @@
+2026-01-11 v1.7.2 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump actions/checkout from 5 to 6
+dependabot[bot] (1):
+
+	at: Leave source tarball name same as distribution tarball
+	at: Add option argument to sign tarballs
+	at: Update Copyright for 2026
+	Merge pull request #5 from m-grant-prg/dependabot/github_actions/tip/actions/checkout-6
+Mark Grant (4):
+
 2025-11-13 v1.7.1 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.6.2
 	at: bash-comp: Add bash completion
