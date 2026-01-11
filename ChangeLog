@@ -1,3 +1,6 @@
+2026-01-11 v1.7.3 Mark Grant <m.grant.prg@gmail.com>
+	* Bump version due to missing commit in 1.7.2
+
 2026-01-11 v1.7.2 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump actions/checkout from 5 to 6
 dependabot[bot] (1):
