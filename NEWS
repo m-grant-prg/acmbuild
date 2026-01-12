@@ -1,3 +1,7 @@
+Release 1.7.4 2026-01-12
+Bump version to sync master and tip branches
+Technical change information can be found in the ChangeLog.
+
 Release 1.7.3 2026-01-11
 Bump version due to missing commit in 1.7.2
 Technical change information can be found in the ChangeLog.
