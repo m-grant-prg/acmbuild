@@ -54,7 +54,7 @@ set -o pipefail
 # Init variables #
 ##################
 
-readonly version=1.7.0			# set version variable
+readonly version=1.7.1			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -447,8 +447,9 @@ proc_CL()
 	# to be inputised before they are passed on in order to maintain
 	# original quoting. They can then be 'eval'ed.
 	if (( $# )); then
-		basedir=${1@Q}
-		basedirunq="$1"		# Unquoted version
+		basedir=${1%/}
+		basedir=${basedir@Q}
+		basedirunq="${1%/}"		# Unquoted version
 		shift
 		configcli_extra_args+=( ' ' "$@" )
 	fi
