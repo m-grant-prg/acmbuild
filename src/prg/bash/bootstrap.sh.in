@@ -441,11 +441,11 @@ proc_CL()
 		script_exit 64
 	fi
 
-	# First non-option argument which is not an option argument is the base
-	# directory, all others are passed straight to the configure command
-	# line, (to support things like  --prefix=... etc). Both of these need
-	# to be inputised before they are passed on in order to maintain
-	# original quoting. They can then be 'eval'ed.
+	# The first non-option argument is the base directory, anything after
+	# an -- is passed straight to the configure command line, (to support
+	# things like  --prefix=... etc). Both of these need to be inputised
+	# before they are passed on in order to maintain original quoting, they
+	# can then be 'eval'ed.
 	if (( $# )); then
 		basedir=${1%/}
 		basedir=${basedir@Q}
