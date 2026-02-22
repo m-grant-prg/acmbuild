@@ -464,9 +464,9 @@ proc_gnulib()
 	local msg
 	local status
 
-	if [[ -f "$basedirunq/m4/gnulib-cache.m4" ]]; then
+	if [[ -f "${basedirunq}/m4/gnulib-cache.m4" ]]; then
 		cmdline="cd $basedir"
-		cmdline+=" && gnulib-tool --update$verbosemake$verbosemake"
+		cmdline+=" && gnulib-tool --update${verbosemake}${verbosemake}"
 		cmdline+=" ; cd -"
 		eval "$cmdline"
 		status=$?
@@ -474,7 +474,7 @@ proc_gnulib()
 		std_cmd_err_handler $status
 	else
 		msg="Option -g --gnulib ignored - "
-		msg+="missing $basedir/m4/gnulib-cache.m4"
+		msg+="missing ${basedir}/m4/gnulib-cache.m4"
 		output "$msg" 0
 	fi
 }
@@ -490,15 +490,15 @@ proc_menuconfig()
 	tmp_file=/tmp/$$.$(basename "$0").tmp
 	readonly tmp_file
 
-	if [[ ! -f $basedirunq/configurable-options.sh \
-		|| ! -r $basedirunq/configurable-options.sh \
-		|| ! -x $basedirunq/configurable-options.sh ]]; then
+	if [[ ! -f ${basedirunq}/configurable-options.sh \
+		|| ! -r ${basedirunq}/configurable-options.sh \
+		|| ! -x ${basedirunq}/configurable-options.sh ]]; then
 		msg="The script configurable-options.sh must; exist in the"
 		msg+=" project root directory, be readable and be executable."
 		output "$msg" 1
 		script_exit 77
 	fi
-	"$basedirunq"/configurable-options.sh "$tmp_file"
+	"${basedirunq}"/configurable-options.sh "$tmp_file"
 	std_cmd_err_handler $?
 	mapfile -t tmp_extra_args < <( head -n 1 "$tmp_file" )
 	std_cmd_err_handler $?
@@ -524,9 +524,9 @@ proc_config()
 	output "$msg" $status
 	std_cmd_err_handler $status
 
-	cmdline="$basedir/configure$cc_cli${configcli_extra_args[*]}"
-	cmdline+="$verboseconfig$atonly$analyzer$debug$headercheck$iwyu$sparse"
-	cmdline+="$scan_build$testinghacks"
+	cmdline="${basedir}/configure${cc_cli}${configcli_extra_args[*]}"
+	cmdline+="${verboseconfig}${atonly}${analyzer}${debug}${headercheck}"
+	cmdline+="${iwyu}${sparse}${scan_build}${testinghacks}"
 
 	eval "$cmdline"
 	status=$?
@@ -543,26 +543,26 @@ proc_make()
 	local status
 
 	if $build ; then
-		cmdline="make"$verbosemake$par_jobs
+		cmdline="make"${verbosemake}${par_jobs}
 	fi
 
 	if $check ; then
 		if [[ ! $cmdline ]]; then
-			cmdline="make"$verbosemake$par_jobs
+			cmdline="make"${verbosemake}${par_jobs}
 		fi
 		cmdline+=" check"
 	fi
 
 	if $distcheck ; then
-		cmdline="make"$verbosemake$par_jobs" distcheck clean"
+		cmdline="make"${verbosemake}${par_jobs}" distcheck clean"
 	fi
 
 	if $dist ; then
-		cmdline="make"$verbosemake$par_jobs" dist clean"
+		cmdline="make"${verbosemake}${par_jobs}" dist clean"
 	fi
 
 	if [[ $iwyu ]]; then
-		cmdline="make"$verbosemake$par_jobs" -k"
+		cmdline="make"${verbosemake}${par_jobs}" -k"
 		cmdline+=" CC=include-what-you-use"
 	fi
 
@@ -571,12 +571,12 @@ proc_make()
 			cmdline="scan-build --use-cc=$cc make"$verbosemake
 			cmdline+=$par_jobs" -k"
 		else
-			cmdline="scan-build make"$verbosemake$par_jobs" -k"
+			cmdline="scan-build make"${verbosemake}${par_jobs}" -k"
 		fi
 	fi
 
 	if $tarball ; then
-		cmdline="make"$verbosemake$par_jobs" srctarball clean"
+		cmdline="make"${verbosemake}${par_jobs}" srctarball clean"
 	fi
 
 	# May get here with cmdline empty if, for example, only the -g option
@@ -600,7 +600,7 @@ proc_gpgsign()
 		return
 	fi
 
-	cmdline="make"$verbosemake$par_jobs" sign_tarball clean"
+	cmdline="make"${verbosemake}${par_jobs}" sign_tarball clean"
 
 	eval "$cmdline"
 	status=$?
