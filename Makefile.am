@@ -42,5 +42,6 @@ srctarball:
 
 
 sign_tarball:
+	rm -f @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz.asc
 	gpg --armor --detach-sign @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
 
