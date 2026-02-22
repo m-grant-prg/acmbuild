@@ -2,20 +2,20 @@ NAME
 acmbuild - acmbuild script
 SYNOPSIS
 acmbuild -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-g] [-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
-acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+	[-g] [-K] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+acmbuild -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-p[X]] [-t] [-v]
 	[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
-acmbuild -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [PATH_TO_PROJECT_ROOT]
+acmbuild -c {-i|-S} [--CC=COMPILER] [-p[X]] [-v] [PATH_TO_PROJECT_ROOT]
 	[-- PASS_THRU_OPTIONS ...]
-acmbuild {-C|-D|-T} [-c] [-g] [-G] [-pX] [PATH_TO_PROJECT_ROOT]
+acmbuild {-C|-D|-T} [-c] [-g] [-G] [-p[X]] [PATH_TO_PROJECT_ROOT]
 	[-- PASS_THRU_OPTIONS ...]
 acmbuild -g [-b]
 	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+	[-K] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 acmbuild {-h|-V}
 acmbuild -K [-b]
 	[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-	[-g] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+	[-g] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
 acmbuild.sh [OPTIONS] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 DESCRIPTION

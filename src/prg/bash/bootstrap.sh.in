@@ -99,21 +99,21 @@ cat << EOF
 Usage is also true for acmbuild
 Usage is:-
 ${0##*/} -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-g] [-K] [-pX] [PATH_TO_PROJECT_ROOT]
+		[-g] [-K] [-p[X]] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
-${0##*/} -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-pX] [-t] [-v]
+${0##*/} -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-p[X]] [-t] [-v]
 		[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
-${0##*/} -c {-i|-S} [--CC=COMPILER] [-pX] [-v] [PATH_TO_PROJECT_ROOT]
+${0##*/} -c {-i|-S} [--CC=COMPILER] [-p[X]] [-v] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
-${0##*/} {-C|-D|-T} [-c] [-g] [-G] [-pX] [PATH_TO_PROJECT_ROOT]
+${0##*/} {-C|-D|-T} [-c] [-g] [-G] [-p[X]] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
 ${0##*/} -g [-b]
 		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-K] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+		[-K] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 ${0##*/} {-h|-V}
 ${0##*/} -K [-b]
 		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
-		[-g] [-pX] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
+		[-g] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
 Usage is:-
 ${0##*/} [OPTIONS] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
