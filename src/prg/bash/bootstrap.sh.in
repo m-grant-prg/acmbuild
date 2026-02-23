@@ -466,7 +466,7 @@ proc_gnulib()
 
 	if [[ -f "${basedirunq}/m4/gnulib-cache.m4" ]]; then
 		cmdline="cd $basedir"
-		cmdline+=" && gnulib-tool --update${verbosemake}${verbosemake}"
+		cmdline+=" && gnulib-tool --update"
 		cmdline+=" ; cd -"
 		eval "$cmdline"
 		status=$?
