@@ -79,7 +79,8 @@ sparse=""
 tarball=false
 testinghacks=""
 verbose=false
-verboseconfig=" --enable-silent-rules=yes"
+verboseautoreconf=""
+verboseconfigure=" --enable-silent-rules=yes"
 verbosemake=" --quiet"
 basedir="."			# Retain quotes
 basedirunq=$basedir		# Without retaining quotes
@@ -98,21 +99,22 @@ usage()
 cat << EOF
 Usage is also true for acmbuild
 Usage is:-
-${0##*/} -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+${0##*/} -b [-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v[X]]]
 		[-g] [-K] [-p[X]] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
-${0##*/} -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-p[X]] [-t] [-v]
+${0##*/} -c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-p[X]] [-t]
+		[-v[X]]
 		[PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
-${0##*/} -c {-i|-S} [--CC=COMPILER] [-p[X]] [-v] [PATH_TO_PROJECT_ROOT]
+${0##*/} -c {-i|-S} [--CC=COMPILER] [-p[X]] [-v[X]] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
-${0##*/} {-C|-D|-T} [-c] [-g] [-G] [-p[X]] [PATH_TO_PROJECT_ROOT]
+${0##*/} {-C|-D|-T} [-c [-v[X]]] [-g] [-G] [-p[X]] [PATH_TO_PROJECT_ROOT]
 		[-- PASS_THRU_OPTIONS ...]
 ${0##*/} -g [-b]
-		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v[X]]]
 		[-K] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 ${0##*/} {-h|-V}
 ${0##*/} -K [-b]
-		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v]]
+		[-c [-a] [-A] [{--CC=COMPILER|-s}] [-d] [-H] [-m] [-t] [-v[X]]]
 		[-g] [-p[X]] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 
 Usage is:-
@@ -146,7 +148,11 @@ ${0##*/} [OPTIONS] [PATH_TO_PROJECT_ROOT] [-- PASS_THRU_OPTIONS ...]
 		when installed will be somewhere under datadir, but during
 		testing it is in the project tree.
 	-T or --source-tarball create source tarball
-	-v or --verbose emit extra information
+	-v[X] or --verbose[=X] emit extra information
+		Without option v configure and make are as quiet as possible.
+		With option v but no X, configure and make return to defaults,
+		so no silent rules and V=0
+		Otherwise X can take values 0 to 3 representing make V=X
 	-V or --version displays version information
 
 	[PATH_TO_PROJECT_ROOT] The absolute or relative path to the project root
@@ -215,11 +221,11 @@ proc_CL()
 	local script_name="acmbuild/bootstrap.sh"
 	local tmp
 
-	tmp="getopt -o aAbcCdDgGhHiKmp::sStTvV "
+	tmp="getopt -o aAbcCdDgGhHiKmp::sStTv::V "
 	tmp+="--long at-only,analyzer,build,CC:,check,config,distcheck,debug"
 	tmp+=",dist,gnulib,gpg-sign,help,header-check,iwyu,menu-config"
 	tmp+=",parallel-jobs::,sparse,scan-build,source-tarball,testing-hacks"
-	tmp+=",verbose,version"
+	tmp+=",verbose::,version"
 	GETOPTTEMP=$($tmp -n "$script_name" -- "$@")
 	std_cmd_err_handler $?
 
@@ -352,10 +358,37 @@ proc_CL()
 			;;
 		-v|--verbose)
 			verbose=true
-			verboseconfig=""
-			verbosemake=""
-			shift
-			;;
+			case "$2" in
+			""|0)
+				verboseautoreconf=""
+				verboseconfigure=""
+				verbosemake=""
+				shift 2
+				;;
+			1)
+				verboseautoreconf=" -v"
+				verboseconfigure=""
+				verbosemake=" V=1"
+				shift 2
+				;;
+			2)
+				verboseautoreconf=" -v"
+				verboseconfigure=""
+				verbosemake=" V=2"
+				shift 2
+				;;
+			3)
+				verboseautoreconf=" -v"
+				verboseconfigure=""
+				verbosemake=" V=3"
+				shift 2
+				;;
+			*)
+				output "Invalid verbosity level" 1
+				script_exit 64
+				;;
+		esac
+		;;
 		-V|--version)
 			printf "Script version %s\n" $version
 			printf "Package version %s\n" $packageversion
@@ -517,15 +550,15 @@ proc_config()
 	local msg
 	local status
 
-	cmdline="autoreconf -if $basedir"
+	cmdline="autoreconf -if ${verboseautoreconf} ${basedir}"
 	eval "$cmdline"
 	status=$?
-	msg="autoreconf -if $basedir completed with exit status: $status"
+	msg="$cmdline completed with exit status: $status"
 	output "$msg" $status
 	std_cmd_err_handler $status
 
 	cmdline="${basedir}/configure${cc_cli}${configcli_extra_args[*]}"
-	cmdline+="${verboseconfig}${atonly}${analyzer}${debug}${headercheck}"
+	cmdline+="${verboseconfigure}${atonly}${analyzer}${debug}${headercheck}"
 	cmdline+="${iwyu}${sparse}${scan_build}${testinghacks}"
 
 	eval "$cmdline"
