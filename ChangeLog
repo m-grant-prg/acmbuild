@@ -1,3 +1,14 @@
+2026-02-23 v1.7.5 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.7.1
+	bash: man: Make verbose CLA take a verbosity level
+	bash: gnulib-tool does not support verbose arguments
+	bash: man: Correct help and man syntax for [-p[X]]
+	at: Remove old signature file before creating a new one
+	bash: Use ${...} form when listing multiple variables
+	bash: Improve comment re basedir and option pass-through
+	bash: Standardise basedir as no trailing slash
+Mark Grant (7):
+
 2026-01-12 v1.7.4 Mark Grant <m.grant.prg@gmail.com>
 	* Bump version to sync master and tip branches
 
