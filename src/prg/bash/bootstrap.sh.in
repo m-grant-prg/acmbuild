@@ -54,7 +54,7 @@ set -o pipefail
 # Init variables #
 ##################
 
-readonly version=1.7.1			# set version variable
+readonly version=1.7.2			# set version variable
 readonly packageversion=@pkgversion@	# Version of the complete package
 
 # Set defaults
@@ -185,7 +185,7 @@ script_exit()
 }
 
 # Standard function to test command error and exit if non-zero.
-# Parameters - 	$1 is the exit code, (normally $? from the preceeding command).
+# Parameters - 	$1 is the exit code, (normally $? from the preceding command).
 # No return value.
 std_cmd_err_handler()
 {
