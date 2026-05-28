@@ -1,3 +1,10 @@
+2026-05-28 v1.7.6 Mark Grant <m.grant.prg@gmail.com>
+	* at: Upgrade bootstrap.sh to v1.7.2
+	bash: Suppress shellcheck warning Function never invoked
+	bash: Fix a spelling mistake
+	at: Add distro info for Installation Directories
+Mark Grant (4):
+
 2026-02-23 v1.7.5 Mark Grant <m.grant.prg@gmail.com>
 	* at: Upgrade bootstrap.sh to v1.7.1
 	bash: man: Make verbose CLA take a verbosity level
