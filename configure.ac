@@ -391,7 +391,7 @@ AC_MSG_NOTICE(processing additional checks and variables)
 #	pkglibexecdir		Package-specific Executables run by other programs
 #					${libexecdir}/${PACKAGE}
 #
-AC_SUBST([edit], ["sed \
+AC_SUBST([edit], ["$SED \
 		-e 's|@topsrcdir[@]|\$(top_srcdir)|g' \
 		-e 's|@topbuilddir[@]|\$(top_builddir)|g' \
 		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
