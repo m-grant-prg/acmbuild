@@ -62,7 +62,7 @@ AC_COPYRIGHT([Copyright (C) 2014-2026  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION([$Revision: 1.2.5 $])
+AC_REVISION([$Revision: 1.2.6 $])
 
 AC_PREREQ([2.69])
 
@@ -392,6 +392,8 @@ AC_MSG_NOTICE(processing additional checks and variables)
 #					${libexecdir}/${PACKAGE}
 #
 AC_SUBST([edit], ["sed \
+		-e 's|@topsrcdir[@]|\$(top_srcdir)|g' \
+		-e 's|@topbuilddir[@]|\$(top_builddir)|g' \
 		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
@@ -443,7 +445,9 @@ AC_MSG_NOTICE(processing output files)
 AC_CONFIG_FILES([Makefile
 		src/bash-comp/Makefile
 		src/man/1/Makefile
-		src/prg/bash/Makefile])
+		src/prg/bash/Makefile
+		src/prg/tests/shellcheck/Makefile
+		src/prg/run-tests/Makefile])
 
 AC_OUTPUT
 

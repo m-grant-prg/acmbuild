@@ -1,0 +1,40 @@
+#! @bashlocation@
+
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+# For each file like path/to/foo.sh.in in the source tree, look in the build
+# tree for:-
+#	buildrootdir/path/to/foo (basename match, no extension)
+# and
+#	buildrootdir/path/to/foo.sh (basename match with .sh)
+#
+# We want this command to operate without expansion
+# shellcheck disable=SC2016
+mapfile -t targets < <(
+	find @topsrcdir@ -type f -name '*.sh.in' -print0 |
+		xargs -0 -n1 bash -c '
+	f="$1"
+	rel="${f#@topsrcdir@/}"		# strip topsrcdir gives path/to/foo.sh.in
+	rel2="${rel%.sh.in}"		# strip .sh.in gives path/to/foo
+	t1="@topbuilddir@/$rel2"	# gives $top_builddir/path/to/foo
+	t2="@topbuilddir@/$rel2.sh"	# gives $top_builddir/path/to/foo.sh
+	if [ -f "$t1" ]; then echo "$t1"; fi
+	if [ -f "$t2" ]; then echo "$t2"; fi
+	' bash
+	)
+
+if [ "${#targets[@]}" -eq 0 ]; then
+	echo "No matching generated scripts found in @topbuilddir@."
+	exit 0
+fi
+
+shellcheck -ax "${targets[@]}"
+
+printf '%s\n' "${targets[@]}" | sort
+
+echo "Files processed - ${#targets[@]}"
+
+cd -
+

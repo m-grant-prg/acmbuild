@@ -20,6 +20,8 @@ AM_DISTCHECK_CONFIGURE_FLAGS =
 SUBDIRS = src/bash-comp
 SUBDIRS += src/man/1
 SUBDIRS += src/prg/bash
+SUBDIRS += src/prg/tests/shellcheck
+SUBDIRS += src/prg/run-tests
 
 doc_DATA = AUTHORS ChangeLog COPYING NEWS README
 
