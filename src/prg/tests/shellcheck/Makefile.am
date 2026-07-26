@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
-# AutoMake script file to generate mge-bash-std-libs tests.		#
+# AutoMake script file to generate tests.				#
 #									#
 #########################################################################
 
