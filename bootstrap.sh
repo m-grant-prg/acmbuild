@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #########################################################################
 #									#
 #	bootstrap.sh is automatically generated,			#
@@ -54,8 +54,8 @@ set -o pipefail
 # Init variables #
 ##################
 
-readonly version=1.7.3			# set version variable
-readonly packageversion=1.7.6-9-gd20d48c2	# Version of the complete package
+readonly version=1.7.4			# set version variable
+readonly packageversion=1.7.6-15-g14f7f773	# Version of the complete package
 
 # Set defaults
 atonly=""
