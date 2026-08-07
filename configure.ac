@@ -227,6 +227,11 @@ if test "x$ECHO" = "xno" ; then
 	AC_MSG_ERROR([echo not found])
 fi
 
+AC_PATH_PROG([ENV], [env], [no])
+if test "x$ENV" = "xno" ; then
+	AC_MSG_ERROR([env not found])
+fi
+
 AC_CHECK_PROG([SHELLCHECK], [shellcheck], [yes], [no])
 if test "x$SHELLCHECK" = "xno" ; then
 	AC_MSG_ERROR([shellcheck not found])
@@ -401,6 +406,7 @@ AC_SUBST([edit], ["$SED \
 		-e 's|@abstopbuilddir[@]|\$(abs_top_builddir)|g' \
 		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
+		-e 's|@envlocation[@]|\$(ENV)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
