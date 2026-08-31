@@ -94,7 +94,9 @@ AC_MSG_NOTICE(initialisation and setup)
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 # Separate AutoTools generated files from project root.
-AC_CONFIG_AUX_DIR([build-aux])
+m4_define([CONFIG_AUXDIR_NAME], [build-aux])
+AC_CONFIG_AUX_DIR(CONFIG_AUXDIR_NAME)
+AC_SUBST([config_aux_dir], [CONFIG_AUXDIR_NAME])
 
 #
 # Passes the options to all am files. Puts objects in the sub-directory
@@ -404,6 +406,7 @@ AC_MSG_NOTICE(processing additional checks and variables)
 AC_SUBST([edit], ["$SED \
 		-e 's|@abstopbuilddir[@]|\$(abs_top_builddir)|g' \
 		-e 's|@abstopsrcdir[@]|\$(abs_top_srcdir)|g' \
+		-e 's|@configauxdir[@]|\$(config_aux_dir)|g' \
 		-e 's|@envlocation[@]|\$(ENV)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@scriptloc[@]|\$(scriptloc)|g' \
